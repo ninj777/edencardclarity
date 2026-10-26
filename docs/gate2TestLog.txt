@@ -1,0 +1,458 @@
+Gate 2 test log
+Date: 2026-10-26T17:52:56.509506-04:00
+Environment: Linux-6.18.55-x86_64-with-glibc2.41
+ASAN_OPTIONS=detect_leaks=0. Leak checking was not run.
+
+Command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 tests/testGate2.py /workspace/cardClarityGate2/build/cardClarity
+Working folder: /workspace/cardClarityGate2
+Input: None
+Standard output:
+
+Standard error:
+test_01_start_empty (__main__.Gate2Tests.test_01_start_empty)
+A missing file starts an empty wallet and creates no file just by viewing. ... ok
+test_02_catalog_has_stable_numbers (__main__.Gate2Tests.test_02_catalog_has_stable_numbers)
+The five sample names have card numbers 1 to 5 and example labels. ... ok
+test_03_add_and_view (__main__.Gate2Tests.test_03_add_and_view)
+Adding card 3 shows only Cashback Sample in the wallet, then saves ID 3. ... ok
+test_04_duplicate (__main__.Gate2Tests.test_04_duplicate)
+A duplicate card is rejected and the saved list contains it only once. ... ok
+test_05_remove_middle_card (__main__.Gate2Tests.test_05_remove_middle_card)
+Removing card 3 from [1, 3, 5] saves [1, 5] in order. ... ok
+test_06_remove_absent_card (__main__.Gate2Tests.test_06_remove_absent_card)
+Removing a valid catalog ID not in the wallet leaves the saved list alone. ... ok
+test_07_remove_from_empty (__main__.Gate2Tests.test_07_remove_from_empty)
+Removing from an empty wallet explains the empty list and does not ask for an ID. ... ok
+test_08_full_wallet (__main__.Gate2Tests.test_08_full_wallet)
+A five-card wallet refuses another addition and saves all five IDs unchanged. ... ok
+test_09_save_and_restart (__main__.Gate2Tests.test_09_save_and_restart)
+After adding and saving cards 1 and 3, a second process loads those two cards. ... ok
+test_10_removal_survives_restart (__main__.Gate2Tests.test_10_removal_survives_restart)
+A removed and saved card stays removed after restarting. ... ok
+test_11_empty_save (__main__.Gate2Tests.test_11_empty_save)
+Removing the final card writes a valid zero-count save that reloads empty. ... ok
+test_12_reload_replaces_unsaved_changes (__main__.Gate2Tests.test_12_reload_replaces_unsaved_changes)
+Reloading restores the saved [1] list after adding unsaved card 3. ... ok
+test_13_missing_reload_keeps_current_cards (__main__.Gate2Tests.test_13_missing_reload_keeps_current_cards)
+Reloading a missing file leaves an unsaved card in memory so it can still be saved. ... ok
+test_14_room_after_removal (__main__.Gate2Tests.test_14_room_after_removal)
+Removing from a full wallet frees a slot and adding again appends the card. ... ok
+test_15_bad_main_and_wallet_choices (__main__.Gate2Tests.test_15_bad_main_and_wallet_choices)
+Blank, text, decimal, negative, zero, and out-of-range choices allow recovery. ... ok
+test_16_bad_card_numbers (__main__.Gate2Tests.test_16_bad_card_numbers)
+Invalid card answers are rejected before a valid card 3 is added. ... ok
+test_17_overlong_and_hidden_null_input (__main__.Gate2Tests.test_17_overlong_and_hidden_null_input)
+Overlong answers and hidden null bytes do not add a card or spoil the next answer. ... ok
+test_18_cancel_add_and_remove (__main__.Gate2Tests.test_18_cancel_add_and_remove)
+Zero cancels an add or removal and leaves [1] unchanged. ... ok
+test_19_end_of_input (__main__.Gate2Tests.test_19_end_of_input)
+End of input at nested prompts exits without a crash or an unexpected save. ... ok
+test_20_save_on_exit (__main__.Gate2Tests.test_20_save_on_exit)
+Save and exit writes unsaved card 1 before closing. ... ok
+test_21_exit_without_saving (__main__.Gate2Tests.test_21_exit_without_saving)
+Exit without saving preserves the older save [1] instead of writing [1, 3]. ... ok
+test_22_keep_editing (__main__.Gate2Tests.test_22_keep_editing)
+Cancelling exit returns to the menu and a later save keeps the edits. ... ok
+test_23_default_path (__main__.Gate2Tests.test_23_default_path)
+Normal launch saves and reloads savedCards.txt in the current folder. ... ok
+test_24_path_with_spaces (__main__.Gate2Tests.test_24_path_with_spaces)
+A chosen save filename containing spaces works across two launches. ... ok
+test_25_damaged_files (__main__.Gate2Tests.test_25_damaged_files)
+Malformed headers, counts, IDs, duplicates, missing data, and extra data are rejected unchanged. ... ok
+test_26_windows_line_endings (__main__.Gate2Tests.test_26_windows_line_endings)
+A valid CRLF file loads the same IDs as an LF file. ... ok
+test_27_no_final_newline (__main__.Gate2Tests.test_27_no_final_newline)
+A valid file without a newline after its last ID still loads. ... ok
+test_28_directory_is_not_a_save (__main__.Gate2Tests.test_28_directory_is_not_a_save)
+A directory at the save path reports a read error and leaves its contents alone. ... ok
+test_29_save_missing_folder (__main__.Gate2Tests.test_29_save_missing_folder)
+Saving into a missing folder fails clearly while the current wallet remains usable. ... ok
+test_30_stale_temporary_file (__main__.Gate2Tests.test_30_stale_temporary_file)
+An existing temporary file blocks saving without changing it or the previous save. ... ok
+test_31_failed_replacement_cleans_own_temp (__main__.Gate2Tests.test_31_failed_replacement_cleans_own_temp)
+A failed replacement of a directory removes the new temp and preserves the directory. ... ok
+test_32_failed_save_on_exit_returns_to_menu (__main__.Gate2Tests.test_32_failed_save_on_exit_returns_to_menu)
+A failed Save and exit leaves the program open for editing or explicit discard. ... ok
+test_33_reload_damaged_file_keeps_current_wallet (__main__.Gate2Tests.test_33_reload_damaged_file_keeps_current_wallet)
+If the file is damaged after startup, Reload leaves the already-loaded card 1 intact. ... ok
+test_34_whitespace_in_numeric_lines (__main__.Gate2Tests.test_34_whitespace_in_numeric_lines)
+Whitespace around a count or ID is accepted and the correct card loads. ... ok
+test_35_remove_first_and_last (__main__.Gate2Tests.test_35_remove_first_and_last)
+Removing the first and last IDs leaves the middle card correctly saved. ... ok
+test_36_real_input_error (__main__.Gate2Tests.test_36_real_input_error)
+A real stdin read error returns status 1 rather than claiming a normal exit. ... ok
+test_37_bad_arguments (__main__.Gate2Tests.test_37_bad_arguments)
+Unknown, incomplete, or empty command arguments return status 1 and do not save. ... ok
+test_38_too_long_save_path (__main__.Gate2Tests.test_38_too_long_save_path)
+An overlong save path is rejected without overflowing the temporary-path buffer. ... ok
+test_39_window_path_on_other_systems (__main__.Gate2Tests.test_39_window_path_on_other_systems)
+The window accepts a chosen save path, then explains that it needs Windows without writing. ... ok
+
+----------------------------------------------------------------------
+Ran 39 tests in 0.071s
+
+OK
+
+Exit status: 0
+
+Command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 tests/testGate1.py /workspace/cardClarityGate2/build/cardClarity
+Working folder: /workspace/cardClarityGate2
+Input: None
+Standard output:
+
+Standard error:
+test_01_menu_has_three_options (__main__.Gate1MenuTests.test_01_menu_has_three_options) ... ok
+test_02_view_all_five_cards (__main__.Gate1MenuTests.test_02_view_all_five_cards) ... ok
+test_03_rates_are_printed (__main__.Gate1MenuTests.test_03_rates_are_printed) ... ok
+test_04_rates_are_labeled_examples (__main__.Gate1MenuTests.test_04_rates_are_labeled_examples) ... ok
+test_05_about_lists_planned_features (__main__.Gate1MenuTests.test_05_about_lists_planned_features) ... ok
+test_06_exit (__main__.Gate1MenuTests.test_06_exit) ... ok
+test_07_text_input (__main__.Gate1MenuTests.test_07_text_input) ... ok
+test_08_zero (__main__.Gate1MenuTests.test_08_zero) ... ok
+test_09_out_of_range (__main__.Gate1MenuTests.test_09_out_of_range) ... ok
+test_10_negative (__main__.Gate1MenuTests.test_10_negative) ... ok
+test_11_empty_answer (__main__.Gate1MenuTests.test_11_empty_answer) ... ok
+test_12_decimal (__main__.Gate1MenuTests.test_12_decimal) ... ok
+test_13_trailing_characters (__main__.Gate1MenuTests.test_13_trailing_characters) ... ok
+test_14_very_large_number (__main__.Gate1MenuTests.test_14_very_large_number) ... ok
+test_15_overlong_text (__main__.Gate1MenuTests.test_15_overlong_text) ... ok
+test_16_valid_after_invalid (__main__.Gate1MenuTests.test_16_valid_after_invalid) ... ok
+test_17_whitespace_around_choice (__main__.Gate1MenuTests.test_17_whitespace_around_choice) ... ok
+test_18_end_of_input (__main__.Gate1MenuTests.test_18_end_of_input) ... ok
+test_19_choice_without_final_newline (__main__.Gate1MenuTests.test_19_choice_without_final_newline) ... ok
+test_20_repeated_choices_return_to_menu (__main__.Gate1MenuTests.test_20_repeated_choices_return_to_menu) ... ok
+test_21_exit_does_not_process_later_input (__main__.Gate1MenuTests.test_21_exit_does_not_process_later_input) ... ok
+test_22_embedded_null_is_rejected (__main__.Gate1MenuTests.test_22_embedded_null_is_rejected) ... ok
+test_23_all_standard_whitespace (__main__.Gate1MenuTests.test_23_all_standard_whitespace) ... ok
+test_24_long_input_is_one_rejected_answer (__main__.Gate1MenuTests.test_24_long_input_is_one_rejected_answer) ... ok
+test_25_invalid_answer_at_eof (__main__.Gate1MenuTests.test_25_invalid_answer_at_eof) ... ok
+test_26_blank_whitespace (__main__.Gate1MenuTests.test_26_blank_whitespace) ... ok
+test_27_read_error_is_not_normal_eof (__main__.Gate1MenuTests.test_27_read_error_is_not_normal_eof) ... ok
+test_28_last_fitting_answer_at_eof (__main__.Gate1MenuTests.test_28_last_fitting_answer_at_eof) ... ok
+test_29_overlong_answer_at_eof (__main__.Gate1MenuTests.test_29_overlong_answer_at_eof) ... ok
+test_30_unknown_argument (__main__.Gate1MenuTests.test_30_unknown_argument) ... ok
+test_31_window_on_other_systems (__main__.Gate1MenuTests.test_31_window_on_other_systems) ... ok
+
+----------------------------------------------------------------------
+Ran 31 tests in 0.026s
+
+OK
+
+Exit status: 0
+
+Command: /workspace/cardClarityGate2/build/cardClarityModules
+Working folder: /workspace/cardClarityGate2
+Input: None
+Standard output:
+0.000 ms [Info] Logger initialized.
+0.030 ms [Info] Sample cards are ready.
+All 40 module checks passed, including the practice reward examples.
+
+Standard error:
+
+Exit status: 0
+
+Command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 tests/testGate2.py /workspace/cardClarityGate2/build/cardClarityClang
+Working folder: /workspace/cardClarityGate2
+Input: None
+Standard output:
+
+Standard error:
+test_01_start_empty (__main__.Gate2Tests.test_01_start_empty)
+A missing file starts an empty wallet and creates no file just by viewing. ... ok
+test_02_catalog_has_stable_numbers (__main__.Gate2Tests.test_02_catalog_has_stable_numbers)
+The five sample names have card numbers 1 to 5 and example labels. ... ok
+test_03_add_and_view (__main__.Gate2Tests.test_03_add_and_view)
+Adding card 3 shows only Cashback Sample in the wallet, then saves ID 3. ... ok
+test_04_duplicate (__main__.Gate2Tests.test_04_duplicate)
+A duplicate card is rejected and the saved list contains it only once. ... ok
+test_05_remove_middle_card (__main__.Gate2Tests.test_05_remove_middle_card)
+Removing card 3 from [1, 3, 5] saves [1, 5] in order. ... ok
+test_06_remove_absent_card (__main__.Gate2Tests.test_06_remove_absent_card)
+Removing a valid catalog ID not in the wallet leaves the saved list alone. ... ok
+test_07_remove_from_empty (__main__.Gate2Tests.test_07_remove_from_empty)
+Removing from an empty wallet explains the empty list and does not ask for an ID. ... ok
+test_08_full_wallet (__main__.Gate2Tests.test_08_full_wallet)
+A five-card wallet refuses another addition and saves all five IDs unchanged. ... ok
+test_09_save_and_restart (__main__.Gate2Tests.test_09_save_and_restart)
+After adding and saving cards 1 and 3, a second process loads those two cards. ... ok
+test_10_removal_survives_restart (__main__.Gate2Tests.test_10_removal_survives_restart)
+A removed and saved card stays removed after restarting. ... ok
+test_11_empty_save (__main__.Gate2Tests.test_11_empty_save)
+Removing the final card writes a valid zero-count save that reloads empty. ... ok
+test_12_reload_replaces_unsaved_changes (__main__.Gate2Tests.test_12_reload_replaces_unsaved_changes)
+Reloading restores the saved [1] list after adding unsaved card 3. ... ok
+test_13_missing_reload_keeps_current_cards (__main__.Gate2Tests.test_13_missing_reload_keeps_current_cards)
+Reloading a missing file leaves an unsaved card in memory so it can still be saved. ... ok
+test_14_room_after_removal (__main__.Gate2Tests.test_14_room_after_removal)
+Removing from a full wallet frees a slot and adding again appends the card. ... ok
+test_15_bad_main_and_wallet_choices (__main__.Gate2Tests.test_15_bad_main_and_wallet_choices)
+Blank, text, decimal, negative, zero, and out-of-range choices allow recovery. ... ok
+test_16_bad_card_numbers (__main__.Gate2Tests.test_16_bad_card_numbers)
+Invalid card answers are rejected before a valid card 3 is added. ... ok
+test_17_overlong_and_hidden_null_input (__main__.Gate2Tests.test_17_overlong_and_hidden_null_input)
+Overlong answers and hidden null bytes do not add a card or spoil the next answer. ... ok
+test_18_cancel_add_and_remove (__main__.Gate2Tests.test_18_cancel_add_and_remove)
+Zero cancels an add or removal and leaves [1] unchanged. ... ok
+test_19_end_of_input (__main__.Gate2Tests.test_19_end_of_input)
+End of input at nested prompts exits without a crash or an unexpected save. ... ok
+test_20_save_on_exit (__main__.Gate2Tests.test_20_save_on_exit)
+Save and exit writes unsaved card 1 before closing. ... ok
+test_21_exit_without_saving (__main__.Gate2Tests.test_21_exit_without_saving)
+Exit without saving preserves the older save [1] instead of writing [1, 3]. ... ok
+test_22_keep_editing (__main__.Gate2Tests.test_22_keep_editing)
+Cancelling exit returns to the menu and a later save keeps the edits. ... ok
+test_23_default_path (__main__.Gate2Tests.test_23_default_path)
+Normal launch saves and reloads savedCards.txt in the current folder. ... ok
+test_24_path_with_spaces (__main__.Gate2Tests.test_24_path_with_spaces)
+A chosen save filename containing spaces works across two launches. ... ok
+test_25_damaged_files (__main__.Gate2Tests.test_25_damaged_files)
+Malformed headers, counts, IDs, duplicates, missing data, and extra data are rejected unchanged. ... ok
+test_26_windows_line_endings (__main__.Gate2Tests.test_26_windows_line_endings)
+A valid CRLF file loads the same IDs as an LF file. ... ok
+test_27_no_final_newline (__main__.Gate2Tests.test_27_no_final_newline)
+A valid file without a newline after its last ID still loads. ... ok
+test_28_directory_is_not_a_save (__main__.Gate2Tests.test_28_directory_is_not_a_save)
+A directory at the save path reports a read error and leaves its contents alone. ... ok
+test_29_save_missing_folder (__main__.Gate2Tests.test_29_save_missing_folder)
+Saving into a missing folder fails clearly while the current wallet remains usable. ... ok
+test_30_stale_temporary_file (__main__.Gate2Tests.test_30_stale_temporary_file)
+An existing temporary file blocks saving without changing it or the previous save. ... ok
+test_31_failed_replacement_cleans_own_temp (__main__.Gate2Tests.test_31_failed_replacement_cleans_own_temp)
+A failed replacement of a directory removes the new temp and preserves the directory. ... ok
+test_32_failed_save_on_exit_returns_to_menu (__main__.Gate2Tests.test_32_failed_save_on_exit_returns_to_menu)
+A failed Save and exit leaves the program open for editing or explicit discard. ... ok
+test_33_reload_damaged_file_keeps_current_wallet (__main__.Gate2Tests.test_33_reload_damaged_file_keeps_current_wallet)
+If the file is damaged after startup, Reload leaves the already-loaded card 1 intact. ... ok
+test_34_whitespace_in_numeric_lines (__main__.Gate2Tests.test_34_whitespace_in_numeric_lines)
+Whitespace around a count or ID is accepted and the correct card loads. ... ok
+test_35_remove_first_and_last (__main__.Gate2Tests.test_35_remove_first_and_last)
+Removing the first and last IDs leaves the middle card correctly saved. ... ok
+test_36_real_input_error (__main__.Gate2Tests.test_36_real_input_error)
+A real stdin read error returns status 1 rather than claiming a normal exit. ... ok
+test_37_bad_arguments (__main__.Gate2Tests.test_37_bad_arguments)
+Unknown, incomplete, or empty command arguments return status 1 and do not save. ... ok
+test_38_too_long_save_path (__main__.Gate2Tests.test_38_too_long_save_path)
+An overlong save path is rejected without overflowing the temporary-path buffer. ... ok
+test_39_window_path_on_other_systems (__main__.Gate2Tests.test_39_window_path_on_other_systems)
+The window accepts a chosen save path, then explains that it needs Windows without writing. ... ok
+
+----------------------------------------------------------------------
+Ran 39 tests in 0.080s
+
+OK
+
+Exit status: 0
+
+Command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 tests/testGate1.py /workspace/cardClarityGate2/build/cardClarityClang
+Working folder: /workspace/cardClarityGate2
+Input: None
+Standard output:
+
+Standard error:
+test_01_menu_has_three_options (__main__.Gate1MenuTests.test_01_menu_has_three_options) ... ok
+test_02_view_all_five_cards (__main__.Gate1MenuTests.test_02_view_all_five_cards) ... ok
+test_03_rates_are_printed (__main__.Gate1MenuTests.test_03_rates_are_printed) ... ok
+test_04_rates_are_labeled_examples (__main__.Gate1MenuTests.test_04_rates_are_labeled_examples) ... ok
+test_05_about_lists_planned_features (__main__.Gate1MenuTests.test_05_about_lists_planned_features) ... ok
+test_06_exit (__main__.Gate1MenuTests.test_06_exit) ... ok
+test_07_text_input (__main__.Gate1MenuTests.test_07_text_input) ... ok
+test_08_zero (__main__.Gate1MenuTests.test_08_zero) ... ok
+test_09_out_of_range (__main__.Gate1MenuTests.test_09_out_of_range) ... ok
+test_10_negative (__main__.Gate1MenuTests.test_10_negative) ... ok
+test_11_empty_answer (__main__.Gate1MenuTests.test_11_empty_answer) ... ok
+test_12_decimal (__main__.Gate1MenuTests.test_12_decimal) ... ok
+test_13_trailing_characters (__main__.Gate1MenuTests.test_13_trailing_characters) ... ok
+test_14_very_large_number (__main__.Gate1MenuTests.test_14_very_large_number) ... ok
+test_15_overlong_text (__main__.Gate1MenuTests.test_15_overlong_text) ... ok
+test_16_valid_after_invalid (__main__.Gate1MenuTests.test_16_valid_after_invalid) ... ok
+test_17_whitespace_around_choice (__main__.Gate1MenuTests.test_17_whitespace_around_choice) ... ok
+test_18_end_of_input (__main__.Gate1MenuTests.test_18_end_of_input) ... ok
+test_19_choice_without_final_newline (__main__.Gate1MenuTests.test_19_choice_without_final_newline) ... ok
+test_20_repeated_choices_return_to_menu (__main__.Gate1MenuTests.test_20_repeated_choices_return_to_menu) ... ok
+test_21_exit_does_not_process_later_input (__main__.Gate1MenuTests.test_21_exit_does_not_process_later_input) ... ok
+test_22_embedded_null_is_rejected (__main__.Gate1MenuTests.test_22_embedded_null_is_rejected) ... ok
+test_23_all_standard_whitespace (__main__.Gate1MenuTests.test_23_all_standard_whitespace) ... ok
+test_24_long_input_is_one_rejected_answer (__main__.Gate1MenuTests.test_24_long_input_is_one_rejected_answer) ... ok
+test_25_invalid_answer_at_eof (__main__.Gate1MenuTests.test_25_invalid_answer_at_eof) ... ok
+test_26_blank_whitespace (__main__.Gate1MenuTests.test_26_blank_whitespace) ... ok
+test_27_read_error_is_not_normal_eof (__main__.Gate1MenuTests.test_27_read_error_is_not_normal_eof) ... ok
+test_28_last_fitting_answer_at_eof (__main__.Gate1MenuTests.test_28_last_fitting_answer_at_eof) ... ok
+test_29_overlong_answer_at_eof (__main__.Gate1MenuTests.test_29_overlong_answer_at_eof) ... ok
+test_30_unknown_argument (__main__.Gate1MenuTests.test_30_unknown_argument) ... ok
+test_31_window_on_other_systems (__main__.Gate1MenuTests.test_31_window_on_other_systems) ... ok
+
+----------------------------------------------------------------------
+Ran 31 tests in 0.031s
+
+OK
+
+Exit status: 0
+
+Command: /workspace/cardClarityGate2/build/cardClarityClangModules
+Working folder: /workspace/cardClarityGate2
+Input: None
+Standard output:
+0.000 ms [Info] Logger initialized.
+0.036 ms [Info] Sample cards are ready.
+All 40 module checks passed, including the practice reward examples.
+
+Standard error:
+
+Exit status: 0
+
+Command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 tests/testGate2.py /workspace/cardClarityGate2/build/cardClarityChecked
+Working folder: /workspace/cardClarityGate2
+Input: None
+Standard output:
+
+Standard error:
+test_01_start_empty (__main__.Gate2Tests.test_01_start_empty)
+A missing file starts an empty wallet and creates no file just by viewing. ... ok
+test_02_catalog_has_stable_numbers (__main__.Gate2Tests.test_02_catalog_has_stable_numbers)
+The five sample names have card numbers 1 to 5 and example labels. ... ok
+test_03_add_and_view (__main__.Gate2Tests.test_03_add_and_view)
+Adding card 3 shows only Cashback Sample in the wallet, then saves ID 3. ... ok
+test_04_duplicate (__main__.Gate2Tests.test_04_duplicate)
+A duplicate card is rejected and the saved list contains it only once. ... ok
+test_05_remove_middle_card (__main__.Gate2Tests.test_05_remove_middle_card)
+Removing card 3 from [1, 3, 5] saves [1, 5] in order. ... ok
+test_06_remove_absent_card (__main__.Gate2Tests.test_06_remove_absent_card)
+Removing a valid catalog ID not in the wallet leaves the saved list alone. ... ok
+test_07_remove_from_empty (__main__.Gate2Tests.test_07_remove_from_empty)
+Removing from an empty wallet explains the empty list and does not ask for an ID. ... ok
+test_08_full_wallet (__main__.Gate2Tests.test_08_full_wallet)
+A five-card wallet refuses another addition and saves all five IDs unchanged. ... ok
+test_09_save_and_restart (__main__.Gate2Tests.test_09_save_and_restart)
+After adding and saving cards 1 and 3, a second process loads those two cards. ... ok
+test_10_removal_survives_restart (__main__.Gate2Tests.test_10_removal_survives_restart)
+A removed and saved card stays removed after restarting. ... ok
+test_11_empty_save (__main__.Gate2Tests.test_11_empty_save)
+Removing the final card writes a valid zero-count save that reloads empty. ... ok
+test_12_reload_replaces_unsaved_changes (__main__.Gate2Tests.test_12_reload_replaces_unsaved_changes)
+Reloading restores the saved [1] list after adding unsaved card 3. ... ok
+test_13_missing_reload_keeps_current_cards (__main__.Gate2Tests.test_13_missing_reload_keeps_current_cards)
+Reloading a missing file leaves an unsaved card in memory so it can still be saved. ... ok
+test_14_room_after_removal (__main__.Gate2Tests.test_14_room_after_removal)
+Removing from a full wallet frees a slot and adding again appends the card. ... ok
+test_15_bad_main_and_wallet_choices (__main__.Gate2Tests.test_15_bad_main_and_wallet_choices)
+Blank, text, decimal, negative, zero, and out-of-range choices allow recovery. ... ok
+test_16_bad_card_numbers (__main__.Gate2Tests.test_16_bad_card_numbers)
+Invalid card answers are rejected before a valid card 3 is added. ... ok
+test_17_overlong_and_hidden_null_input (__main__.Gate2Tests.test_17_overlong_and_hidden_null_input)
+Overlong answers and hidden null bytes do not add a card or spoil the next answer. ... ok
+test_18_cancel_add_and_remove (__main__.Gate2Tests.test_18_cancel_add_and_remove)
+Zero cancels an add or removal and leaves [1] unchanged. ... ok
+test_19_end_of_input (__main__.Gate2Tests.test_19_end_of_input)
+End of input at nested prompts exits without a crash or an unexpected save. ... ok
+test_20_save_on_exit (__main__.Gate2Tests.test_20_save_on_exit)
+Save and exit writes unsaved card 1 before closing. ... ok
+test_21_exit_without_saving (__main__.Gate2Tests.test_21_exit_without_saving)
+Exit without saving preserves the older save [1] instead of writing [1, 3]. ... ok
+test_22_keep_editing (__main__.Gate2Tests.test_22_keep_editing)
+Cancelling exit returns to the menu and a later save keeps the edits. ... ok
+test_23_default_path (__main__.Gate2Tests.test_23_default_path)
+Normal launch saves and reloads savedCards.txt in the current folder. ... ok
+test_24_path_with_spaces (__main__.Gate2Tests.test_24_path_with_spaces)
+A chosen save filename containing spaces works across two launches. ... ok
+test_25_damaged_files (__main__.Gate2Tests.test_25_damaged_files)
+Malformed headers, counts, IDs, duplicates, missing data, and extra data are rejected unchanged. ... ok
+test_26_windows_line_endings (__main__.Gate2Tests.test_26_windows_line_endings)
+A valid CRLF file loads the same IDs as an LF file. ... ok
+test_27_no_final_newline (__main__.Gate2Tests.test_27_no_final_newline)
+A valid file without a newline after its last ID still loads. ... ok
+test_28_directory_is_not_a_save (__main__.Gate2Tests.test_28_directory_is_not_a_save)
+A directory at the save path reports a read error and leaves its contents alone. ... ok
+test_29_save_missing_folder (__main__.Gate2Tests.test_29_save_missing_folder)
+Saving into a missing folder fails clearly while the current wallet remains usable. ... ok
+test_30_stale_temporary_file (__main__.Gate2Tests.test_30_stale_temporary_file)
+An existing temporary file blocks saving without changing it or the previous save. ... ok
+test_31_failed_replacement_cleans_own_temp (__main__.Gate2Tests.test_31_failed_replacement_cleans_own_temp)
+A failed replacement of a directory removes the new temp and preserves the directory. ... ok
+test_32_failed_save_on_exit_returns_to_menu (__main__.Gate2Tests.test_32_failed_save_on_exit_returns_to_menu)
+A failed Save and exit leaves the program open for editing or explicit discard. ... ok
+test_33_reload_damaged_file_keeps_current_wallet (__main__.Gate2Tests.test_33_reload_damaged_file_keeps_current_wallet)
+If the file is damaged after startup, Reload leaves the already-loaded card 1 intact. ... ok
+test_34_whitespace_in_numeric_lines (__main__.Gate2Tests.test_34_whitespace_in_numeric_lines)
+Whitespace around a count or ID is accepted and the correct card loads. ... ok
+test_35_remove_first_and_last (__main__.Gate2Tests.test_35_remove_first_and_last)
+Removing the first and last IDs leaves the middle card correctly saved. ... ok
+test_36_real_input_error (__main__.Gate2Tests.test_36_real_input_error)
+A real stdin read error returns status 1 rather than claiming a normal exit. ... ok
+test_37_bad_arguments (__main__.Gate2Tests.test_37_bad_arguments)
+Unknown, incomplete, or empty command arguments return status 1 and do not save. ... ok
+test_38_too_long_save_path (__main__.Gate2Tests.test_38_too_long_save_path)
+An overlong save path is rejected without overflowing the temporary-path buffer. ... ok
+test_39_window_path_on_other_systems (__main__.Gate2Tests.test_39_window_path_on_other_systems)
+The window accepts a chosen save path, then explains that it needs Windows without writing. ... ok
+
+----------------------------------------------------------------------
+Ran 39 tests in 0.208s
+
+OK
+
+Exit status: 0
+
+Command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 tests/testGate1.py /workspace/cardClarityGate2/build/cardClarityChecked
+Working folder: /workspace/cardClarityGate2
+Input: None
+Standard output:
+
+Standard error:
+test_01_menu_has_three_options (__main__.Gate1MenuTests.test_01_menu_has_three_options) ... ok
+test_02_view_all_five_cards (__main__.Gate1MenuTests.test_02_view_all_five_cards) ... ok
+test_03_rates_are_printed (__main__.Gate1MenuTests.test_03_rates_are_printed) ... ok
+test_04_rates_are_labeled_examples (__main__.Gate1MenuTests.test_04_rates_are_labeled_examples) ... ok
+test_05_about_lists_planned_features (__main__.Gate1MenuTests.test_05_about_lists_planned_features) ... ok
+test_06_exit (__main__.Gate1MenuTests.test_06_exit) ... ok
+test_07_text_input (__main__.Gate1MenuTests.test_07_text_input) ... ok
+test_08_zero (__main__.Gate1MenuTests.test_08_zero) ... ok
+test_09_out_of_range (__main__.Gate1MenuTests.test_09_out_of_range) ... ok
+test_10_negative (__main__.Gate1MenuTests.test_10_negative) ... ok
+test_11_empty_answer (__main__.Gate1MenuTests.test_11_empty_answer) ... ok
+test_12_decimal (__main__.Gate1MenuTests.test_12_decimal) ... ok
+test_13_trailing_characters (__main__.Gate1MenuTests.test_13_trailing_characters) ... ok
+test_14_very_large_number (__main__.Gate1MenuTests.test_14_very_large_number) ... ok
+test_15_overlong_text (__main__.Gate1MenuTests.test_15_overlong_text) ... ok
+test_16_valid_after_invalid (__main__.Gate1MenuTests.test_16_valid_after_invalid) ... ok
+test_17_whitespace_around_choice (__main__.Gate1MenuTests.test_17_whitespace_around_choice) ... ok
+test_18_end_of_input (__main__.Gate1MenuTests.test_18_end_of_input) ... ok
+test_19_choice_without_final_newline (__main__.Gate1MenuTests.test_19_choice_without_final_newline) ... ok
+test_20_repeated_choices_return_to_menu (__main__.Gate1MenuTests.test_20_repeated_choices_return_to_menu) ... ok
+test_21_exit_does_not_process_later_input (__main__.Gate1MenuTests.test_21_exit_does_not_process_later_input) ... ok
+test_22_embedded_null_is_rejected (__main__.Gate1MenuTests.test_22_embedded_null_is_rejected) ... ok
+test_23_all_standard_whitespace (__main__.Gate1MenuTests.test_23_all_standard_whitespace) ... ok
+test_24_long_input_is_one_rejected_answer (__main__.Gate1MenuTests.test_24_long_input_is_one_rejected_answer) ... ok
+test_25_invalid_answer_at_eof (__main__.Gate1MenuTests.test_25_invalid_answer_at_eof) ... ok
+test_26_blank_whitespace (__main__.Gate1MenuTests.test_26_blank_whitespace) ... ok
+test_27_read_error_is_not_normal_eof (__main__.Gate1MenuTests.test_27_read_error_is_not_normal_eof) ... ok
+test_28_last_fitting_answer_at_eof (__main__.Gate1MenuTests.test_28_last_fitting_answer_at_eof) ... ok
+test_29_overlong_answer_at_eof (__main__.Gate1MenuTests.test_29_overlong_answer_at_eof) ... ok
+test_30_unknown_argument (__main__.Gate1MenuTests.test_30_unknown_argument) ... ok
+test_31_window_on_other_systems (__main__.Gate1MenuTests.test_31_window_on_other_systems) ... ok
+
+----------------------------------------------------------------------
+Ran 31 tests in 0.076s
+
+OK
+
+Exit status: 0
+
+Command: /workspace/cardClarityGate2/build/cardClarityCheckedModules
+Working folder: /workspace/cardClarityGate2
+Input: None
+Standard output:
+0.000 ms [Info] Logger initialized.
+0.069 ms [Info] Sample cards are ready.
+All 40 module checks passed, including the practice reward examples.
+
+Standard error:
+
+Exit status: 0
+
+Recorded summary:
+cardClarity: clean C11 build; 39 Gate 2 tests, 31 Gate 1 checks, and 40 module checks passed.
+cardClarityClang: clean C11 build; 39 Gate 2 tests, 31 Gate 1 checks, and 40 module checks passed.
+cardClarityChecked: clean C11 build; 39 Gate 2 tests, 31 Gate 1 checks, and 40 module checks passed.
+The Windows cross-build passed. Windows runtime and MSVC were not tested.
+The three-process save, remove, and reload demonstration passed.

@@ -1,0 +1,267 @@
+Gate 2 save-and-reload demonstration
+Date: 2026-10-26T17:52:56.509506-04:00
+Environment: Linux-6.18.55-x86_64-with-glibc2.41
+
+Expected first run: add cards 1 and 3, view them, and save their IDs.
+
+Command: /workspace/cardClarityGate2/build/cardClarity
+Working folder: /tmp/cardClarityDemooqwdavg_
+Input: '2\n2\n1\n2\n3\n1\n4\n6\n3\n'
+Standard output:
+CardClarity
+You don't need to enter card numbers or bank passwords.
+Saved-card file: savedCards.txt
+There's no saved file yet. Your current list hasn't changed.
+
+1. View sample cards
+2. My card wallet
+3. Exit
+Enter 1, 2, or 3: 
+My card wallet (0 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+Sample cards
+These cards and rates are made up for practice, not real bank offers.
+
+Card 1: Travel Sample
+Example base rate: 1.25% | Example annual fee: $95
+Example bonus percentages: Airlines 5.00% | Stores 3.00% | Services 2.00%
+
+Card 2: Points Sample
+Example base rate: 1.00% | Example annual fee: $250
+Example bonus percentages: Airlines 4.00% | Stores 2.00% | Services 1.50%
+
+Card 3: Cashback Sample
+Example base rate: 1.00% | Example annual fee: $0
+Example bonus percentages: Airlines 3.00% | Stores 2.00% | Services 1.00%
+
+Card 4: Everyday Sample
+Example base rate: 1.00% | Example annual fee: $0
+Example bonus percentages: Airlines 3.00% | Stores 2.00% | Services 2.00%
+
+Card 5: Starter Sample
+Example base rate: 1.00% | Example annual fee: $0
+Example bonus percentages: Airlines 4.50% | Stores 2.50% | Services 1.00%
+
+A bonus percentage increases the base reward; it is not a times multiplier.
+These practice values do not compare the cash value of points or miles.
+Enter a card number, or 0 to cancel: Added Travel Sample.
+
+My card wallet (1 of 5 cards)
+You haven't saved your changes yet.
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+Sample cards
+These cards and rates are made up for practice, not real bank offers.
+
+Card 1: Travel Sample
+Example base rate: 1.25% | Example annual fee: $95
+Example bonus percentages: Airlines 5.00% | Stores 3.00% | Services 2.00%
+
+Card 2: Points Sample
+Example base rate: 1.00% | Example annual fee: $250
+Example bonus percentages: Airlines 4.00% | Stores 2.00% | Services 1.50%
+
+Card 3: Cashback Sample
+Example base rate: 1.00% | Example annual fee: $0
+Example bonus percentages: Airlines 3.00% | Stores 2.00% | Services 1.00%
+
+Card 4: Everyday Sample
+Example base rate: 1.00% | Example annual fee: $0
+Example bonus percentages: Airlines 3.00% | Stores 2.00% | Services 2.00%
+
+Card 5: Starter Sample
+Example base rate: 1.00% | Example annual fee: $0
+Example bonus percentages: Airlines 4.50% | Stores 2.50% | Services 1.00%
+
+A bonus percentage increases the base reward; it is not a times multiplier.
+These practice values do not compare the cash value of points or miles.
+Enter a card number, or 0 to cancel: Added Cashback Sample.
+
+My card wallet (2 of 5 cards)
+You haven't saved your changes yet.
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+My card wallet (2 of 5 cards)
+These cards and rates are made up for practice, not real bank offers.
+Card 1: Travel Sample | Example base rate: 1.25%
+Card 3: Cashback Sample | Example base rate: 1.00%
+
+My card wallet (2 of 5 cards)
+You haven't saved your changes yet.
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: Saved your card list to savedCards.txt.
+
+My card wallet (2 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+1. View sample cards
+2. My card wallet
+3. Exit
+Enter 1, 2, or 3: Goodbye!
+
+Standard error:
+
+Exit status: 0
+Actual saved file after first run: b'cardClarityWallet1\n2\n1\n3\n'
+
+Expected second run: automatically load both cards, remove card 1, save, and reload card 3.
+
+Command: /workspace/cardClarityGate2/build/cardClarity
+Working folder: /tmp/cardClarityDemooqwdavg_
+Input: '2\n1\n3\n1\n4\n5\n1\n6\n3\n'
+Standard output:
+CardClarity
+You don't need to enter card numbers or bank passwords.
+Saved-card file: savedCards.txt
+Loaded your saved card list.
+
+1. View sample cards
+2. My card wallet
+3. Exit
+Enter 1, 2, or 3: 
+My card wallet (2 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+My card wallet (2 of 5 cards)
+These cards and rates are made up for practice, not real bank offers.
+Card 1: Travel Sample | Example base rate: 1.25%
+Card 3: Cashback Sample | Example base rate: 1.00%
+
+My card wallet (2 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+My card wallet (2 of 5 cards)
+These cards and rates are made up for practice, not real bank offers.
+Card 1: Travel Sample | Example base rate: 1.25%
+Card 3: Cashback Sample | Example base rate: 1.00%
+Enter the card number to remove, or 0 to cancel: Removed Travel Sample.
+
+My card wallet (1 of 5 cards)
+You haven't saved your changes yet.
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: Saved your card list to savedCards.txt.
+
+My card wallet (1 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: Loaded your saved card list.
+
+My card wallet (1 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+My card wallet (1 of 5 cards)
+These cards and rates are made up for practice, not real bank offers.
+Card 3: Cashback Sample | Example base rate: 1.00%
+
+My card wallet (1 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+1. View sample cards
+2. My card wallet
+3. Exit
+Enter 1, 2, or 3: Goodbye!
+
+Standard error:
+
+Exit status: 0
+Actual saved file after second run: b'cardClarityWallet1\n1\n3\n'
+
+Expected third run: after another restart, only Cashback Sample is saved.
+
+Command: /workspace/cardClarityGate2/build/cardClarity
+Working folder: /tmp/cardClarityDemooqwdavg_
+Input: '2\n1\n6\n3\n'
+Standard output:
+CardClarity
+You don't need to enter card numbers or bank passwords.
+Saved-card file: savedCards.txt
+Loaded your saved card list.
+
+1. View sample cards
+2. My card wallet
+3. Exit
+Enter 1, 2, or 3: 
+My card wallet (1 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+My card wallet (1 of 5 cards)
+These cards and rates are made up for practice, not real bank offers.
+Card 3: Cashback Sample | Example base rate: 1.00%
+
+My card wallet (1 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+1. View sample cards
+2. My card wallet
+3. Exit
+Enter 1, 2, or 3: Goodbye!
+
+Standard error:
+
+Exit status: 0
+Result: passed. All five actions and persistence across separate processes were observed.
