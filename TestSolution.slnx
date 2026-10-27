@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="CreditCardThing/CreditCardThing.vcxproj" Id="acf5f760-aaa2-455e-890c-30294094d7a7" />
+</Solution>

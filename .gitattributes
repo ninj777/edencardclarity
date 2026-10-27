@@ -1,0 +1,4 @@
+* text=auto
+
+# Preserve spaces printed by the menu in the recorded demo.
+docs/gate2DemoLog.txt whitespace=-blank-at-eol
