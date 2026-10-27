@@ -1,4 +1,4 @@
-# Visual Studio files made on each computer
+# Oliver: I leave each computer's Visual Studio files out of the source.
 .vs/
 *.user
 *.suo
@@ -10,7 +10,7 @@ Win32/
 Debug/
 Release/
 
-# Compiled programs, objects, and debugger output
+# I leave build output out so the source folder stays easy to share.
 build/
 *.exe
 *.o
@@ -21,6 +21,6 @@ build/
 *.tlog/
 *.lastbuildstate
 
-# Personal card selections and unfinished saves
+# I keep a person's saved cards and unfinished save out of the submission.
 savedCards.txt
 savedCards.txt.tmp

@@ -1,3 +1,13 @@
+/*
+Oliver Dolfin - my assigned build and logger area
+
+I keep this small logger from the original project. I print the elapsed time,
+a level, and a message when logging is enabled. I leave it off for the console
+so the numbered menu is the first useful output. I turn it on in runWindow.
+I keep startTime and loggerReady private to this file with static.
+I use the Windows timer there and the C timespec timer on other systems.
+I use these messages to help with startup errors, not as proof of a gate test.
+*/
 #include <stdio.h>
 #include <stdbool.h>
 #include <time.h>

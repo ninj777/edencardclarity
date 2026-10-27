@@ -1,3 +1,14 @@
+/*
+Evan Zhuang - my assigned restart demonstration
+
+I run CardClarity three separate times with the same temporary save path.
+First I add cards 1 and 3, view, and save. Next I restart, remove card 1, save,
+and reload. Last I restart again and expect only card 3. I print each set of
+answers, full output, exit status, and checked saved bytes for the demo log.
+I use expectedFiles to check the file itself after each process finishes.
+I keep the demonstration separate from the 39 menu cases so its actual output
+is easy to show during the gate check. I leave the usual saved wallet alone.
+*/
 #include <stdio.h>
 #include <string.h>
 #include "testSupport.h"
@@ -22,6 +33,7 @@ int main(int argc, char* argv[]) {
 		"cardClarityWallet1\n1\n3\n"
 	};
 	for (int i = 0; i < 3; i++) {
+		/* I keep the same file but start a fresh program for each step. */
 		printf("\nRun %d\nAnswers, one per line:\n%s\n", i + 1, inputs[i]);
 		runProgram(&test, arguments, inputs[i], strlen(inputs[i]), 0, false);
 		printf("Actual standard output:\n%s\nActual standard error:\n%s\n", test.output, test.errors);

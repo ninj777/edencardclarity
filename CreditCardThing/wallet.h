@@ -1,10 +1,19 @@
+/*
+Eden Yun Yu - my assigned wallet structure
+
+I store catalog IDs in cardIds and the used length in count. I use the same
+five-card limit as the catalog so every type can be selected once. I return a
+named WalletResult for invalid IDs, duplicates, and a full wallet. I keep the
+modifying parameters as Wallet* and read-only parameters as const Wallet*.
+I explain additions and moving entries after removal in wallet.c.
+*/
 #ifndef WALLET_H
 #define WALLET_H
 
 #include <stdbool.h>
 #include "cards.h"
 
-/* We can save every card in the current five-card catalog once. */
+/* I allow every card in the five-card catalog once. */
 #define MAX_WALLET_CARDS SAMPLE_CARD_COUNT
 
 typedef struct {
@@ -21,9 +30,9 @@ enum WalletResult {
 
 void initWallet(Wallet* wallet);
 bool walletHasCard(const Wallet* wallet, int cardId);
-/* Adding rejects unknown IDs, a full list, and duplicate card types. */
+/* I reject unknown IDs, a full list, and duplicates when adding. */
 enum WalletResult addWalletCard(Wallet* wallet, int cardId);
-/* Removal uses the catalog ID, not the card's current position in the list. */
+/* I remove by catalog ID, not by the card's current position. */
 bool removeWalletCard(Wallet* wallet, int cardId);
 bool isWalletValid(const Wallet* wallet);
 void printWallet(const Wallet* wallet);

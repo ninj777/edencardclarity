@@ -1,3 +1,48 @@
+/*
+Evan Zhuang - my assigned Gate 2 action and file checks
+
+I test all five wallet actions: add, view, remove, save, and reload. I use
+39 cases and a new temporary folder for each one so I leave the normal save
+alone. I check the messages, process status, and exact saved bytes. I keep
+names and expected behavior in the arrays before the switch.
+
+I use case 3 for adding card 3 and viewing Cashback Sample. I expect it once,
+with ID 3 in the file. I use case 4 for a duplicate and cases 1 and 7 for an
+empty wallet. I check a full five-card list and adding again after a removal.
+I remove the middle, first, last, absent, and final remaining cards too.
+
+I start a second process in case 9 to check that cards 1 and 3 survive a save
+and restart. In case 10 I expect a saved removal to stay removed. In case 12
+I reload over an unsaved edit and expect only the saved list and a cleared
+unsaved flag. I do not treat seeing a card before closing as restart proof.
+
+I check blank answers, text, decimals, invalid IDs, long input, hidden nulls,
+cancelling an action, input ending, and all three unsaved-exit choices.
+I check the default path, a path with spaces, and an overlong save path.
+I expect a failed Save and exit to keep the program available for editing.
+
+For the extra Gate 2 requirement, I use 22 damaged files inside case 25.
+I include bad headers/counts, unknown or duplicate IDs, missing or extra
+records, long lines, hidden nulls, and a byte-order mark. I expect rejection
+without rewriting the file. I count those as examples inside one case.
+I also check valid Windows line endings and a missing last newline.
+
+In case 33, I keep the program open after a valid load. I then damage its file
+before sending Reload. I expect the current card 1 to stay in memory and the
+new bad file to remain unchanged. The input pipe lets me control that order.
+I also check a directory at the save path, a missing folder, an old temporary
+file, and replacement failure. I check that the old data survives the error.
+
+I print expected and actual observations in docs/gate2TestLog.txt. I use
+safe temporary test files; I never need someone's real payment details.
+I skip the Linux read-error case and unsupported-window message on Windows.
+I still need a real desktop check of its buttons, resizing, and close prompts.
+
+For Gate 2, I need all five actions and required tests for a 3; the extra
+damaged-file checks are the possible 4 requirement. I keep the build and demo
+logs with the source. For Gate 3, I still need the QA checklist, bug list,
+retest notes, and actual review. The test count alone does not sign that report.
+*/
 #include <stdio.h>
 #include <string.h>
 #include "testSupport.h"
@@ -37,7 +82,7 @@ static void damagedFiles(void) {
 	memset(longHeader, 'x', 1000); strcpy(longHeader + 1000, "\n0\n");
 	strcpy(longId, "cardClarityWallet1\n1\n"); used = strlen(longId);
 	memset(longId + used, '1', 1000); strcpy(longId + used + 1000, "\n");
-	/* sizeof keeps hidden null bytes in these test files. */
+	/* I use sizeof to keep hidden null bytes in these fixtures. */
 #define FILE_CASE(label, content) { label, content, sizeof(content) - 1 }
 	const struct {
 		const char* name;
@@ -181,6 +226,7 @@ int main(int argc, char* argv[]) {
 			saved("cardClarityWallet1\n5\n1\n2\n3\n4\n5\n");
 			break;
 		case 9:
+			/* I launch another process to check the saved file, not just the live list. */
 			runMenu("2\n2\n1\n2\n3\n4\n6\n3\n"); saved("cardClarityWallet1\n2\n1\n3\n");
 			runMenu("2\n1\n6\n3\n"); contains("Loaded your saved card list");
 			contains("My card wallet (2 of 5 cards)"); contains("Card 1: Travel Sample |");
@@ -318,6 +364,7 @@ int main(int argc, char* argv[]) {
 			expect(&test, textCount(test.output, "Goodbye!") == 1, "failure did not close the program early");
 			break;
 		case 33: {
+			/* I damage the file only after the first valid wallet has loaded. */
 			seed("cardClarityWallet1\n1\n1\n");
 			const char* arguments[] = { "--wallet-file", test.save, NULL };
 			startProgram(&test, arguments, false);

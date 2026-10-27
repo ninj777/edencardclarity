@@ -1,3 +1,40 @@
+/*
+Evan Zhuang - my assigned C test support
+
+I keep the process and file setup here so the menu cases can focus on answers
+and expected behavior. Standard C does not provide child processes with input
+pipes and time limits. I use Windows functions under _WIN32 and POSIX functions
+on the other supported systems. Both branches are C, not another language.
+
+I resolve the application's path before entering a temporary folder. I make
+that folder for each case, with its own savedCards.txt, output.txt, and errors.txt.
+I remove only that temporary folder after recording the result. I never need
+to clean or overwrite the person's normal saved wallet for a test.
+
+I start the compiled program directly. On Windows I use CreateProcessA and
+inheritable file/pipe handles. I quote each argument, including backslashes,
+so a save path with spaces stays one argument. On POSIX I use pipe, fork,
+dup2, and execv. I pass the arguments as separate array entries there.
+
+I send answers through the pipe and then close it to signal EOF. I accept an
+explicit byte length so a test can send hidden nulls rather than stopping at
+the first one. I wait up to five seconds. If the child takes too long, I stop
+it and record a failure. I close the process and input handles after use.
+
+I capture the output in files instead of filling an unread output pipe.
+I compare text after normalizing Windows line endings, but I compare saved
+files as exact bytes. I keep those two checks separate because a correct
+message does not prove the save contains the right IDs.
+
+I use expect for one yes-or-no observation, finishCase for the result of a
+whole case, and finishTests for the final passed/failed/skipped totals.
+I return a nonzero status for any failure so a build log cannot hide it.
+I skip platform-only cases explicitly. A skip is not a successful desktop test.
+
+For the live damaged-file test, I leave input open, wait for the initial load
+message, replace the fixture, and only then send Reload. I need that order to
+check that the loaded wallet survives a file becoming damaged during a session.
+*/
 #ifndef _WIN32
 #define _POSIX_C_SOURCE 200809L
 #define _XOPEN_SOURCE 700
@@ -50,7 +87,7 @@ void makeFolder(const char* path) {
 	}
 }
 
-/* Only called on the temporary folder created by this test runner. */
+/* I only call this on the temporary folder made by my runner. */
 static void removeFolder(const char* path) {
 	char child[TEST_PATH_SIZE];
 #ifdef _WIN32
@@ -144,7 +181,7 @@ static void readText(const char* path, char* text, size_t capacity) {
 		stopTest("could not read the complete program output");
 	}
 	text[length] = '\0';
-	/* Compare the same text on Windows and Linux. Saved bytes are checked separately. */
+	/* I normalize output line endings here and check saved bytes separately. */
 	size_t used = 0;
 	for (size_t i = 0; i < length; i++) {
 		if (text[i] != '\r' || text[i + 1] != '\n') {
@@ -272,7 +309,7 @@ static void pauseBriefly(void) {
 }
 
 #ifdef _WIN32
-/* Windows accepts one command string. Quote each argument, including its backslashes. */
+/* I quote each argument because Windows accepts one command string. */
 static void appendArgument(char* command, size_t capacity, const char* argument) {
 	size_t used = strlen(command);
 	size_t length = strlen(argument);
@@ -307,6 +344,7 @@ static void appendArgument(char* command, size_t capacity, const char* argument)
 #endif
 
 void startProgram(TestContext* test, const char* const arguments[], bool badInput) {
+	/* I capture this run separately from the runner's own expected/actual messages. */
 	char outputPath[TEST_PATH_SIZE], errorPath[TEST_PATH_SIZE];
 	joinPath(outputPath, sizeof(outputPath), test->folder, "output.txt");
 	joinPath(errorPath, sizeof(errorPath), test->folder, "errors.txt");
@@ -360,6 +398,7 @@ void startProgram(TestContext* test, const char* const arguments[], bool badInpu
 		stopTest("could not start the compiled program");
 	}
 	if (child == 0) {
+		/* I set up the child's input and output before replacing it with CardClarity. */
 		close(input[1]);
 		int in = badInput ? open(test->folder, O_RDONLY) : input[0];
 		int out = open(outputPath, O_WRONLY | O_CREAT | O_TRUNC, 0600);
@@ -392,6 +431,7 @@ void startProgram(TestContext* test, const char* const arguments[], bool badInpu
 }
 
 void sendAnswers(TestContext* test, const void* answers, size_t length) {
+	/* I send every requested byte, including null bytes used by the input tests. */
 	const char* bytes = answers;
 	while (length > 0) {
 #ifdef _WIN32
@@ -424,6 +464,7 @@ void closeAnswers(TestContext* test) {
 }
 
 void waitProgram(TestContext* test) {
+	/* I stop a child that does not finish rather than letting a check hang forever. */
 #ifdef _WIN32
 	DWORD result = WaitForSingleObject(test->process, 5000);
 	if (result != WAIT_OBJECT_0) {

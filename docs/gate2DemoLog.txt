@@ -1,6 +1,6 @@
 Gate 2 C save-and-reload demonstration
-Date: 2026-10-27 17:02:00 UTC
-Program: /workspace/scratch/cOnlyFresh/build/cOnly/gcc/cardClarity
+Date: 2026-10-27 20:48:17 UTC
+Program: /workspace/scratch/sourceNotesFresh/build/cOnly/gcc/cardClarity
 Test platform: POSIX
 
 Case 1: Three separate program runs
@@ -24,7 +24,7 @@ Observed: standard error is empty: yes
 Actual standard output:
 CardClarity
 You don't need to enter card numbers or bank passwords.
-Saved-card file: /tmp/cardClarity0BpqD5/savedCards.txt
+Saved-card file: /tmp/cardClarityaYMRHR/savedCards.txt
 There's no saved file yet. Your current list hasn't changed.
 
 1. View sample cards
@@ -124,7 +124,7 @@ You haven't saved your changes yet.
 4. Save my cards
 5. Reload my last save (undoes unsaved changes)
 6. Back
-Choose 1 to 6: Saved your card list to /tmp/cardClarity0BpqD5/savedCards.txt.
+Choose 1 to 6: Saved your card list to /tmp/cardClarityaYMRHR/savedCards.txt.
 
 My card wallet (2 of 5 cards)
 1. View my cards
@@ -168,7 +168,7 @@ Observed: standard error is empty: yes
 Actual standard output:
 CardClarity
 You don't need to enter card numbers or bank passwords.
-Saved-card file: /tmp/cardClarity0BpqD5/savedCards.txt
+Saved-card file: /tmp/cardClarityaYMRHR/savedCards.txt
 Loaded your saved card list.
 
 1. View sample cards
@@ -210,7 +210,7 @@ You haven't saved your changes yet.
 4. Save my cards
 5. Reload my last save (undoes unsaved changes)
 6. Back
-Choose 1 to 6: Saved your card list to /tmp/cardClarity0BpqD5/savedCards.txt.
+Choose 1 to 6: Saved your card list to /tmp/cardClarityaYMRHR/savedCards.txt.
 
 My card wallet (1 of 5 cards)
 1. View my cards
@@ -270,7 +270,7 @@ Observed: standard error is empty: yes
 Actual standard output:
 CardClarity
 You don't need to enter card numbers or bank passwords.
-Saved-card file: /tmp/cardClarity0BpqD5/savedCards.txt
+Saved-card file: /tmp/cardClarityaYMRHR/savedCards.txt
 Loaded your saved card list.
 
 1. View sample cards

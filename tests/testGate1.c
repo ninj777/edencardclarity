@@ -1,3 +1,46 @@
+/*
+Evan Zhuang - my assigned Gate 1 checks
+
+I check the compiled program, not just whether the source looks right. I start
+it with --gate1, send answers, and compare the output and exit status. I use
+31 cases so the normal menu and the bad-answer recovery both get checked.
+I put the expected behavior in the expected array beside the case names.
+I print each actual observation through expect and return failure if a check
+fails. I keep the compile command and its result in docs/gate2BuildLog.txt.
+
+For the proposal's five required checks, I use:
+  Compilation: I expect C11 with warnings enabled and no build errors.
+  Startup: in case 1 I expect exactly three numbered menu options.
+  Samples: in cases 2-4 I expect five names, exact rates, and example labels.
+  Invalid input: in case 7 I expect hello to be rejected before Exit works.
+  Exit: in case 6 I expect Goodbye and status 0.
+For the extra recovery check in case 16, I send a bad answer, then 1, then 3.
+I expect a retry message, the sample cards, and a clean exit in that order.
+I keep the actual run observations in docs/gate2TestLog.txt.
+
+I also check zero, negatives, blank answers, decimals, trailing letters,
+large numbers, long lines, hidden nulls, whitespace, repeated choices, and EOF.
+I check the largest fitting line and the first overlong line separately.
+I use a real Linux read error in case 27 and the unsupported-window path in
+case 31. I skip those two on Windows rather than claiming the window was tested.
+
+For Gate 1, I need every required file and five passing checks for a 3.
+For a possible 4, I also need an extra passing test and a teammate code review.
+I cannot replace that review with another test count. I leave this record for
+an actual reviewer to fill in after reading the code and trying the program:
+
+  Reviewer and date: _________________________________________________
+  Commit or ZIP reviewed: ____________________________________________
+  Three choices and sample labels: ___________________________________
+  Invalid-input recovery and exit: ___________________________________
+  Shared declarations and build: _____________________________________
+  Problems found and retest: _________________________________________
+  Review conclusion and signature: ___________________________________
+
+I leave the actual Windows build and run for the demo computer. I record its
+compiler, inputs, expected and actual behavior, and any retest in readMe.txt.
+I leave the gate rating to the teacher and the staffing exception to staff.
+*/
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
@@ -6,6 +49,7 @@
 static TestContext test;
 
 static void runAnswers(const char* answers) {
+	/* I always choose the earlier menu here, even in a Gate 2 build. */
 	const char* arguments[] = { "--gate1", NULL };
 	runProgram(&test, arguments, answers, strlen(answers), 0, false);
 }
@@ -20,6 +64,7 @@ static void rejects(const char* answers) {
 }
 
 static int menuLines(const char* text) {
+	/* I count numbered choices at the start of a line, not numbers inside a rate. */
 	int count = 0;
 	while (*text) {
 		if (*text >= '1' && *text <= '9' && text[1] == '.' && text[2] == ' ') {
@@ -181,6 +226,7 @@ int main(int argc, char* argv[]) {
 			expect(&test, textCount(test.output, "Enter 1, 2, or 3:") == 1, "one menu visit");
 			break;
 		case 22: {
+			/* I use explicit lengths because strlen would hide the embedded null. */
 			const char data[] = "1\0hidden\n3\n";
 			const char* arguments[] = { "--gate1", NULL };
 			const size_t lengths[] = { sizeof(data) - 1, 8 };
@@ -221,6 +267,7 @@ int main(int argc, char* argv[]) {
 #endif
 			break;
 		case 28:
+			/* I leave one byte for the ending null in the application's 128-byte array. */
 			answers[0] = '1'; memset(answers + 1, ' ', 126); answers[127] = '\0';
 			runAnswers(answers); contains("Travel Sample"); contains("No more input");
 			expect(&test, !strstr(test.output, "Please enter"), "largest fitting line accepted");

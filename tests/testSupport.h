@@ -1,3 +1,12 @@
+/*
+Evan Zhuang - my assigned shared test declarations
+
+I group each runner's paths, captured output, counts, and child-process handles
+in TestContext. I share these declarations so both menu suites and the demo
+use the same setup and cleanup. I keep the Windows handles and POSIX process
+numbers under separate compile conditions because those systems use different
+process APIs. I keep the test code in C on both systems.
+*/
 #ifndef TEST_SUPPORT_H
 #define TEST_SUPPORT_H
 
@@ -37,7 +46,7 @@ bool pathExists(const char* path);
 void makeFolder(const char* path);
 int textCount(const char* text, const char* part);
 
-/* The open input pipe also lets one test change a file before choosing Reload. */
+/* I can keep input open while changing a fixture before choosing Reload. */
 void startProgram(TestContext* test, const char* const arguments[], bool badInput);
 void sendAnswers(TestContext* test, const void* answers, size_t length);
 void closeAnswers(TestContext* test);

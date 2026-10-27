@@ -1,3 +1,32 @@
+/*
+Joe Kwon - my assigned sample cards and ID checks
+
+I keep the card records here. These are made-up examples, not current offers.
+For Gate 1 I need at least three named cards and labeled example rates.
+I keep five: Travel Sample, Points Sample, Cashback Sample, Everyday Sample,
+and Starter Sample. Only Travel has a 1.25% base rate; the other four use 1%.
+I keep the exact fees and category bonuses beside each record below.
+
+For Gate 2 I need the saved IDs to keep matching those same records:
+    1 Travel Sample       2 Points Sample       3 Cashback Sample
+    4 Everyday Sample     5 Starter Sample
+I do not renumber the catalog when someone removes a card from their wallet.
+I check IDs before calling the older zero-based testGetCard function because
+its fallback is the first card. I return NULL for an unknown public ID.
+
+I use registerCard to fill the main fields and addMultiplier for the category
+bonuses. I leave unassigned bonuses at zero. I use printSampleCards for console
+output and the two shorter formatting functions for the Windows detail labels.
+
+I keep the existing practice formula: amount * rate/100 * (1 + bonus/100).
+I mean an extra 5% of the base reward when I store a bonus of 5, not five times
+the reward. For 10 at 1.25% with a 2% bonus I expect 0.1275 reward units.
+I do not call points equal to dollars or subtract annual fees with this formula.
+
+For Gate 4 I still need sources and check dates for real benefits, six checked
+purchase cases, ties, limits, activation rules, and expiration notes. I keep
+the sample warning until the data is actually researched and checked.
+*/
 #include <stdio.h>
 #ifdef _WIN32
 #include <windows.h>
@@ -50,7 +79,7 @@ Card registerCard(char* issuer, enum Network network, int annualFee, enum Reward
 
 #ifdef _WIN32
 LPCWSTR getGUIDAsLPCWSTR(GUID guid) {
-	/* The window copies this text when the label is created. */
+	/* I keep this buffer valid after returning; the window copies the text. */
 	static wchar_t buf[37];
 
 	swprintf_s(
@@ -107,7 +136,7 @@ void addMultiplier(Card* card, enum MerchantCategory category, double multiplier
 	card->multipliers[category] = newMultiplier;
 }
 
-/* A 5 percent bonus makes the base reward 1.05 times as large. */
+/* I apply a 5 percent bonus as 1.05 times the base reward. */
 double calculateReward(Card card, enum MerchantCategory category, double amount) {
 	double baseReward = amount * (card.rate/100);
 	double multiplier = card.multipliers[category].multiplier;
@@ -132,6 +161,7 @@ Card* testGetCard(int id) {
 }
 
 Card* getCardById(int cardId) {
+	/* I check the public ID before using the older function's fallback. */
 	if (cardId < 1 || cardId > SAMPLE_CARD_COUNT) {
 		return NULL;
 	}
@@ -139,6 +169,7 @@ Card* getCardById(int cardId) {
 }
 
 void initTestCards(void) {
+	/* I keep these made-up values together so the displayed and saved IDs agree. */
 	cardA = registerCard("Travel Sample", VISA, 95, REWARD_POINTS, 1.25);
 	addMultiplier(&cardA, AIRLINES, 5.0);
 	addMultiplier(&cardA, STORES, 3.0);
