@@ -36,9 +36,9 @@ Detailed explanation: [joeWork.md](joeWork.md).
 
 Proposal role: interface developer and tester. Gate 1 work is the five required checks, expected and actual results, and bug notes. Gate 2 work tests add, view, remove, save, and reload, including error cases.
 
-Assigned files: `tests/testGate1.py`, `tests/testGate2.py`, `tests/testModules.c`, and `tests/recordGate2.py`. Test results, the three run logs, demonstration steps, and menu-clarity checks belong in this area. Oliver's window implementation and Evan's interface checks are related jobs, rather than two separate window implementations.
+Assigned files: `tests/testGate1.c`, `tests/testGate2.c`, `tests/testModules.c`, `tests/demoGate2.c`, `tests/testSupport.c`, and `tests/testSupport.h`. Test results, the three run logs, demonstration steps, and menu-clarity checks belong in this area. Oliver's window implementation and Evan's interface checks are related jobs, rather than two separate window implementations.
 
-Current test source: 822 lines, including 57 C lines and 765 Python lines. Changes after Gate 1: 563 added, 120 removed across the tests folder, including retiring the older recorder.
+Current test source and headers: 1,285 lines, all C. Changes after Gate 1: 1,232 added, 326 removed across the tests folder. These numbers include replacing the original test tools with C runners, not new application features.
 
 Detailed explanation: [evanWork.md](evanWork.md).
 

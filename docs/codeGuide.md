@@ -69,6 +69,8 @@ The new layout and button behavior still need a real Windows desktop check. The 
 
 ## Checking it
 
-The Visual Studio project compiles all seven C files as C11. The test scripts run the program with temporary save files and check the output and file contents. They also start separate processes to check that saves survive a restart. The application is C; Python only runs the tests.
+The Visual Studio project compiles all seven application files as C11. The separate check programs are C too. `testGate1.c` and `testGate2.c` run the application with temporary save files and compare the output and saved bytes with expected results. `testModules.c` calls the card functions directly. `demoGate2.c` records the three-run restart demonstration.
 
-`recordGate2.py` keeps three logs: builds, tests, and the restart demo. Windows runtime is still unverified. The Linux sanitizer run had leak checking disabled.
+`testSupport.c` handles temporary files, input pipes, captured output, and the five-second limit. Windows uses `CreateProcessA`; POSIX systems use `fork`, `execv`, and `waitpid`. Those are operating-system functions called from C. They are needed because standard C does not supply a process API with redirected input and a timeout.
+
+The three logs keep actual build, C test, and demonstration results. The C runners print expected results and observations themselves. No script interpreter is needed. Windows runtime is still unverified. The Linux sanitizer run had leak checking disabled.

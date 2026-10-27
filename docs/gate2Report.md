@@ -50,7 +50,7 @@ The logs are genuine program and compiler output, with summaries of their observ
 - [testResults.md](testResults.md): expected and actual summaries, plus the unfinished demo-computer record.
 - [evanWork.md](evanWork.md): the test groups, exact checks behind the five actions, and remaining Windows work.
 
-The full recorded GCC 14.2.0, Clang 19.1.7, and checked Clang runs each passed 39 Gate 2 tests, 31 Gate 1 checks, and 40 module checks. The checked run disabled leak checking. After the later font change, the GCC build, Windows cross-build, and all 39 Gate 2 tests passed again. Documentation changes do not represent another run of those tests.
+The full recorded GCC 14.2.0, Clang 19.1.7, and checked Clang runs each passed the compiled C runners: 39 Gate 2 cases, 31 Gate 1 cases, 40 module checks, and the three-process demonstration. The checked run disabled leak checking. The Windows application, both menu runners, module program, and demo cross-compiled successfully. All program and testing source is C. HTML and CSS are unused, which is within the proposal's 5% maximum.
 
 The three-process demo saved Travel Sample and Cashback Sample, restarted with both, removed Travel Sample and saved again, then restarted with only Cashback Sample. This checks persistence rather than just showing the list while the first process is still open.
 

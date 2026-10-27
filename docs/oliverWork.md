@@ -70,7 +70,7 @@ The latest appearance changes use Tahoma, smaller titles and rates, bold section
 
 ## Build and handoff
 
-The build compiles seven C files: `main.c`, `cards.c`, `logger.c`, `input.c`, `wallet.c`, `storage.c`, and `window.c`. Headers provide shared declarations. The unused C++ starter is preserved but excluded from this build.
+The application build compiles seven C files: `main.c`, `cards.c`, `logger.c`, `input.c`, `wallet.c`, `storage.c`, and `window.c`. Headers provide shared declarations. The separate test and demo programs are also C. The unused starter in another language has been removed from the current folder.
 
 The Visual Studio project sets C11, compilation as C, and warning level 3. Its Windows libraries include `ole32`, `user32`, and `gdi32`. The launch argument is `--gui`, so Ctrl+F5 opens the window. Running the executable without that argument opens the console.
 

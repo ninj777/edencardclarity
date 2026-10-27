@@ -10,6 +10,8 @@ The original upload already contained card records and a Windows window. The cou
 - `5a22251`: the completed Gate 1 starter and evidence.
 - `1832702`: Gate 2, including the smaller window fonts and updated colors.
 
+The current submission adds the C-only test runners after those checkpoints. Application source is unchanged from the font version. Every active source file in the application, tests, and demonstration is C. There is no HTML or CSS source, so their share is 0%, below the 5% maximum.
+
 The local Git bundle keeps these checkpoints. The new repository's initial project upload is `72a433b`, and its font follow-up is `39b06a4`. Those uploads have the same project contents as the corresponding local versions, but they are separate commits in the new repository's history.
 
 ## Oliver's assigned source
@@ -56,16 +58,18 @@ Gate 2 specifically needs a reliable ID-to-record mapping. The small later diffe
 
 ## Evan's assigned test source
 
-Current total: 822 lines: 765 Python and 57 C.
+Current total: 1,285 lines of C source and headers.
 
-- `testGate1.py`: 208 lines. Gate 2 difference: 2 added, 2 removed.
-- `testGate2.py`: 444 lines. Gate 2 difference: 444 added, 0 removed.
+- `testGate1.c`: 255 lines. All added after Gate 1.
+- `testGate2.c`: 394 lines. All added after Gate 1.
+- `testSupport.c`: 485 lines. All added after Gate 1.
+- `testSupport.h`: 49 lines. All added after Gate 1.
+- `demoGate2.c`: 45 lines. All added after Gate 1.
 - `testModules.c`: 57 lines. Gate 2 difference: 4 added, 1 removed.
-- `recordGate2.py`: 113 lines. Gate 2 difference: 113 added, 0 removed.
 
-Gate 1 difference: 379 added and 0 removed across the tests and the older recorder. Gate 2 difference: 563 added and 120 removed across the whole `tests` folder. Of those removals, 117 are the retired `recordGate1.py`, whose job is covered by the newer recorder. That file remains in Git history rather than being duplicated in the current folder.
+Gate 1 difference: 379 added and 0 removed across the original tests and recorder. The current difference from Gate 1 is 1,232 added and 326 removed across the tests folder. The removals include the old 208-line menu runner and 117-line recorder, plus one changed module-test line. The new C programs cover both menus and the restart demonstration. Earlier tools remain only in Git history.
 
-Test logs and written results are assigned here too, but generated output and documentation are not counted as test source. The Python files run tests; the application itself is C.
+Test logs and written results are assigned here too, but generated output and documentation are not counted as test source. `testSupport.c` contains the platform-specific process and temporary-file functions shared by the C runners.
 
 ## Repeating the count
 
@@ -75,10 +79,10 @@ From the original local history or supplied bundle, this command shows the Gate 
 git diff --numstat 4299578 5a22251 -- CreditCardThing tests
 ```
 
-This command shows the Gate 2 changes through the font update:
+This command shows the changes from Gate 1 through the current C-only version:
 
 ```sh
-git diff --numstat 5a22251 1832702 -- CreditCardThing tests
+git diff --numstat 5a22251 HEAD -- CreditCardThing tests
 ```
 
 Read the first two columns as lines added and removed. The counts above group only the listed source files; project settings, unused starter files, and generated logs are excluded. Adding and removing a line during an edit can count in both columns.

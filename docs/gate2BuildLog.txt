@@ -1,10 +1,9 @@
-Gate 2 build log
-Date: 2026-10-26T17:52:56.509506-04:00
-Environment: Linux-6.18.55-x86_64-with-glibc2.41
+C-only build record
+Date: 2026-10-27 17:01:57 UTC
+Linux 6.18.55 x86_64
+Working folder: /workspace/scratch/cOnlyFresh
 
 Command: gcc --version
-Working folder: /workspace/cardClarityGate2
-Input: None
 Standard output:
 gcc (Debian 14.2.0-19) 14.2.0
 Copyright (C) 2024 Free Software Foundation, Inc.
@@ -16,18 +15,35 @@ Standard error:
 
 Exit status: 0
 
-Command: gcc -std=c11 -Wall -Wextra -Wpedantic -Werror CreditCardThing/main.c CreditCardThing/cards.c CreditCardThing/logger.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/window.c -o /workspace/cardClarityGate2/build/cardClarity
-Working folder: /workspace/cardClarityGate2
-Input: None
+Command: gcc -std=c11 -Wall -Wextra -Wpedantic -Werror CreditCardThing/main.c CreditCardThing/cards.c CreditCardThing/logger.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/window.c -o build/cOnly/gcc/cardClarity
 Standard output:
 
 Standard error:
 
 Exit status: 0
 
-Command: gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testModules.c CreditCardThing/cards.c CreditCardThing/logger.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/window.c -o /workspace/cardClarityGate2/build/cardClarityModules
-Working folder: /workspace/cardClarityGate2
-Input: None
+Command: gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGate1.c tests/testSupport.c -o build/cOnly/gcc/testGate1
+Standard output:
+
+Standard error:
+
+Exit status: 0
+
+Command: gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGate2.c tests/testSupport.c -o build/cOnly/gcc/testGate2
+Standard output:
+
+Standard error:
+
+Exit status: 0
+
+Command: gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/demoGate2.c tests/testSupport.c -o build/cOnly/gcc/demoGate2
+Standard output:
+
+Standard error:
+
+Exit status: 0
+
+Command: gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testModules.c CreditCardThing/cards.c CreditCardThing/logger.c -lm -o build/cOnly/gcc/testModules
 Standard output:
 
 Standard error:
@@ -35,8 +51,6 @@ Standard error:
 Exit status: 0
 
 Command: /workspace/tools/bin/clang --version
-Working folder: /workspace/cardClarityGate2
-Input: None
 Standard output:
 Debian clang version 19.1.7 (3+b1)
 Target: x86_64-pc-linux-gnu
@@ -47,18 +61,35 @@ Standard error:
 
 Exit status: 0
 
-Command: /workspace/tools/bin/clang -std=c11 -Wall -Wextra -Wpedantic -Werror CreditCardThing/main.c CreditCardThing/cards.c CreditCardThing/logger.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/window.c -o /workspace/cardClarityGate2/build/cardClarityClang
-Working folder: /workspace/cardClarityGate2
-Input: None
+Command: /workspace/tools/bin/clang -std=c11 -Wall -Wextra -Wpedantic -Werror CreditCardThing/main.c CreditCardThing/cards.c CreditCardThing/logger.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/window.c -o build/cOnly/clang/cardClarity
 Standard output:
 
 Standard error:
 
 Exit status: 0
 
-Command: /workspace/tools/bin/clang -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testModules.c CreditCardThing/cards.c CreditCardThing/logger.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/window.c -o /workspace/cardClarityGate2/build/cardClarityClangModules
-Working folder: /workspace/cardClarityGate2
-Input: None
+Command: /workspace/tools/bin/clang -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGate1.c tests/testSupport.c -o build/cOnly/clang/testGate1
+Standard output:
+
+Standard error:
+
+Exit status: 0
+
+Command: /workspace/tools/bin/clang -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGate2.c tests/testSupport.c -o build/cOnly/clang/testGate2
+Standard output:
+
+Standard error:
+
+Exit status: 0
+
+Command: /workspace/tools/bin/clang -std=c11 -Wall -Wextra -Wpedantic -Werror tests/demoGate2.c tests/testSupport.c -o build/cOnly/clang/demoGate2
+Standard output:
+
+Standard error:
+
+Exit status: 0
+
+Command: /workspace/tools/bin/clang -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testModules.c CreditCardThing/cards.c CreditCardThing/logger.c -lm -o build/cOnly/clang/testModules
 Standard output:
 
 Standard error:
@@ -66,8 +97,6 @@ Standard error:
 Exit status: 0
 
 Command: /workspace/tools/bin/clang --version
-Working folder: /workspace/cardClarityGate2
-Input: None
 Standard output:
 Debian clang version 19.1.7 (3+b1)
 Target: x86_64-pc-linux-gnu
@@ -78,18 +107,35 @@ Standard error:
 
 Exit status: 0
 
-Command: /workspace/tools/bin/clang -std=c11 -Wall -Wextra -Wpedantic -Werror -fsanitize=address,undefined -fno-omit-frame-pointer -g CreditCardThing/main.c CreditCardThing/cards.c CreditCardThing/logger.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/window.c -o /workspace/cardClarityGate2/build/cardClarityChecked
-Working folder: /workspace/cardClarityGate2
-Input: None
+Command: /workspace/tools/bin/clang -std=c11 -Wall -Wextra -Wpedantic -Werror -fsanitize=address\,undefined -fno-omit-frame-pointer -g CreditCardThing/main.c CreditCardThing/cards.c CreditCardThing/logger.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/window.c -o build/cOnly/checked/cardClarity
 Standard output:
 
 Standard error:
 
 Exit status: 0
 
-Command: /workspace/tools/bin/clang -std=c11 -Wall -Wextra -Wpedantic -Werror -fsanitize=address,undefined -fno-omit-frame-pointer -g tests/testModules.c CreditCardThing/cards.c CreditCardThing/logger.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/window.c -o /workspace/cardClarityGate2/build/cardClarityCheckedModules
-Working folder: /workspace/cardClarityGate2
-Input: None
+Command: /workspace/tools/bin/clang -std=c11 -Wall -Wextra -Wpedantic -Werror -fsanitize=address\,undefined -fno-omit-frame-pointer -g tests/testGate1.c tests/testSupport.c -o build/cOnly/checked/testGate1
+Standard output:
+
+Standard error:
+
+Exit status: 0
+
+Command: /workspace/tools/bin/clang -std=c11 -Wall -Wextra -Wpedantic -Werror -fsanitize=address\,undefined -fno-omit-frame-pointer -g tests/testGate2.c tests/testSupport.c -o build/cOnly/checked/testGate2
+Standard output:
+
+Standard error:
+
+Exit status: 0
+
+Command: /workspace/tools/bin/clang -std=c11 -Wall -Wextra -Wpedantic -Werror -fsanitize=address\,undefined -fno-omit-frame-pointer -g tests/demoGate2.c tests/testSupport.c -o build/cOnly/checked/demoGate2
+Standard output:
+
+Standard error:
+
+Exit status: 0
+
+Command: /workspace/tools/bin/clang -std=c11 -Wall -Wextra -Wpedantic -Werror -fsanitize=address\,undefined -fno-omit-frame-pointer -g tests/testModules.c CreditCardThing/cards.c CreditCardThing/logger.c -lm -o build/cOnly/checked/testModules
 Standard output:
 
 Standard error:
@@ -97,8 +143,6 @@ Standard error:
 Exit status: 0
 
 Command: /workspace/tools/bin/x86_64-w64-mingw32-gcc --version
-Working folder: /workspace/cardClarityGate2
-Input: None
 Standard output:
 x86_64-w64-mingw32-gcc-posix (GCC) 14-posix
 Copyright (C) 2024 Free Software Foundation, Inc.
@@ -110,29 +154,40 @@ Standard error:
 
 Exit status: 0
 
-Command: /workspace/tools/bin/x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror -DUNICODE -D_UNICODE CreditCardThing/main.c CreditCardThing/cards.c CreditCardThing/logger.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/window.c -o build/cardClarity.exe -lole32 -luser32 -lgdi32
-Working folder: /workspace/cardClarityGate2
-Input: None
+Command: /workspace/tools/bin/x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror -DUNICODE -D_UNICODE CreditCardThing/main.c CreditCardThing/cards.c CreditCardThing/logger.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/window.c -o build/cOnly/windows/cardClarity.exe -lole32 -luser32 -lgdi32
 Standard output:
 
 Standard error:
 
 Exit status: 0
 
-Visual Studio and the Windows window have not been run here.
+Command: /workspace/tools/bin/x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGate1.c tests/testSupport.c -o build/cOnly/windows/testGate1.exe
+Standard output:
 
-Font changes checked: 2026-10-26T20:18:29.805458-04:00
+Standard error:
 
-Command: gcc -std=c11 -Wall -Wextra -Wpedantic -Werror CreditCardThing/main.c CreditCardThing/cards.c CreditCardThing/logger.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/window.c -o build/cardClarity
-Working folder: /workspace/cardClarityGate2
-Standard output: empty
-Standard error: empty
 Exit status: 0
 
-Command: /workspace/tools/bin/x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror -DUNICODE -D_UNICODE CreditCardThing/main.c CreditCardThing/cards.c CreditCardThing/logger.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/window.c -o build/cardClarity.exe -lole32 -luser32 -lgdi32
-Working folder: /workspace/cardClarityGate2
-Standard output: empty
-Standard error: empty
+Command: /workspace/tools/bin/x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGate2.c tests/testSupport.c -o build/cOnly/windows/testGate2.exe
+Standard output:
+
+Standard error:
+
 Exit status: 0
 
-These builds passed. The Windows window still needs to be opened on the demo computer to check the fonts and spacing.
+Command: /workspace/tools/bin/x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/demoGate2.c tests/testSupport.c -o build/cOnly/windows/demoGate2.exe
+Standard output:
+
+Standard error:
+
+Exit status: 0
+
+Command: /workspace/tools/bin/x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testModules.c CreditCardThing/cards.c CreditCardThing/logger.c -o build/cOnly/windows/testModules.exe -lole32
+Standard output:
+
+Standard error:
+
+Exit status: 0
+
+Windows application and all C check programs cross-compiled successfully.
+The Windows executables and Visual Studio have not been run.

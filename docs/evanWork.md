@@ -2,17 +2,17 @@
 
 Evan Zhuang is assigned the Gate 1 test cases and the five Gate 2 user-action checks. The proposal also gives Evan menu clarity, bug notes, the first QA review at Gate 3, and help with the final demo.
 
-The current test source is `testGate1.py`, `testGate2.py`, `testModules.c`, and `recordGate2.py`. There are 822 lines across those files: 765 Python lines and 57 C lines, counting comments and blank lines. The exact changes, including the removed older recorder, are in [codeChanges.md](codeChanges.md).
+The current test source is `testGate1.c`, `testGate2.c`, `testModules.c`, `demoGate2.c`, `testSupport.c`, and `testSupport.h`. There are 1,285 C source and header lines, counting comments and blank lines. The earlier interpreter-based runners were replaced so the whole current code folder uses C. The exact changes are in [codeChanges.md](codeChanges.md).
 
 ## Gate 1 checks
 
 These results are from the recorded Linux builds and tests. They are not filled-in results from a student's demo computer.
 
 1. Compilation. Expected: C11 build with warnings enabled and no errors. Actual: GCC and Clang builds completed with no warnings or errors. The Windows cross-build also completed. Evidence: [gate2BuildLog.txt](gate2BuildLog.txt).
-2. Startup. Input: `3`. Expected: the three numbered Gate 1 choices appear. Actual: View sample cards, About CardClarity, and Exit appeared. `test_01_menu_has_three_options` also checks that there are exactly three choices.
-3. View cards. Input: `1`, then `3`. Expected: at least three sample names and example rates, then exit. Actual: all five named samples and their rates appeared. Tests 2, 3, and 4 check the names, exact values, and example labels.
+2. Startup. Input: `3`. Expected: the three numbered Gate 1 choices appear. Actual: View sample cards, About CardClarity, and Exit appeared. Case 1 also checks that there are exactly three choices.
+3. View cards. Input: `1`, then `3`. Expected: at least three sample names and example rates, then exit. Actual: all five named samples and their rates appeared. Cases 2, 3, and 4 check the names, exact values, and example labels.
 4. Invalid input. Input: `hello`, then `3`. Expected: a retry message and a usable menu. Actual: the message asked for 1, 2, or 3, and the next choice exited normally. This is test 7.
-5. Exit. Input: `3`. Expected: Goodbye and exit status 0. Actual: Goodbye appeared and the process returned 0. Test 21 also confirms input after Exit is not processed.
+5. Exit. Input: `3`. Expected: Goodbye and exit status 0. Actual: Goodbye appeared and the process returned 0. Case 21 also confirms input after Exit is not processed.
 
 Extra check: `not a choice`, then `1`, then `3`. Expected: reject the bad answer, show the cards, and exit. Actual: all three steps worked. This is test 16. Gate 1's rating 4 also requires a real teammate code review; a passing extra test does not replace it.
 
@@ -44,24 +44,32 @@ Tests 28 through 32 check file errors such as a directory in place of a save, a 
 
 ## How the tests run
 
-The Python scripts use `subprocess` to start the compiled C program, send answers, and capture its output and exit status. Gate 2 tests use temporary folders, so they do not use the normal saved wallet. Time limits catch a program that stops responding. Assertions compare messages and file contents with expected results.
+The C runners start the compiled application as a separate process. `testSupport.c` creates a temporary folder, opens an input pipe, and captures standard output and errors in files inside that folder. It sends the test answers, waits up to five seconds, and records the exit status. An overlong run is stopped and marked failed. Temporary folders are removed after each case, leaving the normal saved wallet alone.
+
+`expect` checks one condition and prints the actual yes-or-no observation. `finishCase` records whether every check matched. `finishTests` reports passed, failed, and skipped cases and returns a failure status if anything failed. Hidden-null tests pass a byte count rather than using `strlen`, so the test input is not accidentally cut short.
+
+Windows uses `CreateProcessA`, inheritable input/output handles, and `WaitForSingleObject`. POSIX systems use `pipe`, `fork`, `execv`, and `waitpid`. Both branches are C. The platform code is grouped in the support file because the menu cases should mainly describe answers and expected behavior.
+
+Case 33 leaves the input pipe open, waits until the initial saved list has loaded, changes the file, then sends the Reload answer. It checks a live running program, rather than only testing the file-loading function in isolation.
 
 `testModules.c` calls the card functions directly. It has 35 checks across the five records, two invalid-ID checks, and three practice reward checks, for 40 total. Some headers are deliberately included twice to check that their include guards prevent repeated definitions.
 
-`recordGate2.py` runs the builds, both menu suites, module checks, and the restart demonstration. It keeps three logs, rather than a separate log for every individual run.
+`demoGate2.c` runs the save-and-reload demonstration in three separate processes. It prints the answers, full program output, exit statuses, and checked saved bytes. Compiler commands are recorded in the build log. The menu runners and module program produce the test log. No separate build script or interpreter is required in the project.
 
 From the project root after building:
 
 ```sh
-python3 tests/testGate1.py build/cardClarity
-python3 tests/testGate2.py build/cardClarity
+./build/testGate1 ./build/cardClarity
+./build/testGate2 ./build/cardClarity
+./build/testModules
+./build/demoGate2 ./build/cardClarity
 ```
 
-The recorder command is in the [readMe](../readMe.md). It rewrites the three log files with the new run; keep earlier records if they are needed before using it.
+The C compiler commands are in the [readMe](../readMe.md). Redirect output to a log to keep a run. Check its exit status too; printing a result does not make a failed check pass.
 
 ## What has actually been checked
 
-The recorded GCC, Clang, and checked Clang builds each passed 31 Gate 1 tests, 39 Gate 2 tests, and 40 module checks. Leak checking was disabled in the checked build. The later font change was followed by another GCC build, Windows cross-build, and 39-test Gate 2 run.
+The recorded GCC, Clang, and checked Clang builds each passed the new C runners: 31 Gate 1 cases, 39 Gate 2 cases, 40 module checks, and the three-process demonstration. Leak checking was disabled in the checked build. The Windows application, both menu runners, module checks, and demo all cross-compiled. Their Windows executables have not been run here.
 
 Windows runtime is still unverified. On Windows, the runners skip checks that require Linux or check the unsupported-window message on other systems. Expected totals there are 29 passes and two skips for Gate 1, and 37 passes and two skips for Gate 2. Those are expected totals, not completed Windows results.
 

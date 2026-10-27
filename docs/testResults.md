@@ -1,6 +1,6 @@
 # Gate 2 checks
 
-The recorded results below come from running the test scripts on Linux. No student's personal run or review is filled in for them.
+The recorded results below come from the compiled C test runners on Linux. No student's personal run or review is filled in for them.
 
 1. Add: expected card 3 to add Cashback Sample once. Actual: it appeared in the wallet and saved as ID 3. Adding it again showed the duplicate message. Passed.
 
@@ -20,7 +20,7 @@ The damaged-file check tries 22 examples: empty file, wrong header, missing coun
 
 Valid Windows line endings and a missing final newline worked. The file-error tests covered a directory used as a save file, a missing folder, an existing temporary file, and a failed replacement. They reported failure and kept existing data in place.
 
-GCC 14.2.0, Clang 19.1.7, and Clang with address and undefined-behavior checks each passed all 39 Gate 2 tests, 31 Gate 1 checks, and 40 module checks. The module checks include the five card mappings, their values, and the earlier practice calculations. The extra command-line check accepts a chosen file for `--gui` and reports that Windows is needed when run on Linux. Leak checking was disabled. The Windows cross-build passed; Windows runtime and Visual Studio are still unverified.
+GCC 14.2.0, Clang 19.1.7, and Clang with address and undefined-behavior checks each passed the C runners: 39 Gate 2 cases, 31 Gate 1 cases, 40 module checks, and the three-process demonstration. The module checks include the five card mappings, their values, and the earlier practice calculations. The extra command-line check accepts a chosen file for `--gui` and reports that Windows is needed when run on Linux. Leak checking was disabled. The Windows application and all four separate C check programs cross-compiled; Windows runtime and Visual Studio are still unverified.
 
 The exact commands and output are in `gate2BuildLog.txt` and `gate2TestLog.txt`. The tests are repeatable with the commands in the readMe.
 
