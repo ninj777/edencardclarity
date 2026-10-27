@@ -61,10 +61,12 @@ The Win32 code moved from `main.c` into `window.c`. It still uses the same windo
 
 `onWindowResize` moves the controls when the window changes size. A minimum size keeps the panels and footer from overlapping. The message loop uses `IsDialogMessageW` for moving between controls with Tab. Fonts and brushes are released after the window closes.
 
+For Oliver's window section, the font is Tahoma. The title and rate are smaller now, and section headings use bold text. The background is light cream, with dark gray writing and a white card panel. The sentence at the top explains how to choose a card. These are appearance changes; the wallet buttons still call the same functions.
+
 The new layout and button behavior still need a real Windows desktop check. The Linux tests check the shared wallet code and the command arguments; the cross-build checks that the Windows code compiles and links.
 
 ## Checking it
 
-The Visual Studio project compiles all six files as C11. The test scripts run the program with temporary save files and check the output and file contents. They also start separate processes to check that saves survive a restart. The application is C; Python only runs the tests.
+The Visual Studio project compiles all seven C files as C11. The test scripts run the program with temporary save files and check the output and file contents. They also start separate processes to check that saves survive a restart. The application is C; Python only runs the tests.
 
 `recordGate2.py` keeps three logs: builds, tests, and the restart demo. Windows runtime is still unverified. The Linux sanitizer run had leak checking disabled.

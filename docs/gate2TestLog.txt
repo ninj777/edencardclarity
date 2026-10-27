@@ -456,3 +456,8 @@ cardClarityClang: clean C11 build; 39 Gate 2 tests, 31 Gate 1 checks, and 40 mod
 cardClarityChecked: clean C11 build; 39 Gate 2 tests, 31 Gate 1 checks, and 40 module checks passed.
 The Windows cross-build passed. Windows runtime and MSVC were not tested.
 The three-process save, remove, and reload demonstration passed.
+
+Font changes checked: 2026-10-26T20:18:29.805458-04:00
+Command: python3 tests/testGate2.py build/cardClarity
+Result: all 39 tests passed on Linux. Exit status: 0.
+These tests do not check the appearance of the Windows window.

@@ -206,7 +206,7 @@ static void onWindowResize(HWND hwnd) {
 		return;
 	}
 	int detailWidth = width - 400;
-	MoveWindow(controls.title, 24, 20, width - 48, 38, TRUE);
+	MoveWindow(controls.title, 24, 24, width - 48, 32, TRUE);
 	MoveWindow(controls.subtitle, 24, 64, width - 48, 26, TRUE);
 	MoveWindow(controls.catalogHeading, 24, 112, 300, 26, TRUE);
 	MoveWindow(controls.catalogList, 24, 144, 300, 154, TRUE);
@@ -217,7 +217,7 @@ static void onWindowResize(HWND hwnd) {
 	MoveWindow(controls.removeButton, 24, height - 144, 300, 34, TRUE);
 	MoveWindow(controls.cardName, 376, 136, detailWidth, 34, TRUE);
 	MoveWindow(controls.rateLabel, 376, 180, detailWidth, 22, TRUE);
-	MoveWindow(controls.rate, 376, 206, detailWidth, 46, TRUE);
+	MoveWindow(controls.rate, 376, 208, detailWidth, 36, TRUE);
 	MoveWindow(controls.cardInfo, 376, 268, detailWidth, 72, TRUE);
 	MoveWindow(controls.bonusHeading, 376, 354, detailWidth, 24, TRUE);
 	MoveWindow(controls.bonuses, 376, 388, detailWidth, 66, TRUE);
@@ -233,7 +233,7 @@ static bool loadWindowWidgets(HWND hwnd) {
 	DWORD listStyle = WS_BORDER | WS_TABSTOP | WS_VSCROLL | LBS_NOTIFY | LBS_NOINTEGRALHEIGHT;
 	DWORD labelStyle = SS_LEFT | SS_NOPREFIX;
 	controls.title = makeControl(hwnd, L"STATIC", L"CardClarity", labelStyle, 0, titleFont);
-	controls.subtitle = makeControl(hwnd, L"STATIC", L"Choose your cards. Keep your list for next time.", labelStyle, 0, bodyFont);
+	controls.subtitle = makeControl(hwnd, L"STATIC", L"Select a card to see its rates, then add it to your wallet.", labelStyle, 0, bodyFont);
 	controls.catalogHeading = makeControl(hwnd, L"STATIC", L"Sample cards", labelStyle, 0, headingFont);
 	controls.catalogList = makeControl(hwnd, L"LISTBOX", L"", listStyle, ID_CATALOG, bodyFont);
 	controls.addButton = makeControl(hwnd, L"BUTTON", L"Add to my wallet", WS_TABSTOP | BS_PUSHBUTTON, ID_ADD, bodyFont);
@@ -241,8 +241,8 @@ static bool loadWindowWidgets(HWND hwnd) {
 	controls.walletCount = makeControl(hwnd, L"STATIC", L"", labelStyle, 0, bodyFont);
 	controls.walletList = makeControl(hwnd, L"LISTBOX", L"", listStyle, ID_WALLET, bodyFont);
 	controls.removeButton = makeControl(hwnd, L"BUTTON", L"Remove selected card", WS_TABSTOP | BS_PUSHBUTTON, ID_REMOVE, bodyFont);
-	controls.cardName = makeControl(hwnd, L"STATIC", L"", labelStyle, 0, titleFont);
-	controls.rateLabel = makeControl(hwnd, L"STATIC", L"Example base reward rate", labelStyle, 0, bodyFont);
+	controls.cardName = makeControl(hwnd, L"STATIC", L"", labelStyle, 0, headingFont);
+	controls.rateLabel = makeControl(hwnd, L"STATIC", L"Base reward rate (example)", labelStyle, 0, bodyFont);
 	controls.rate = makeControl(hwnd, L"STATIC", L"", labelStyle, 0, rateFont);
 	controls.cardInfo = makeControl(hwnd, L"STATIC", L"", labelStyle, 0, bodyFont);
 	controls.bonusHeading = makeControl(hwnd, L"STATIC", L"Category bonuses", labelStyle, 0, headingFont);
@@ -314,11 +314,11 @@ static LRESULT CALLBACK applicationWindowProc(HWND hwnd, UINT message, WPARAM wP
 		SetBkMode(dc, TRANSPARENT);
 		bool muted = label == controls.subtitle || label == controls.rateLabel
 			|| label == controls.bonusNote || label == controls.walletCount || label == controls.disclaimer;
-		SetTextColor(dc, muted ? RGB(87, 99, 117) : RGB(28, 39, 56));
+		SetTextColor(dc, muted ? RGB(96, 96, 96) : RGB(40, 40, 40));
 		return (LRESULT)(detailLabel(label) ? panelBrush : backgroundBrush);
 	}
 	case WM_CTLCOLORLISTBOX:
-		SetTextColor((HDC)wParam, RGB(28, 39, 56));
+		SetTextColor((HDC)wParam, RGB(40, 40, 40));
 		SetBkColor((HDC)wParam, RGB(255, 255, 255));
 		return (LRESULT)panelBrush;
 	case WM_PAINT: {
@@ -377,16 +377,17 @@ int runWindow(const char* filePath) {
 	changed = false;
 	controlsReady = false;
 	savePath = filePath;
-	backgroundBrush = CreateSolidBrush(RGB(244, 247, 251));
+	backgroundBrush = CreateSolidBrush(RGB(245, 244, 240));
 	panelBrush = CreateSolidBrush(RGB(255, 255, 255));
+	/* Use one plain font, with bold text just for the section headings. */
 	bodyFont = CreateFontW(-16, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, DEFAULT_PITCH, L"Segoe UI");
-	titleFont = CreateFontW(-28, 0, 0, 0, FW_SEMIBOLD, FALSE, FALSE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, DEFAULT_PITCH, L"Segoe UI");
-	headingFont = CreateFontW(-18, 0, 0, 0, FW_SEMIBOLD, FALSE, FALSE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, DEFAULT_PITCH, L"Segoe UI");
-	rateFont = CreateFontW(-36, 0, 0, 0, FW_SEMIBOLD, FALSE, FALSE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, DEFAULT_PITCH, L"Segoe UI");
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, DEFAULT_PITCH, L"Tahoma");
+	titleFont = CreateFontW(-24, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, DEFAULT_PITCH, L"Tahoma");
+	headingFont = CreateFontW(-17, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, DEFAULT_PITCH, L"Tahoma");
+	rateFont = CreateFontW(-26, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, DEFAULT_PITCH, L"Tahoma");
 	if (!backgroundBrush || !panelBrush || !bodyFont || !titleFont || !headingFont || !rateFont) {
 		releaseWindowResources();
 		return 1;
