@@ -16,6 +16,15 @@ Running the executable without arguments opens the three-option console menu. `-
 
 `docs/demoSteps.md` has the steps for the gate check. `docs/codeGuide.md` explains the code, and `docs/teamWork.md` lists our assigned parts and the size of the changes.
 
+The fuller explanations follow the proposal's jobs:
+
+- [Oliver: menus, window, and build](docs/oliverWork.md).
+- [Eden: input, wallet, and saved files](docs/edenWork.md).
+- [Joe: sample records, IDs, and practice math](docs/joeWork.md).
+- [Evan: tests, results, and demo checks](docs/evanWork.md).
+
+[Code amounts](docs/codeChanges.md) shows the file sizes and changes for each assigned area. [Gate 1](docs/gate1Report.md) and [Gate 2](docs/gate2Report.md) explain the requirements, evidence, and remaining checks.
+
 ## Keep a Windows build log
 
 From this folder in Developer Command Prompt for Visual Studio:

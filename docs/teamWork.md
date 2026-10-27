@@ -1,25 +1,51 @@
-# Our Gate 2 jobs
+# Team responsibilities for Gates 1 and 2
 
-Eden Yun Yu leads this gate. The files below are grouped by our assigned jobs. Line counts describe changes since Gate 1, including code moved between files. Each person can add their own edits and review notes at the end.
+This division follows sections 4 and 5 of the CardClarity proposal. Gate 1 is led by Oliver Dolfin and is due October 22, 2026. Gate 2 is led by Eden Yun Yu and is due October 28, 2026. The descriptions below divide the implementation by those responsibilities.
 
-Eden: `input.c`, `wallet.c`, `storage.c`, and their headers. These check menu answers, manage selected IDs, validate files, and save or reload the list. The window reuses these functions. This source area has 316 added lines and 0 removed lines.
+## Oliver Dolfin
 
-Oliver: `main.c`, `window.c`, `window.h`, and the logger. These connect the console and Windows view to the wallet. Oliver also handles the Visual Studio files, solution, readMe, Git settings, and submission folder. This source area has 619 added lines and 395 removed lines. The latest window changes use Tahoma, smaller titles, and a plain cream background.
+Proposal role: project lead and main programmer. Gate 1 work is the menu, connecting modules, compiling, and submission. Gate 2 work connects the wallet actions to the main menu.
 
-Joe: `cards.c` and `cards.h`. These keep the five sample records, check saved IDs, and format the name, rate, network, fees, and bonus labels. The ID list is in `savedCardsFormat.md`. This source area has 17 added lines and 9 removed lines.
+Assigned files: `main.c`, `window.c`, `window.h`, `logger.c`, `logger.h`, the Visual Studio project and filters, the solution, readMe, Git settings, and source package. The original unused starter files also stay under project cleanup rather than being counted as active features.
 
-Evan: The test scripts and `testModules.c`. These check all five wallet actions, bad input, saved files, restarts, and command arguments. Evan is also assigned the three run logs, `testResults.md`, and `demoSteps.md`, including the real Windows checks. This source area has 563 added lines and 120 removed lines.
+Current C source and headers: 734 lines. Changes after Gate 1: 619 added, 395 removed, including separating the window from `main.c`.
 
-Eden coordinates the Gate 2 report and saved-file notes. The code guide follows the same file assignments above. The older uncompiled C++ starter and `pagereader.c` remain under Oliver's project-cleanup responsibility.
+Detailed explanation: [oliverWork.md](oliverWork.md).
 
-The program is C. Python runs the tests. The counts exclude documents, output logs, and project settings. They are file-change counts, not personal time records.
+## Eden Yun Yu
 
-Notes after doing the work or reviewing it:
+Proposal role: systems and security developer. Gate 1 work is the input rules and saved-file plan. Gate 2 work is input validation, wallet storage, saving, loading, and handling missing or damaged files.
 
-Eden, files/functions and date: ____________________
+Assigned files: `input.c`, `input.h`, `wallet.c`, `wallet.h`, `storage.c`, and `storage.h`. The saved-file format notes and Gate 2 report follow this area too.
 
-Oliver, files/functions and date: ____________________
+Current C source and headers: 316 lines. All six files were added after Gate 1. The earlier input checking was inside the starter's `main.c`.
 
-Joe, records checked and date: ____________________
+Detailed explanation: [edenWork.md](edenWork.md).
 
-Evan, checks run and date: ____________________
+## Joe Kwon
+
+Proposal role: card research and data developer. Gate 1 work is the sample records and example reward rates. Gate 2 work keeps the saved card IDs matched to the sample catalog.
+
+Assigned files: `cards.c` and `cards.h`, plus the catalog values and expected reward examples used by the tests. Later work needs sources and dates for any real benefit data.
+
+Current C source and headers: 257 lines. Changes after Gate 1: 17 added, 9 removed. The small difference is expected because the sample records already existed.
+
+Detailed explanation: [joeWork.md](joeWork.md).
+
+## Evan Zhuang
+
+Proposal role: interface developer and tester. Gate 1 work is the five required checks, expected and actual results, and bug notes. Gate 2 work tests add, view, remove, save, and reload, including error cases.
+
+Assigned files: `tests/testGate1.py`, `tests/testGate2.py`, `tests/testModules.c`, and `tests/recordGate2.py`. Test results, the three run logs, demonstration steps, and menu-clarity checks belong in this area. Oliver's window implementation and Evan's interface checks are related jobs, rather than two separate window implementations.
+
+Current test source: 822 lines, including 57 C lines and 765 Python lines. Changes after Gate 1: 563 added, 120 removed across the tests folder, including retiring the older recorder.
+
+Detailed explanation: [evanWork.md](evanWork.md).
+
+## Where the parts meet
+
+Adding a card starts in Oliver's menu or button handler, uses Eden's `addWalletCard`, looks up Joe's ID mapping, and is checked by Evan's test cases. Saving starts in the menu or window and uses Eden's file functions. The test runner checks the actual saved IDs and launches another process to check that they survive a restart.
+
+The full per-file counts, starting-code explanation, and comparison commands are in [codeChanges.md](codeChanges.md). Logs and documents are excluded from those source amounts.
+
+Gate requirements and evidence are in [gate1Report.md](gate1Report.md) and [gate2Report.md](gate2Report.md). The code overview is in [codeGuide.md](codeGuide.md). Real demo-computer results belong in [testResults.md](testResults.md); the teammate review record for Gate 1 is in its report.

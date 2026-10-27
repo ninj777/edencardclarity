@@ -2,6 +2,8 @@
 
 The program is split into seven C files. `main.c` connects the menu to the card, wallet, input, and storage functions. `window.c` handles the Windows layout and buttons. `logger.c` prints its startup and error messages.
 
+This page is the short overview. The detailed explanations are divided by the proposal: [Oliver's menus and build](oliverWork.md), [Eden's input and storage](edenWork.md), [Joe's catalog](joeWork.md), and [Evan's tests](evanWork.md). [codeChanges.md](codeChanges.md) gives the source amounts without counting documentation or generated logs as application code.
+
 ## Cards and wallet
 
 `cards.h` defines `Card`, which groups a name, network, fee, reward type, base rate, and category bonuses. `cards.c` sets up the five practice records. The existing reward formula is unchanged: a 5% bonus makes the base reward 1.05 times as large. The menu is not a full purchase calculator yet.
