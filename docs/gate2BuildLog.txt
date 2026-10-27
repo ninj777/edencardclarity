@@ -120,3 +120,19 @@ Standard error:
 Exit status: 0
 
 Visual Studio and the Windows window have not been run here.
+
+Font changes checked: 2026-10-26T20:18:29.805458-04:00
+
+Command: gcc -std=c11 -Wall -Wextra -Wpedantic -Werror CreditCardThing/main.c CreditCardThing/cards.c CreditCardThing/logger.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/window.c -o build/cardClarity
+Working folder: /workspace/cardClarityGate2
+Standard output: empty
+Standard error: empty
+Exit status: 0
+
+Command: /workspace/tools/bin/x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror -DUNICODE -D_UNICODE CreditCardThing/main.c CreditCardThing/cards.c CreditCardThing/logger.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/window.c -o build/cardClarity.exe -lole32 -luser32 -lgdi32
+Working folder: /workspace/cardClarityGate2
+Standard output: empty
+Standard error: empty
+Exit status: 0
+
+These builds passed. The Windows window still needs to be opened on the demo computer to check the fonts and spacing.

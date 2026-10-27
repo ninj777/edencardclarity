@@ -4,7 +4,7 @@ Eden Yun Yu leads this gate. The files below are grouped by our assigned jobs. L
 
 Eden: `input.c`, `wallet.c`, `storage.c`, and their headers. These check menu answers, manage selected IDs, validate files, and save or reload the list. The window reuses these functions. This source area has 316 added lines and 0 removed lines.
 
-Oliver: `main.c`, `window.c`, `window.h`, and the logger. These connect the console and Windows view to the wallet. Oliver also handles the Visual Studio files, solution, readMe, Git settings, and submission folder. This source area has 618 added lines and 395 removed lines.
+Oliver: `main.c`, `window.c`, `window.h`, and the logger. These connect the console and Windows view to the wallet. Oliver also handles the Visual Studio files, solution, readMe, Git settings, and submission folder. This source area has 619 added lines and 395 removed lines. The latest window changes use Tahoma, smaller titles, and a plain cream background.
 
 Joe: `cards.c` and `cards.h`. These keep the five sample records, check saved IDs, and format the name, rate, network, fees, and bonus labels. The ID list is in `savedCardsFormat.md`. This source area has 17 added lines and 9 removed lines.
 
