@@ -1,13 +1,11 @@
 /*
-Evan Zhuang - my assigned direct card checks
+Evan Zhuang - direct card checks
 
-I check the card functions without going through the menu. I use Joe's sample
-names, fees, base rates, and three category bonuses as the expected values.
-I check seven things per card, two invalid IDs, and three practice calculations:
-35 + 2 + 3 gives 40 checks. I include the headers twice to check their guards.
-I use a small tolerance for the nonzero double results, not exact equality.
-I print a failed check and return 1 if anything differs. I only print the
-40-check success message after the error count stays zero.
+I compare Joe's names, rates, fees, and bonuses without going through a menu.
+There are seven checks per card, two invalid-ID checks, and three calculation
+checks: 35 + 2 + 3 = 40. Including the headers twice checks their guards.
+For nonzero double results, I allow a small tolerance. Any mismatch returns
+1; the success message only appears when the error count stays zero.
 */
 #include <math.h>
 #include <stdio.h>
@@ -41,8 +39,11 @@ int main(void) {
 	initLogger();
 	initTestCards();
 	for (int i = 0; i < 5; i++) {
-		Card* card = testGetCard(i);
-		errors += check(getCardById(i + 1) == card, "Saved card ID maps to its record");
+		Card* card = getCardById(i + 1);
+		errors += check(card != NULL, "Saved card ID has a record");
+		if (!card) {
+			continue;
+		}
 		errors += check(strcmp(card->issuer, names[i]) == 0, "Sample name");
 		errors += check(card->rate == rates[i], "Base rate");
 		errors += check(card->annualFee == fees[i], "Example fee");
@@ -54,11 +55,11 @@ int main(void) {
 	errors += check(getCardById(0) == NULL, "Zero is not a saved card ID");
 	errors += check(getCardById(SAMPLE_CARD_COUNT + 1) == NULL, "Unknown card ID is rejected");
 	/* I expect 10 * 0.0125 * 1.02 = 0.1275 reward units for this example. */
-	errors += check(fabs(calculateReward(*testGetCard(0), SERVICES, 10) - 0.1275) < 0.000001,
+	errors += check(fabs(calculateReward(*getCardById(1), SERVICES, 10) - 0.1275) < 0.000001,
 		"Service reward with a bonus");
-	errors += check(calculateReward(*testGetCard(0), SERVICES, 0) == 0,
+	errors += check(calculateReward(*getCardById(1), SERVICES, 0) == 0,
 		"Zero purchase");
-	errors += check(fabs(calculateReward(*testGetCard(0), HOTEL, 100) - 1.25) < 0.000001,
+	errors += check(fabs(calculateReward(*getCardById(1), HOTEL, 100) - 1.25) < 0.000001,
 		"Category without a bonus");
 	if (errors) {
 		return 1;

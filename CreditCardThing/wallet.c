@@ -1,30 +1,29 @@
 /*
-Eden Yun Yu - my assigned wallet list
+Eden Yun Yu - the selected-card list
 
-I keep selected card types in a Wallet rather than copying every full Card.
-The struct has five ID slots and a count of how many are used. If I select
-cards 1, 3, and 5, the used part is [1, 3, 5] and count is 3. The actual names,
-rates, and fees stay in Joe's catalog, so I do not save conflicting copies.
+I keep selected IDs in a Wallet instead of copying full Card records. It has
+five slots and a count of the used entries. For cards 1, 3, and 5, the used
+part is [1, 3, 5] and count is 3. Names, rates, and fees stay in Joe's catalog,
+so the wallet cannot keep a separate set of values that gradually disagrees.
 
-I initialize the count and slots to zero. I search only the used entries when
-checking duplicates. Before adding, I check the ID, available room, and whether
-the card is already there. I then write at cardIds[count] and increase count.
-I use five slots because the catalog has five unique types. The earlier plan
-mentioned twenty, but I cannot fill twenty unique slots from five records.
+I start the count and slots at zero and only search the used entries.
+Adding checks the ID, space, and duplicates before writing at cardIds[count].
+The count then increases. There are five unique types in the catalog, so five
+slots are enough. The earlier twenty-card plan would not make sense without
+more unique records.
 
-When I remove an ID, I move later entries left and clear the unused last slot.
-Removing 3 from [1, 3, 5] leaves [1, 5]; it does not change what ID 5 means.
-I return false if I cannot find that ID, leaving the list alone.
+For removal, I find the ID, move later entries left, and clear the unused last
+slot. Removing 3 from [1, 3, 5] leaves [1, 5]; ID 5 still means the same card.
+If the ID isn't selected, the list stays as it was.
 
-Before saving, I use isWalletValid to check the count and add the used IDs to
-a separate empty wallet. That reuses my normal ID and duplicate rules instead
-of letting the saved-file checks gradually disagree with menu additions.
+Before saving, I check the count and try the used IDs in a separate empty
+wallet. Reusing the Add rules keeps file validation consistent with normal
+menu additions, especially for unknown or duplicate IDs.
 
-I pass Wallet* to functions that change the list. I use const Wallet* when a
-function only needs to read it. The pointer accesses the existing wallet, and
-const prevents that function from changing it through the parameter.
-I use printWallet for the selected names and example rates, including an empty
-message when no card is selected. I do not write a save just for viewing.
+I pass Wallet* when a function changes the list and const Wallet* when it only
+reads. Both point to the existing wallet, but const prevents changes through
+that parameter. printWallet shows the selected names and example rates, or
+an empty message. Viewing the list does not rewrite its save.
 */
 #include <stdio.h>
 #include "wallet.h"

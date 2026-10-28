@@ -1,9 +1,9 @@
 /*
-Oliver Dolfin - my assigned window entry point
+Oliver Dolfin - opening the window
 
-I declare runWindow here so main.c can launch the window without knowing every
-Windows control. I pass the save path in, which lets both interfaces use the
-same wallet file. I return a normal program status to main.
+I keep just the entry point here. main.c passes the save path and gets a
+program status back, without needing to know about every Windows control.
+The wallet file format is the same as the console's.
 */
 #ifndef WINDOW_H
 #define WINDOW_H

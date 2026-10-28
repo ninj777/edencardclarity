@@ -1,80 +1,76 @@
 /*
-Oliver Dolfin - my assigned menu and build work
+Oliver Dolfin - menu and build notes
 
-My part is connecting the menus, the card records, and Eden's wallet functions.
-I keep the main menu in this file and the Windows controls in window.c. This
-lets me follow the console without scrolling through the whole window code.
-I use C11 for the application and keep the tests in C too.
+My part is joining the menus, Joe's card records, and Eden's wallet functions.
+The console stays here, while the Windows controls are in window.c. That keeps
+the two views easier to follow. The application and its check programs use C11.
 
-For Gate 1, I need a three-option starter, at least three named sample cards,
-valid input, invalid input, and a working exit. Oliver Dolfin is the assigned
-lead, and the proposal date is Thursday, October 22, 2026. I keep that earlier
-menu available with --gate1. The current catalog has five examples, which is
-more than the required three. I keep all of them rather than hiding two.
+For Gate 1, I need three menu choices, at least three named sample cards, valid
+and invalid input, and a clean exit. I'm the assigned lead for that gate, due
+Thursday, October 22, 2026. The earlier menu is still available with --gate1.
+There are five samples, so the starter has more than the required three.
 
-I keep this feature checklist separate from what is already finished:
-  Card wallet - Eden handles the list and saving; I connect the menu.
-  Benefits display - Joe handles records; Evan checks whether labels are clear.
-  Rewards calculator - I connect the calculations; Joe checks example values.
-  Card recommendations - I handle comparisons using Joe's checked card data.
-The wallet works for Gate 2. I still need the later researched benefits,
-whole-cent purchase calculations, comparisons, ties, and reward restrictions.
-I do not treat the old practice formula as the finished calculator.
+This is the feature checklist from our proposal, with the work divided up:
+  Card wallet: Eden handles the list and saving; I connect the menus.
+  Benefits display: Joe handles the records; Evan checks the wording.
+  Rewards calculator: I connect the calculations; Joe checks the examples.
+  Card recommendations: I compare cards using Joe's checked data.
+The wallet works for Gate 2. Researched benefits, whole-cent purchase amounts,
+rounding, comparisons, ties, and limits are later work. The practice reward
+formula by itself does not finish the calculator.
 
-For Gate 2, I connect adding, viewing, removing, saving, and reloading chosen
-card types. Eden Yun Yu leads that gate, due Wednesday, October 28, 2026.
-I pass IDs to Eden's functions, use Joe's catalog to get the names, and leave
-Evan's separate test programs to check the resulting output and saved bytes.
-I keep input and file rules in Eden's modules so the window can reuse them.
+Eden leads Gate 2, due Wednesday, October 28, 2026. I connect its five actions:
+add, view, remove, save, and reload. The menu passes IDs to Eden's functions
+and gets the names from Joe's catalog. Evan's C cases check the results.
+Keeping the rules in those modules also lets the window call the same code.
 
-I start by preparing the samples in main. Then I check the launch arguments:
-  No argument: I open the three-option Gate 2 console menu.
-  --gate1: I open the earlier starter menu.
-  --wallet-file path: I use another save for the console.
-  --gui: I open the Windows window using savedCards.txt.
-  --gui --wallet-file path: I use another save for the window.
-I return 1 for an unsupported or incomplete argument instead of ignoring it.
-I return 0 for normal exit. The readMe.txt file has the actual build commands.
+At startup, I prepare the samples and check the command-line arguments:
+  No argument opens the Gate 2 console menu.
+  --gate1 opens the earlier starter.
+  --wallet-file path uses another save for the console.
+  --gui opens the Windows window with savedCards.txt.
+  --gui --wallet-file path uses another save for the window.
+An incomplete or unknown argument returns 1. A normal exit returns 0.
+The actual compiler commands are in readMe.txt.
 
-I use a loop for each menu. After showing the samples or the About text, I
-reach the next loop and ask again. I do not start another copy of the menu
-function. When I enter the wallet submenu, I pass its address so actions can
-change the same wallet instead of a temporary copy.
+I use a loop for each menu. Viewing samples or reading About finishes that
+action, then the loop asks again. It does not call another copy of the menu.
+The wallet goes to the submenu by address so both functions use the same list.
 
-I use changed to remember an unsaved addition or removal. A successful save
-or reload clears it. Going Back keeps the current list. If I choose Exit
-with edits, I offer save, discard, or keep editing. A failed save returns to
-the menu. If input ends, I warn about unsaved edits before closing.
+The changed flag is how I track unsaved additions and removals. A successful
+save or reload clears it, but Back keeps it. If there are edits at Exit, I
+offer save, discard, or keep editing. A failed save also keeps the menu open.
+When input ends, the program warns about unsaved edits before closing.
 
-I label Reload as undoing unsaved changes in the console. I also ask for
-confirmation in the window. Both versions use the same storage functions.
-I never ask for actual payment numbers, security codes, or bank passwords.
+I label console Reload as undoing unsaved changes. The window asks first too.
+Both views use the same storage format. Neither needs actual payment numbers,
+security codes, or bank passwords.
 
-For the build, I include main, cards, logger, input, wallet, storage, and
-window as seven C files. I keep their declarations in the matching headers.
-I use C11 and warnings. In Visual Studio I select CompileAsC, and --gui is
-the launch argument. I leave the old pagereader.c stub out of the build.
+For the build I include main, cards, logger, input, wallet, storage, and window.
+Their headers supply the shared declarations. Visual Studio uses C11 and
+CompileAsC, and its launch argument is --gui. The old page-reader placeholder
+had no working code and never supplied bank data or a benefits feature.
 
-For Gate 1 evidence, I need the feature checklist, owners, source, actual
-compile output, and five expected/actual checks. Evan's cases cover startup,
-sample display, invalid input, and exit; the build log covers compilation.
-For a possible 4, I also need the extra recovery check and a real teammate
-code review. I keep that review record at the top of tests/testGate1.c.
-For Gate 2, I need all five actions, restart proof, and input/file checks.
-The additional damaged-file cases are its extra rating requirement.
+For Gate 1, I need the checklist, owners, source, compile output, and five
+expected/actual checks. The build log covers compilation; Evan's cases cover
+startup, samples, invalid input, and exit. A possible 4 also needs the extra
+recovery case and a real teammate code review. That review record is at the
+top of tests/testGate1.c. For Gate 2, the extra rating requirement is passing
+additional damaged-file cases along with the five working actions.
 
-I use the three files in docs for actual build, C test, and restart output.
-I keep the source-size snapshot before these notes at commit bc9ae72:
-  My assigned menu/window/logger files: 734 lines; Gate 2 change +619/-395.
-  Eden's input/wallet/storage files: 316 lines; Gate 2 change +316/-0.
-  Joe's card files: 257 lines; Gate 2 change +17/-9.
-  Evan's C checks and support: 1,285 lines; Gate 2 change +1,232/-326.
-I include headers, comments, and blank lines in those file amounts. I do not
-use them as a measure of personal authorship or time. I keep the current file
-sizes in readMe.txt because moving notes into code increases the line counts.
-I leave the Visual Studio and Windows runtime result unverified until the
-program runs there. I also leave the proposal's four-student/six-investigator
-exception for staff to confirm. I leave the final gate ratings to the teacher.
+I keep the actual build, C test, and restart output in the three docs files.
+The source-size snapshot before these annotations is commit bc9ae72:
+  My menu/window/logger area: 734 lines; Gate 2 change +619/-395.
+  Eden's input/wallet/storage area: 316 lines; change +316/-0.
+  Joe's card area: 257 lines; change +17/-9.
+  Evan's C checks and support: 1,285 lines; change +1,232/-326.
+These file amounts include headers, comments, and blank lines. They do not
+measure personal authorship or time. Current sizes are in readMe.txt.
+
+A cross-build does not show that the window ran. I leave the Visual Studio
+and Windows runtime result open until it is checked on the demo computer.
+Staff also need to confirm the four-student/six-investigator exception.
+The teacher decides the gate ratings.
 */
 #include <stdio.h>
 #include <string.h>

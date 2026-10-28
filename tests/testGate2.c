@@ -1,47 +1,43 @@
 /*
-Evan Zhuang - my assigned Gate 2 action and file checks
+Evan Zhuang - Gate 2 wallet checks
 
-I test all five wallet actions: add, view, remove, save, and reload. I use
-39 cases and a new temporary folder for each one so I leave the normal save
-alone. I check the messages, process status, and exact saved bytes. I keep
-names and expected behavior in the arrays before the switch.
+I check add, view, remove, save, and reload in 39 cases. Each gets a temporary
+folder so the normal save is left alone. Messages, exit status, and exact
+saved bytes all have expected results in the arrays before the switch.
 
-I use case 3 for adding card 3 and viewing Cashback Sample. I expect it once,
-with ID 3 in the file. I use case 4 for a duplicate and cases 1 and 7 for an
-empty wallet. I check a full five-card list and adding again after a removal.
-I remove the middle, first, last, absent, and final remaining cards too.
+Case 3 adds and views card 3, which should be Cashback Sample. Case 4 rejects
+a duplicate; cases 1 and 7 cover an empty wallet. I check a full five-card
+list, space after removal, and removing a middle, first, last, absent,
+or final remaining card.
 
-I start a second process in case 9 to check that cards 1 and 3 survive a save
-and restart. In case 10 I expect a saved removal to stay removed. In case 12
-I reload over an unsaved edit and expect only the saved list and a cleared
-unsaved flag. I do not treat seeing a card before closing as restart proof.
+In case 9 I start another process to load saved cards 1 and 3. Case 10 checks
+that a saved removal stays removed after restarting. Case 12 reloads over an
+unsaved edit and expects the saved list and a cleared unsaved flag.
+Seeing a card before closing would not prove that it survived a restart.
 
-I check blank answers, text, decimals, invalid IDs, long input, hidden nulls,
-cancelling an action, input ending, and all three unsaved-exit choices.
-I check the default path, a path with spaces, and an overlong save path.
-I expect a failed Save and exit to keep the program available for editing.
+I also check bad menu answers and IDs, long and hidden-null input, cancelling,
+input ending, and all three unsaved-exit choices. Paths include the default,
+one with spaces, and one too long. Failed Save and exit should keep the menu open.
 
-For the extra Gate 2 requirement, I use 22 damaged files inside case 25.
-I include bad headers/counts, unknown or duplicate IDs, missing or extra
-records, long lines, hidden nulls, and a byte-order mark. I expect rejection
-without rewriting the file. I count those as examples inside one case.
-I also check valid Windows line endings and a missing last newline.
+Case 25 has 22 damaged-file examples. I use bad headers/counts, unknown and
+duplicate IDs, missing or extra records, long lines, hidden nulls, and a
+byte-order mark. All should fail without rewriting the file. They are examples
+inside one case, not 22 extra cases. Valid Windows line endings and an ID
+without a last newline are checked separately.
 
-In case 33, I keep the program open after a valid load. I then damage its file
-before sending Reload. I expect the current card 1 to stay in memory and the
-new bad file to remain unchanged. The input pipe lets me control that order.
-I also check a directory at the save path, a missing folder, an old temporary
-file, and replacement failure. I check that the old data survives the error.
+For case 33 I wait for a valid wallet to load, damage the file, then send
+Reload through the open input pipe. Card 1 should stay in memory and the
+damaged file should stay unchanged. Other cases cover a directory at the
+save path, a missing folder, an old temporary file, and replacement failure.
 
-I print expected and actual observations in docs/gate2TestLog.txt. I use
-safe temporary test files; I never need someone's real payment details.
-I skip the Linux read-error case and unsupported-window message on Windows.
-I still need a real desktop check of its buttons, resizing, and close prompts.
+I keep expected and actual observations in docs/gate2TestLog.txt and the
+three-process example in docs/gate2DemoLog.txt. No payment details are needed.
+The Linux read-error case and unsupported-window message are skipped on Windows.
+Buttons, resizing, and close prompts still need a desktop check.
 
-For Gate 2, I need all five actions and required tests for a 3; the extra
-damaged-file checks are the possible 4 requirement. I keep the build and demo
-logs with the source. For Gate 3, I still need the QA checklist, bug list,
-retest notes, and actual review. The test count alone does not sign that report.
+Gate 2 needs all five actions and required cases for a 3. Extra damaged-file
+checks are its possible 4 requirement. Gate 3 still needs its QA checklist,
+bug list, actual retests, and review; this test count doesn't sign that report.
 */
 #include <stdio.h>
 #include <string.h>

@@ -1,13 +1,12 @@
 /*
-Evan Zhuang - my assigned restart demonstration
+Evan Zhuang - restart demo
 
-I run CardClarity three separate times with the same temporary save path.
-First I add cards 1 and 3, view, and save. Next I restart, remove card 1, save,
-and reload. Last I restart again and expect only card 3. I print each set of
-answers, full output, exit status, and checked saved bytes for the demo log.
-I use expectedFiles to check the file itself after each process finishes.
-I keep the demonstration separate from the 39 menu cases so its actual output
-is easy to show during the gate check. I leave the usual saved wallet alone.
+I use one temporary save path across three separate CardClarity runs.
+First I add cards 1 and 3, view, and save. Next I restart, remove 1, save,
+and reload. Last I restart again and expect only card 3. The log includes
+the answers, full output, exit statuses, and saved-byte checks.
+expectedFiles gives the file content after each run. I keep this separate
+from the 39 cases so the complete demo output is easy to show.
 */
 #include <stdio.h>
 #include <string.h>

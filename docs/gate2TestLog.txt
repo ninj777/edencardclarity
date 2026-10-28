@@ -5,8 +5,8 @@ Build: gcc
 
 Command: build/cOnly/gcc/testGate1 build/cOnly/gcc/cardClarity
 Gate 1 C menu checks
-Date: 2026-10-27 20:48:15 UTC
-Program: /workspace/scratch/sourceNotesFresh/build/cOnly/gcc/cardClarity
+Date: 2026-10-28 01:17:31 UTC
+Program: /workspace/scratch/cleanupFresh/build/cOnly/gcc/cardClarity
 Test platform: POSIX
 
 Case 1: Three-option menu
@@ -303,8 +303,8 @@ Exit status: 0
 
 Command: build/cOnly/gcc/testGate2 build/cOnly/gcc/cardClarity
 Gate 2 C wallet checks
-Date: 2026-10-27 20:48:16 UTC
-Program: /workspace/scratch/sourceNotesFresh/build/cOnly/gcc/cardClarity
+Date: 2026-10-28 01:17:31 UTC
+Program: /workspace/scratch/cleanupFresh/build/cOnly/gcc/cardClarity
 Test platform: POSIX
 
 Case 1: Start empty
@@ -931,7 +931,7 @@ Exit status: 0
 
 Command: build/cOnly/gcc/testModules
 0.000 ms [Info] Logger initialized.
-0.035 ms [Info] Sample cards are ready.
+0.034 ms [Info] Sample cards are ready.
 All 40 module checks passed, including the practice reward examples.
 Exit status: 0
 
@@ -939,8 +939,8 @@ Build: clang
 
 Command: build/cOnly/clang/testGate1 build/cOnly/clang/cardClarity
 Gate 1 C menu checks
-Date: 2026-10-27 20:48:18 UTC
-Program: /workspace/scratch/sourceNotesFresh/build/cOnly/clang/cardClarity
+Date: 2026-10-28 01:17:34 UTC
+Program: /workspace/scratch/cleanupFresh/build/cOnly/clang/cardClarity
 Test platform: POSIX
 
 Case 1: Three-option menu
@@ -1237,8 +1237,8 @@ Exit status: 0
 
 Command: build/cOnly/clang/testGate2 build/cOnly/clang/cardClarity
 Gate 2 C wallet checks
-Date: 2026-10-27 20:48:19 UTC
-Program: /workspace/scratch/sourceNotesFresh/build/cOnly/clang/cardClarity
+Date: 2026-10-28 01:17:34 UTC
+Program: /workspace/scratch/cleanupFresh/build/cOnly/clang/cardClarity
 Test platform: POSIX
 
 Case 1: Start empty
@@ -1865,14 +1865,14 @@ Exit status: 0
 
 Command: build/cOnly/clang/testModules
 0.000 ms [Info] Logger initialized.
-0.032 ms [Info] Sample cards are ready.
+0.031 ms [Info] Sample cards are ready.
 All 40 module checks passed, including the practice reward examples.
 Exit status: 0
 
 Command: build/cOnly/clang/demoGate2 build/cOnly/clang/cardClarity
 Gate 2 C save-and-reload demonstration
-Date: 2026-10-27 20:48:21 UTC
-Program: /workspace/scratch/sourceNotesFresh/build/cOnly/clang/cardClarity
+Date: 2026-10-28 01:17:36 UTC
+Program: /workspace/scratch/cleanupFresh/build/cOnly/clang/cardClarity
 Test platform: POSIX
 
 Case 1: Three separate program runs
@@ -1896,7 +1896,7 @@ Observed: standard error is empty: yes
 Actual standard output:
 CardClarity
 You don't need to enter card numbers or bank passwords.
-Saved-card file: /tmp/cardClarityFTC9iv/savedCards.txt
+Saved-card file: /tmp/cardClarityEOsUiy/savedCards.txt
 There's no saved file yet. Your current list hasn't changed.
 
 1. View sample cards
@@ -1996,7 +1996,7 @@ You haven't saved your changes yet.
 4. Save my cards
 5. Reload my last save (undoes unsaved changes)
 6. Back
-Choose 1 to 6: Saved your card list to /tmp/cardClarityFTC9iv/savedCards.txt.
+Choose 1 to 6: Saved your card list to /tmp/cardClarityEOsUiy/savedCards.txt.
 
 My card wallet (2 of 5 cards)
 1. View my cards
@@ -2040,7 +2040,7 @@ Observed: standard error is empty: yes
 Actual standard output:
 CardClarity
 You don't need to enter card numbers or bank passwords.
-Saved-card file: /tmp/cardClarityFTC9iv/savedCards.txt
+Saved-card file: /tmp/cardClarityEOsUiy/savedCards.txt
 Loaded your saved card list.
 
 1. View sample cards
@@ -2082,7 +2082,7 @@ You haven't saved your changes yet.
 4. Save my cards
 5. Reload my last save (undoes unsaved changes)
 6. Back
-Choose 1 to 6: Saved your card list to /tmp/cardClarityFTC9iv/savedCards.txt.
+Choose 1 to 6: Saved your card list to /tmp/cardClarityEOsUiy/savedCards.txt.
 
 My card wallet (1 of 5 cards)
 1. View my cards
@@ -2142,7 +2142,7 @@ Observed: standard error is empty: yes
 Actual standard output:
 CardClarity
 You don't need to enter card numbers or bank passwords.
-Saved-card file: /tmp/cardClarityFTC9iv/savedCards.txt
+Saved-card file: /tmp/cardClarityEOsUiy/savedCards.txt
 Loaded your saved card list.
 
 1. View sample cards
@@ -2195,8 +2195,8 @@ Build: checked
 
 Command: build/cOnly/checked/testGate1 build/cOnly/checked/cardClarity
 Gate 1 C menu checks
-Date: 2026-10-27 20:48:22 UTC
-Program: /workspace/scratch/sourceNotesFresh/build/cOnly/checked/cardClarity
+Date: 2026-10-28 01:17:38 UTC
+Program: /workspace/scratch/cleanupFresh/build/cOnly/checked/cardClarity
 Test platform: POSIX
 
 Case 1: Three-option menu
@@ -2493,8 +2493,8 @@ Exit status: 0
 
 Command: build/cOnly/checked/testGate2 build/cOnly/checked/cardClarity
 Gate 2 C wallet checks
-Date: 2026-10-27 20:48:23 UTC
-Program: /workspace/scratch/sourceNotesFresh/build/cOnly/checked/cardClarity
+Date: 2026-10-28 01:17:38 UTC
+Program: /workspace/scratch/cleanupFresh/build/cOnly/checked/cardClarity
 Test platform: POSIX
 
 Case 1: Start empty
@@ -3121,14 +3121,14 @@ Exit status: 0
 
 Command: build/cOnly/checked/testModules
 0.000 ms [Info] Logger initialized.
-0.139 ms [Info] Sample cards are ready.
+0.065 ms [Info] Sample cards are ready.
 All 40 module checks passed, including the practice reward examples.
 Exit status: 0
 
 Command: build/cOnly/checked/demoGate2 build/cOnly/checked/cardClarity
 Gate 2 C save-and-reload demonstration
-Date: 2026-10-27 20:48:25 UTC
-Program: /workspace/scratch/sourceNotesFresh/build/cOnly/checked/cardClarity
+Date: 2026-10-28 01:17:40 UTC
+Program: /workspace/scratch/cleanupFresh/build/cOnly/checked/cardClarity
 Test platform: POSIX
 
 Case 1: Three separate program runs
@@ -3152,7 +3152,7 @@ Observed: standard error is empty: yes
 Actual standard output:
 CardClarity
 You don't need to enter card numbers or bank passwords.
-Saved-card file: /tmp/cardClarity4wLpzX/savedCards.txt
+Saved-card file: /tmp/cardClarityaiNAiK/savedCards.txt
 There's no saved file yet. Your current list hasn't changed.
 
 1. View sample cards
@@ -3252,7 +3252,7 @@ You haven't saved your changes yet.
 4. Save my cards
 5. Reload my last save (undoes unsaved changes)
 6. Back
-Choose 1 to 6: Saved your card list to /tmp/cardClarity4wLpzX/savedCards.txt.
+Choose 1 to 6: Saved your card list to /tmp/cardClarityaiNAiK/savedCards.txt.
 
 My card wallet (2 of 5 cards)
 1. View my cards
@@ -3296,7 +3296,7 @@ Observed: standard error is empty: yes
 Actual standard output:
 CardClarity
 You don't need to enter card numbers or bank passwords.
-Saved-card file: /tmp/cardClarity4wLpzX/savedCards.txt
+Saved-card file: /tmp/cardClarityaiNAiK/savedCards.txt
 Loaded your saved card list.
 
 1. View sample cards
@@ -3338,7 +3338,7 @@ You haven't saved your changes yet.
 4. Save my cards
 5. Reload my last save (undoes unsaved changes)
 6. Back
-Choose 1 to 6: Saved your card list to /tmp/cardClarity4wLpzX/savedCards.txt.
+Choose 1 to 6: Saved your card list to /tmp/cardClarityaiNAiK/savedCards.txt.
 
 My card wallet (1 of 5 cards)
 1. View my cards
@@ -3398,7 +3398,7 @@ Observed: standard error is empty: yes
 Actual standard output:
 CardClarity
 You don't need to enter card numbers or bank passwords.
-Saved-card file: /tmp/cardClarity4wLpzX/savedCards.txt
+Saved-card file: /tmp/cardClarityaiNAiK/savedCards.txt
 Loaded your saved card list.
 
 1. View sample cards

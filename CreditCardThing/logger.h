@@ -1,9 +1,9 @@
 /*
-Oliver Dolfin - my assigned logger interface
+Oliver Dolfin - logger declarations
 
-I share the message levels and two logger functions here. I keep the timer and
-enabled flag in logger.c, so including this header does not define extra global
-copies. I turn logging on explicitly for the window.
+I share the message levels and two functions here. The timer and enabled flag
+stay in logger.c, so including this header does not create more global copies.
+The window turns logging on when it starts.
 */
 #ifndef LOGGER_H
 #define LOGGER_H
