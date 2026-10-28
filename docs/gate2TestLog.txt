@@ -1,463 +1,3446 @@
-Gate 2 test log
-Date: 2026-10-26T17:52:56.509506-04:00
-Environment: Linux-6.18.55-x86_64-with-glibc2.41
-ASAN_OPTIONS=detect_leaks=0. Leak checking was not run.
+C test runner results
+Every menu test launches the compiled C application.
 
-Command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 tests/testGate2.py /workspace/cardClarityGate2/build/cardClarity
-Working folder: /workspace/cardClarityGate2
-Input: None
-Standard output:
+Build: gcc
 
-Standard error:
-test_01_start_empty (__main__.Gate2Tests.test_01_start_empty)
-A missing file starts an empty wallet and creates no file just by viewing. ... ok
-test_02_catalog_has_stable_numbers (__main__.Gate2Tests.test_02_catalog_has_stable_numbers)
-The five sample names have card numbers 1 to 5 and example labels. ... ok
-test_03_add_and_view (__main__.Gate2Tests.test_03_add_and_view)
-Adding card 3 shows only Cashback Sample in the wallet, then saves ID 3. ... ok
-test_04_duplicate (__main__.Gate2Tests.test_04_duplicate)
-A duplicate card is rejected and the saved list contains it only once. ... ok
-test_05_remove_middle_card (__main__.Gate2Tests.test_05_remove_middle_card)
-Removing card 3 from [1, 3, 5] saves [1, 5] in order. ... ok
-test_06_remove_absent_card (__main__.Gate2Tests.test_06_remove_absent_card)
-Removing a valid catalog ID not in the wallet leaves the saved list alone. ... ok
-test_07_remove_from_empty (__main__.Gate2Tests.test_07_remove_from_empty)
-Removing from an empty wallet explains the empty list and does not ask for an ID. ... ok
-test_08_full_wallet (__main__.Gate2Tests.test_08_full_wallet)
-A five-card wallet refuses another addition and saves all five IDs unchanged. ... ok
-test_09_save_and_restart (__main__.Gate2Tests.test_09_save_and_restart)
-After adding and saving cards 1 and 3, a second process loads those two cards. ... ok
-test_10_removal_survives_restart (__main__.Gate2Tests.test_10_removal_survives_restart)
-A removed and saved card stays removed after restarting. ... ok
-test_11_empty_save (__main__.Gate2Tests.test_11_empty_save)
-Removing the final card writes a valid zero-count save that reloads empty. ... ok
-test_12_reload_replaces_unsaved_changes (__main__.Gate2Tests.test_12_reload_replaces_unsaved_changes)
-Reloading restores the saved [1] list after adding unsaved card 3. ... ok
-test_13_missing_reload_keeps_current_cards (__main__.Gate2Tests.test_13_missing_reload_keeps_current_cards)
-Reloading a missing file leaves an unsaved card in memory so it can still be saved. ... ok
-test_14_room_after_removal (__main__.Gate2Tests.test_14_room_after_removal)
-Removing from a full wallet frees a slot and adding again appends the card. ... ok
-test_15_bad_main_and_wallet_choices (__main__.Gate2Tests.test_15_bad_main_and_wallet_choices)
-Blank, text, decimal, negative, zero, and out-of-range choices allow recovery. ... ok
-test_16_bad_card_numbers (__main__.Gate2Tests.test_16_bad_card_numbers)
-Invalid card answers are rejected before a valid card 3 is added. ... ok
-test_17_overlong_and_hidden_null_input (__main__.Gate2Tests.test_17_overlong_and_hidden_null_input)
-Overlong answers and hidden null bytes do not add a card or spoil the next answer. ... ok
-test_18_cancel_add_and_remove (__main__.Gate2Tests.test_18_cancel_add_and_remove)
-Zero cancels an add or removal and leaves [1] unchanged. ... ok
-test_19_end_of_input (__main__.Gate2Tests.test_19_end_of_input)
-End of input at nested prompts exits without a crash or an unexpected save. ... ok
-test_20_save_on_exit (__main__.Gate2Tests.test_20_save_on_exit)
-Save and exit writes unsaved card 1 before closing. ... ok
-test_21_exit_without_saving (__main__.Gate2Tests.test_21_exit_without_saving)
-Exit without saving preserves the older save [1] instead of writing [1, 3]. ... ok
-test_22_keep_editing (__main__.Gate2Tests.test_22_keep_editing)
-Cancelling exit returns to the menu and a later save keeps the edits. ... ok
-test_23_default_path (__main__.Gate2Tests.test_23_default_path)
-Normal launch saves and reloads savedCards.txt in the current folder. ... ok
-test_24_path_with_spaces (__main__.Gate2Tests.test_24_path_with_spaces)
-A chosen save filename containing spaces works across two launches. ... ok
-test_25_damaged_files (__main__.Gate2Tests.test_25_damaged_files)
-Malformed headers, counts, IDs, duplicates, missing data, and extra data are rejected unchanged. ... ok
-test_26_windows_line_endings (__main__.Gate2Tests.test_26_windows_line_endings)
-A valid CRLF file loads the same IDs as an LF file. ... ok
-test_27_no_final_newline (__main__.Gate2Tests.test_27_no_final_newline)
-A valid file without a newline after its last ID still loads. ... ok
-test_28_directory_is_not_a_save (__main__.Gate2Tests.test_28_directory_is_not_a_save)
-A directory at the save path reports a read error and leaves its contents alone. ... ok
-test_29_save_missing_folder (__main__.Gate2Tests.test_29_save_missing_folder)
-Saving into a missing folder fails clearly while the current wallet remains usable. ... ok
-test_30_stale_temporary_file (__main__.Gate2Tests.test_30_stale_temporary_file)
-An existing temporary file blocks saving without changing it or the previous save. ... ok
-test_31_failed_replacement_cleans_own_temp (__main__.Gate2Tests.test_31_failed_replacement_cleans_own_temp)
-A failed replacement of a directory removes the new temp and preserves the directory. ... ok
-test_32_failed_save_on_exit_returns_to_menu (__main__.Gate2Tests.test_32_failed_save_on_exit_returns_to_menu)
-A failed Save and exit leaves the program open for editing or explicit discard. ... ok
-test_33_reload_damaged_file_keeps_current_wallet (__main__.Gate2Tests.test_33_reload_damaged_file_keeps_current_wallet)
-If the file is damaged after startup, Reload leaves the already-loaded card 1 intact. ... ok
-test_34_whitespace_in_numeric_lines (__main__.Gate2Tests.test_34_whitespace_in_numeric_lines)
-Whitespace around a count or ID is accepted and the correct card loads. ... ok
-test_35_remove_first_and_last (__main__.Gate2Tests.test_35_remove_first_and_last)
-Removing the first and last IDs leaves the middle card correctly saved. ... ok
-test_36_real_input_error (__main__.Gate2Tests.test_36_real_input_error)
-A real stdin read error returns status 1 rather than claiming a normal exit. ... ok
-test_37_bad_arguments (__main__.Gate2Tests.test_37_bad_arguments)
-Unknown, incomplete, or empty command arguments return status 1 and do not save. ... ok
-test_38_too_long_save_path (__main__.Gate2Tests.test_38_too_long_save_path)
-An overlong save path is rejected without overflowing the temporary-path buffer. ... ok
-test_39_window_path_on_other_systems (__main__.Gate2Tests.test_39_window_path_on_other_systems)
-The window accepts a chosen save path, then explains that it needs Windows without writing. ... ok
+Command: build/cOnly/gcc/testGate1 build/cOnly/gcc/cardClarity
+Gate 1 C menu checks
+Date: 2026-10-27 20:48:15 UTC
+Program: /workspace/scratch/sourceNotesFresh/build/cOnly/gcc/cardClarity
+Test platform: POSIX
 
-----------------------------------------------------------------------
-Ran 39 tests in 0.071s
+Case 1: Three-option menu
+Expected: Exactly three numbered choices appear.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: 1. View sample cards: yes
+Observed: 2. About CardClarity: yes
+Observed: 3. Exit: yes
+Observed: exactly three numbered choices: yes
+Result: passed (6 checks matched).
 
-OK
+Case 2: Five sample names
+Expected: Each of the five names appears once.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Travel Sample: yes
+Observed: Points Sample: yes
+Observed: Cashback Sample: yes
+Observed: Everyday Sample: yes
+Observed: Starter Sample: yes
+Result: passed (7 checks matched).
 
+Case 3: Exact example values
+Expected: All base rates, fees, and category bonuses match the sample records.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Travel Sample: yes
+Observed: Points Sample: yes
+Observed: Cashback Sample: yes
+Observed: Everyday Sample: yes
+Observed: Starter Sample: yes
+Observed: it is not a times multiplier: yes
+Result: passed (8 checks matched).
+
+Case 4: Example labels
+Expected: Values are labeled as made-up examples and no words are all capitals.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: made up for practice, not real bank offers: yes
+Observed: no all-capital words in the display: yes
+Result: passed (4 checks matched).
+
+Case 5: Four planned features
+Expected: About lists the wallet, benefits, calculator, and recommendations.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card wallet:: yes
+Observed: Benefits display:: yes
+Observed: Rewards calculator:: yes
+Observed: Card recommendations:: yes
+Result: passed (6 checks matched).
+
+Case 6: Exit
+Expected: Goodbye appears and the program returns 0.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Goodbye!: yes
+Result: passed (3 checks matched).
+
+Case 7: Text input
+Expected: Text is rejected and exit still works.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 8: Zero
+Expected: Zero is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 9: Out-of-range choice
+Expected: Choice 9 is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 10: Negative choice
+Expected: A negative choice is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 11: Blank answer
+Expected: An empty answer is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 12: Decimal choice
+Expected: A decimal is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 13: Trailing characters
+Expected: Letters after a number are rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 14: Oversized numbers
+Expected: Both 30-digit and 300-digit numbers are rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (6 checks matched).
+
+Case 15: Long text
+Expected: A 600-character answer is one invalid answer.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 16: Recovery after bad input
+Expected: A bad answer is rejected, then cards display and exit works.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Travel Sample: yes
+Observed: Goodbye!: yes
+Result: passed (5 checks matched).
+
+Case 17: Surrounding spaces
+Expected: Spaces and a tab around 1 are accepted.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Travel Sample: yes
+Result: passed (3 checks matched).
+
+Case 18: End of input
+Expected: End of input closes normally.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No more input: yes
+Result: passed (3 checks matched).
+
+Case 19: No final newline
+Expected: Exit works without a final newline.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Goodbye!: yes
+Result: passed (3 checks matched).
+
+Case 20: Repeated choices
+Expected: View and About return to the same menu.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: cards shown twice: yes
+Observed: four menu visits: yes
+Observed: one exit message: yes
+Result: passed (5 checks matched).
+
+Case 21: Input after exit
+Expected: Exit does not process another choice after it.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: no cards shown after Exit: yes
+Observed: one menu visit: yes
+Result: passed (4 checks matched).
+
+Case 22: Hidden null
+Expected: Hidden nulls are rejected, including at end of input.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Goodbye!: yes
+Observed: hidden answer did not show cards: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Goodbye!: yes
+Observed: hidden answer did not show cards: yes
+Result: passed (10 checks matched).
+
+Case 23: Standard whitespace
+Expected: All ordinary surrounding whitespace is accepted.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Travel Sample: yes
+Observed: no retry needed: yes
+Result: passed (4 checks matched).
+
+Case 24: Whole overlong line
+Expected: One overlong line causes one error, then the next answer works.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: one rejected line: yes
+Observed: next choice worked once: yes
+Observed: Goodbye!: yes
+Result: passed (5 checks matched).
+
+Case 25: Bad answer at end
+Expected: A bad final answer is rejected before input ends.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: No more input: yes
+Observed: one rejected final answer: yes
+Result: passed (5 checks matched).
+
+Case 26: Whitespace-only answer
+Expected: A whitespace-only line is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Goodbye!: yes
+Result: passed (4 checks matched).
+
+Case 27: Real read error
+Expected: A genuine read error returns 1 and does not say Goodbye.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: read error explained: yes
+Observed: no normal exit claim: yes
+Result: passed (3 checks matched).
+
+Case 28: Largest fitting line
+Expected: A 127-character answer ending with spaces is accepted.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Travel Sample: yes
+Observed: No more input: yes
+Observed: largest fitting line accepted: yes
+Result: passed (5 checks matched).
+
+Case 29: First overlong line
+Expected: A 128-character answer is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: No more input: yes
+Observed: overlong line did not show cards: yes
+Result: passed (5 checks matched).
+
+Case 30: Unknown argument
+Expected: An unknown argument returns 1.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: usage help printed: yes
+Result: passed (2 checks matched).
+
+Case 31: Window on another system
+Expected: The window option explains that Windows is needed and returns 1.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: Windows requirement explained: yes
+Result: passed (2 checks matched).
+
+Summary: 31 passed, 0 failed, 0 skipped.
 Exit status: 0
 
-Command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 tests/testGate1.py /workspace/cardClarityGate2/build/cardClarity
-Working folder: /workspace/cardClarityGate2
-Input: None
-Standard output:
+Command: build/cOnly/gcc/testGate2 build/cOnly/gcc/cardClarity
+Gate 2 C wallet checks
+Date: 2026-10-27 20:48:16 UTC
+Program: /workspace/scratch/sourceNotesFresh/build/cOnly/gcc/cardClarity
+Test platform: POSIX
 
-Standard error:
-test_01_menu_has_three_options (__main__.Gate1MenuTests.test_01_menu_has_three_options) ... ok
-test_02_view_all_five_cards (__main__.Gate1MenuTests.test_02_view_all_five_cards) ... ok
-test_03_rates_are_printed (__main__.Gate1MenuTests.test_03_rates_are_printed) ... ok
-test_04_rates_are_labeled_examples (__main__.Gate1MenuTests.test_04_rates_are_labeled_examples) ... ok
-test_05_about_lists_planned_features (__main__.Gate1MenuTests.test_05_about_lists_planned_features) ... ok
-test_06_exit (__main__.Gate1MenuTests.test_06_exit) ... ok
-test_07_text_input (__main__.Gate1MenuTests.test_07_text_input) ... ok
-test_08_zero (__main__.Gate1MenuTests.test_08_zero) ... ok
-test_09_out_of_range (__main__.Gate1MenuTests.test_09_out_of_range) ... ok
-test_10_negative (__main__.Gate1MenuTests.test_10_negative) ... ok
-test_11_empty_answer (__main__.Gate1MenuTests.test_11_empty_answer) ... ok
-test_12_decimal (__main__.Gate1MenuTests.test_12_decimal) ... ok
-test_13_trailing_characters (__main__.Gate1MenuTests.test_13_trailing_characters) ... ok
-test_14_very_large_number (__main__.Gate1MenuTests.test_14_very_large_number) ... ok
-test_15_overlong_text (__main__.Gate1MenuTests.test_15_overlong_text) ... ok
-test_16_valid_after_invalid (__main__.Gate1MenuTests.test_16_valid_after_invalid) ... ok
-test_17_whitespace_around_choice (__main__.Gate1MenuTests.test_17_whitespace_around_choice) ... ok
-test_18_end_of_input (__main__.Gate1MenuTests.test_18_end_of_input) ... ok
-test_19_choice_without_final_newline (__main__.Gate1MenuTests.test_19_choice_without_final_newline) ... ok
-test_20_repeated_choices_return_to_menu (__main__.Gate1MenuTests.test_20_repeated_choices_return_to_menu) ... ok
-test_21_exit_does_not_process_later_input (__main__.Gate1MenuTests.test_21_exit_does_not_process_later_input) ... ok
-test_22_embedded_null_is_rejected (__main__.Gate1MenuTests.test_22_embedded_null_is_rejected) ... ok
-test_23_all_standard_whitespace (__main__.Gate1MenuTests.test_23_all_standard_whitespace) ... ok
-test_24_long_input_is_one_rejected_answer (__main__.Gate1MenuTests.test_24_long_input_is_one_rejected_answer) ... ok
-test_25_invalid_answer_at_eof (__main__.Gate1MenuTests.test_25_invalid_answer_at_eof) ... ok
-test_26_blank_whitespace (__main__.Gate1MenuTests.test_26_blank_whitespace) ... ok
-test_27_read_error_is_not_normal_eof (__main__.Gate1MenuTests.test_27_read_error_is_not_normal_eof) ... ok
-test_28_last_fitting_answer_at_eof (__main__.Gate1MenuTests.test_28_last_fitting_answer_at_eof) ... ok
-test_29_overlong_answer_at_eof (__main__.Gate1MenuTests.test_29_overlong_answer_at_eof) ... ok
-test_30_unknown_argument (__main__.Gate1MenuTests.test_30_unknown_argument) ... ok
-test_31_window_on_other_systems (__main__.Gate1MenuTests.test_31_window_on_other_systems) ... ok
+Case 1: Start empty
+Expected: A missing file starts an empty wallet without writing a save.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: no saved file yet: yes
+Observed: Your wallet is empty: yes
+Observed: viewing created no save: yes
+Result: passed (5 checks matched).
 
-----------------------------------------------------------------------
-Ran 31 tests in 0.026s
+Case 2: Stable card IDs
+Expected: The five names keep IDs 1 through 5 and example labels.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 1: Travel Sample: yes
+Observed: Card 2: Points Sample: yes
+Observed: Card 3: Cashback Sample: yes
+Observed: Card 4: Everyday Sample: yes
+Observed: Card 5: Starter Sample: yes
+Observed: not real bank offers: yes
+Result: passed (8 checks matched).
 
-OK
+Case 3: Add and view
+Expected: Adding card 3 displays Cashback Sample and saves ID 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Added Cashback Sample.: yes
+Observed: Card 3: Cashback Sample | Example base rate: 1.00%: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (5 checks matched).
 
+Case 4: Duplicate card
+Expected: Adding card 1 twice is rejected and saves it once.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: already in your wallet: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 5: Remove middle
+Expected: Removing 3 from [1,3,5] saves [1,5].
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Removed Cashback Sample.: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 6: Remove absent card
+Expected: Removing an absent ID keeps the current list.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: isn't in your wallet: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 7: Remove from empty
+Expected: An empty list explains that there is nothing to remove.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Your wallet is empty: yes
+Observed: unwanted text is absent: yes
+Result: passed (4 checks matched).
+
+Case 8: Full wallet
+Expected: A full five-card list refuses another addition.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Your wallet is full: yes
+Observed: My card wallet (5 of 5 cards): yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (5 checks matched).
+
+Case 9: Save and restart
+Expected: A new process reloads the saved cards 1 and 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Loaded your saved card list: yes
+Observed: My card wallet (2 of 5 cards): yes
+Observed: Card 1: Travel Sample |: yes
+Observed: Card 3: Cashback Sample |: yes
+Observed: unwanted text is absent: yes
+Result: passed (10 checks matched).
+
+Case 10: Removal after restart
+Expected: A removed and saved card stays removed after restarting.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Observed: My card wallet (2 of 5 cards): yes
+Observed: unwanted text is absent: yes
+Result: passed (7 checks matched).
+
+Case 11: Save empty wallet
+Expected: Removing the last card saves a valid empty wallet.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Your wallet is empty: yes
+Result: passed (6 checks matched).
+
+Case 12: Reload saved list
+Expected: Reload restores [1] after an unsaved addition of card 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Reload reported a second successful load: yes
+Observed: one saved card restored: yes
+Observed: unsaved card removed by Reload: yes
+Observed: unsaved flag cleared: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (7 checks matched).
+
+Case 13: Missing reload
+Expected: A missing reload keeps an unsaved card available for saving.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Your current list hasn't changed: yes
+Observed: Card 1: Travel Sample |: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (5 checks matched).
+
+Case 14: Space after removal
+Expected: Removal frees a slot and adding appends the card.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (3 checks matched).
+
+Case 15: Bad menu choices
+Expected: Bad answers at both menus allow recovery.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Result: passed (40 checks matched).
+
+Case 16: Bad card numbers
+Expected: Six invalid card answers are rejected before a valid answer.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: six bad answers rejected: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 17: Long and hidden input
+Expected: A long answer and hidden null are rejected before adding card 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: both invalid lines rejected: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 18: Cancel actions
+Expected: Zero cancels add and remove without changing [1].
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Add cancelled: yes
+Observed: Remove cancelled: yes
+Observed: unwanted text is absent: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (6 checks matched).
+
+Case 19: End of input
+Expected: Input ending at nested questions exits without saving.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No more input. Goodbye!: yes
+Observed: end of input did not create a save: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No more input. Goodbye!: yes
+Observed: end of input did not create a save: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No more input. Goodbye!: yes
+Observed: end of input did not create a save: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No more input. Goodbye!: yes
+Observed: end of input did not create a save: yes
+Result: passed (16 checks matched).
+
+Case 20: Save on exit
+Expected: Save and exit writes the unsaved card first.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Save and exit: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 21: Discard changes
+Expected: Exit without saving preserves the older saved list.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (3 checks matched).
+
+Case 22: Keep editing
+Expected: Keep editing returns to the menu and later saving works.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: only the final Exit closed the program: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 23: Default save path
+Expected: Normal launch saves and reloads savedCards.txt in its current folder.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 5: Starter Sample |: yes
+Result: passed (6 checks matched).
+
+Case 24: Path with spaces
+Expected: A selected filename containing spaces works across restarts.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 2: Points Sample |: yes
+Result: passed (6 checks matched).
+
+Case 25: Damaged files
+Expected: All 22 malformed files are rejected without rewriting them.
+Damaged-file example: empty
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: wrong header
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: header only
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: negative count
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: too many cards
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: huge count
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: text count
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: decimal count
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: zero ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: unknown ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: negative ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: duplicate
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: missing ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: extra ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: extra blank line
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: hidden null in header
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: hidden null in count
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: hidden null in ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: long header
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: long ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: byte-order mark
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: ID followed by letters
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Result: passed (110 checks matched).
+
+Case 26: Windows line endings
+Expected: Windows line endings load cards 1 and 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 1: Travel Sample |: yes
+Observed: Card 3: Cashback Sample |: yes
+Result: passed (4 checks matched).
+
+Case 27: No final newline
+Expected: The final ID is accepted without a newline.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 5: Starter Sample |: yes
+Result: passed (3 checks matched).
+
+Case 28: Directory as save
+Expected: A directory used as a save reports an error and keeps its contents.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't read your saved cards: yes
+Observed: directory contents preserved: yes
+Result: passed (4 checks matched).
+
+Case 29: Missing folder
+Expected: A missing destination folder causes a save error without losing the live wallet.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't save your cards: yes
+Observed: Card 1: Travel Sample |: yes
+Observed: no save created in missing folder: yes
+Result: passed (5 checks matched).
+
+Case 30: Existing temporary file
+Expected: An existing temporary file blocks saving and stays unchanged.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't save your cards: yes
+Observed: Card 3: Cashback Sample |: yes
+Observed: saved bytes match the expected IDs: yes
+Observed: old temporary file preserved: yes
+Result: passed (6 checks matched).
+
+Case 31: Failed replacement
+Expected: Failed replacement keeps the directory and removes the newly written temporary file.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't save your cards: yes
+Observed: new temporary file removed: yes
+Observed: directory contents preserved: yes
+Result: passed (5 checks matched).
+
+Case 32: Failed save on exit
+Expected: Failed Save and exit keeps the menu usable.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't save your cards: yes
+Observed: Card 1: Travel Sample |: yes
+Observed: failure did not close the program early: yes
+Result: passed (5 checks matched).
+
+Case 33: Damage after startup
+Expected: Damage after startup causes Reload to keep the live card 1.
+Observed: initial save loaded before damage: yes
+Observed: program stayed usable after failed Reload: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Card 1: Travel Sample |: yes
+Observed: unwanted text is absent: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (6 checks matched).
+
+Case 34: Numeric whitespace
+Expected: Surrounding whitespace is allowed in numeric lines.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 3: Cashback Sample |: yes
+Result: passed (3 checks matched).
+
+Case 35: Remove first and last
+Expected: Removing first and last leaves the middle ID 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (3 checks matched).
+
+Case 36: Real read error
+Expected: A genuine stdin read error returns 1.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: real read error explained: yes
+Observed: unwanted text is absent: yes
+Result: passed (3 checks matched).
+
+Case 37: Bad arguments
+Expected: Unknown, incomplete, and empty arguments return 1 without saving.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Result: passed (24 checks matched).
+
+Case 38: Long save path
+Expected: An overlong save path reports a save error without overflowing.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't save your cards: yes
+Observed: overlong save path created no file: yes
+Observed: overlong save path created no temporary file: yes
+Result: passed (5 checks matched).
+
+Case 39: Chosen window path on another system
+Expected: The chosen window path is parsed before explaining that Windows is required.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: chosen window path accepted: yes
+Observed: valid window arguments did not print usage help: yes
+Observed: unsupported window created no save: yes
+Result: passed (4 checks matched).
+
+Summary: 39 passed, 0 failed, 0 skipped.
 Exit status: 0
 
-Command: /workspace/cardClarityGate2/build/cardClarityModules
-Working folder: /workspace/cardClarityGate2
-Input: None
-Standard output:
+Command: build/cOnly/gcc/testModules
 0.000 ms [Info] Logger initialized.
-0.030 ms [Info] Sample cards are ready.
+0.035 ms [Info] Sample cards are ready.
 All 40 module checks passed, including the practice reward examples.
-
-Standard error:
-
 Exit status: 0
 
-Command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 tests/testGate2.py /workspace/cardClarityGate2/build/cardClarityClang
-Working folder: /workspace/cardClarityGate2
-Input: None
-Standard output:
+Build: clang
 
-Standard error:
-test_01_start_empty (__main__.Gate2Tests.test_01_start_empty)
-A missing file starts an empty wallet and creates no file just by viewing. ... ok
-test_02_catalog_has_stable_numbers (__main__.Gate2Tests.test_02_catalog_has_stable_numbers)
-The five sample names have card numbers 1 to 5 and example labels. ... ok
-test_03_add_and_view (__main__.Gate2Tests.test_03_add_and_view)
-Adding card 3 shows only Cashback Sample in the wallet, then saves ID 3. ... ok
-test_04_duplicate (__main__.Gate2Tests.test_04_duplicate)
-A duplicate card is rejected and the saved list contains it only once. ... ok
-test_05_remove_middle_card (__main__.Gate2Tests.test_05_remove_middle_card)
-Removing card 3 from [1, 3, 5] saves [1, 5] in order. ... ok
-test_06_remove_absent_card (__main__.Gate2Tests.test_06_remove_absent_card)
-Removing a valid catalog ID not in the wallet leaves the saved list alone. ... ok
-test_07_remove_from_empty (__main__.Gate2Tests.test_07_remove_from_empty)
-Removing from an empty wallet explains the empty list and does not ask for an ID. ... ok
-test_08_full_wallet (__main__.Gate2Tests.test_08_full_wallet)
-A five-card wallet refuses another addition and saves all five IDs unchanged. ... ok
-test_09_save_and_restart (__main__.Gate2Tests.test_09_save_and_restart)
-After adding and saving cards 1 and 3, a second process loads those two cards. ... ok
-test_10_removal_survives_restart (__main__.Gate2Tests.test_10_removal_survives_restart)
-A removed and saved card stays removed after restarting. ... ok
-test_11_empty_save (__main__.Gate2Tests.test_11_empty_save)
-Removing the final card writes a valid zero-count save that reloads empty. ... ok
-test_12_reload_replaces_unsaved_changes (__main__.Gate2Tests.test_12_reload_replaces_unsaved_changes)
-Reloading restores the saved [1] list after adding unsaved card 3. ... ok
-test_13_missing_reload_keeps_current_cards (__main__.Gate2Tests.test_13_missing_reload_keeps_current_cards)
-Reloading a missing file leaves an unsaved card in memory so it can still be saved. ... ok
-test_14_room_after_removal (__main__.Gate2Tests.test_14_room_after_removal)
-Removing from a full wallet frees a slot and adding again appends the card. ... ok
-test_15_bad_main_and_wallet_choices (__main__.Gate2Tests.test_15_bad_main_and_wallet_choices)
-Blank, text, decimal, negative, zero, and out-of-range choices allow recovery. ... ok
-test_16_bad_card_numbers (__main__.Gate2Tests.test_16_bad_card_numbers)
-Invalid card answers are rejected before a valid card 3 is added. ... ok
-test_17_overlong_and_hidden_null_input (__main__.Gate2Tests.test_17_overlong_and_hidden_null_input)
-Overlong answers and hidden null bytes do not add a card or spoil the next answer. ... ok
-test_18_cancel_add_and_remove (__main__.Gate2Tests.test_18_cancel_add_and_remove)
-Zero cancels an add or removal and leaves [1] unchanged. ... ok
-test_19_end_of_input (__main__.Gate2Tests.test_19_end_of_input)
-End of input at nested prompts exits without a crash or an unexpected save. ... ok
-test_20_save_on_exit (__main__.Gate2Tests.test_20_save_on_exit)
-Save and exit writes unsaved card 1 before closing. ... ok
-test_21_exit_without_saving (__main__.Gate2Tests.test_21_exit_without_saving)
-Exit without saving preserves the older save [1] instead of writing [1, 3]. ... ok
-test_22_keep_editing (__main__.Gate2Tests.test_22_keep_editing)
-Cancelling exit returns to the menu and a later save keeps the edits. ... ok
-test_23_default_path (__main__.Gate2Tests.test_23_default_path)
-Normal launch saves and reloads savedCards.txt in the current folder. ... ok
-test_24_path_with_spaces (__main__.Gate2Tests.test_24_path_with_spaces)
-A chosen save filename containing spaces works across two launches. ... ok
-test_25_damaged_files (__main__.Gate2Tests.test_25_damaged_files)
-Malformed headers, counts, IDs, duplicates, missing data, and extra data are rejected unchanged. ... ok
-test_26_windows_line_endings (__main__.Gate2Tests.test_26_windows_line_endings)
-A valid CRLF file loads the same IDs as an LF file. ... ok
-test_27_no_final_newline (__main__.Gate2Tests.test_27_no_final_newline)
-A valid file without a newline after its last ID still loads. ... ok
-test_28_directory_is_not_a_save (__main__.Gate2Tests.test_28_directory_is_not_a_save)
-A directory at the save path reports a read error and leaves its contents alone. ... ok
-test_29_save_missing_folder (__main__.Gate2Tests.test_29_save_missing_folder)
-Saving into a missing folder fails clearly while the current wallet remains usable. ... ok
-test_30_stale_temporary_file (__main__.Gate2Tests.test_30_stale_temporary_file)
-An existing temporary file blocks saving without changing it or the previous save. ... ok
-test_31_failed_replacement_cleans_own_temp (__main__.Gate2Tests.test_31_failed_replacement_cleans_own_temp)
-A failed replacement of a directory removes the new temp and preserves the directory. ... ok
-test_32_failed_save_on_exit_returns_to_menu (__main__.Gate2Tests.test_32_failed_save_on_exit_returns_to_menu)
-A failed Save and exit leaves the program open for editing or explicit discard. ... ok
-test_33_reload_damaged_file_keeps_current_wallet (__main__.Gate2Tests.test_33_reload_damaged_file_keeps_current_wallet)
-If the file is damaged after startup, Reload leaves the already-loaded card 1 intact. ... ok
-test_34_whitespace_in_numeric_lines (__main__.Gate2Tests.test_34_whitespace_in_numeric_lines)
-Whitespace around a count or ID is accepted and the correct card loads. ... ok
-test_35_remove_first_and_last (__main__.Gate2Tests.test_35_remove_first_and_last)
-Removing the first and last IDs leaves the middle card correctly saved. ... ok
-test_36_real_input_error (__main__.Gate2Tests.test_36_real_input_error)
-A real stdin read error returns status 1 rather than claiming a normal exit. ... ok
-test_37_bad_arguments (__main__.Gate2Tests.test_37_bad_arguments)
-Unknown, incomplete, or empty command arguments return status 1 and do not save. ... ok
-test_38_too_long_save_path (__main__.Gate2Tests.test_38_too_long_save_path)
-An overlong save path is rejected without overflowing the temporary-path buffer. ... ok
-test_39_window_path_on_other_systems (__main__.Gate2Tests.test_39_window_path_on_other_systems)
-The window accepts a chosen save path, then explains that it needs Windows without writing. ... ok
+Command: build/cOnly/clang/testGate1 build/cOnly/clang/cardClarity
+Gate 1 C menu checks
+Date: 2026-10-27 20:48:18 UTC
+Program: /workspace/scratch/sourceNotesFresh/build/cOnly/clang/cardClarity
+Test platform: POSIX
 
-----------------------------------------------------------------------
-Ran 39 tests in 0.080s
+Case 1: Three-option menu
+Expected: Exactly three numbered choices appear.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: 1. View sample cards: yes
+Observed: 2. About CardClarity: yes
+Observed: 3. Exit: yes
+Observed: exactly three numbered choices: yes
+Result: passed (6 checks matched).
 
-OK
+Case 2: Five sample names
+Expected: Each of the five names appears once.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Travel Sample: yes
+Observed: Points Sample: yes
+Observed: Cashback Sample: yes
+Observed: Everyday Sample: yes
+Observed: Starter Sample: yes
+Result: passed (7 checks matched).
 
+Case 3: Exact example values
+Expected: All base rates, fees, and category bonuses match the sample records.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Travel Sample: yes
+Observed: Points Sample: yes
+Observed: Cashback Sample: yes
+Observed: Everyday Sample: yes
+Observed: Starter Sample: yes
+Observed: it is not a times multiplier: yes
+Result: passed (8 checks matched).
+
+Case 4: Example labels
+Expected: Values are labeled as made-up examples and no words are all capitals.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: made up for practice, not real bank offers: yes
+Observed: no all-capital words in the display: yes
+Result: passed (4 checks matched).
+
+Case 5: Four planned features
+Expected: About lists the wallet, benefits, calculator, and recommendations.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card wallet:: yes
+Observed: Benefits display:: yes
+Observed: Rewards calculator:: yes
+Observed: Card recommendations:: yes
+Result: passed (6 checks matched).
+
+Case 6: Exit
+Expected: Goodbye appears and the program returns 0.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Goodbye!: yes
+Result: passed (3 checks matched).
+
+Case 7: Text input
+Expected: Text is rejected and exit still works.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 8: Zero
+Expected: Zero is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 9: Out-of-range choice
+Expected: Choice 9 is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 10: Negative choice
+Expected: A negative choice is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 11: Blank answer
+Expected: An empty answer is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 12: Decimal choice
+Expected: A decimal is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 13: Trailing characters
+Expected: Letters after a number are rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 14: Oversized numbers
+Expected: Both 30-digit and 300-digit numbers are rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (6 checks matched).
+
+Case 15: Long text
+Expected: A 600-character answer is one invalid answer.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 16: Recovery after bad input
+Expected: A bad answer is rejected, then cards display and exit works.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Travel Sample: yes
+Observed: Goodbye!: yes
+Result: passed (5 checks matched).
+
+Case 17: Surrounding spaces
+Expected: Spaces and a tab around 1 are accepted.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Travel Sample: yes
+Result: passed (3 checks matched).
+
+Case 18: End of input
+Expected: End of input closes normally.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No more input: yes
+Result: passed (3 checks matched).
+
+Case 19: No final newline
+Expected: Exit works without a final newline.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Goodbye!: yes
+Result: passed (3 checks matched).
+
+Case 20: Repeated choices
+Expected: View and About return to the same menu.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: cards shown twice: yes
+Observed: four menu visits: yes
+Observed: one exit message: yes
+Result: passed (5 checks matched).
+
+Case 21: Input after exit
+Expected: Exit does not process another choice after it.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: no cards shown after Exit: yes
+Observed: one menu visit: yes
+Result: passed (4 checks matched).
+
+Case 22: Hidden null
+Expected: Hidden nulls are rejected, including at end of input.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Goodbye!: yes
+Observed: hidden answer did not show cards: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Goodbye!: yes
+Observed: hidden answer did not show cards: yes
+Result: passed (10 checks matched).
+
+Case 23: Standard whitespace
+Expected: All ordinary surrounding whitespace is accepted.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Travel Sample: yes
+Observed: no retry needed: yes
+Result: passed (4 checks matched).
+
+Case 24: Whole overlong line
+Expected: One overlong line causes one error, then the next answer works.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: one rejected line: yes
+Observed: next choice worked once: yes
+Observed: Goodbye!: yes
+Result: passed (5 checks matched).
+
+Case 25: Bad answer at end
+Expected: A bad final answer is rejected before input ends.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: No more input: yes
+Observed: one rejected final answer: yes
+Result: passed (5 checks matched).
+
+Case 26: Whitespace-only answer
+Expected: A whitespace-only line is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Goodbye!: yes
+Result: passed (4 checks matched).
+
+Case 27: Real read error
+Expected: A genuine read error returns 1 and does not say Goodbye.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: read error explained: yes
+Observed: no normal exit claim: yes
+Result: passed (3 checks matched).
+
+Case 28: Largest fitting line
+Expected: A 127-character answer ending with spaces is accepted.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Travel Sample: yes
+Observed: No more input: yes
+Observed: largest fitting line accepted: yes
+Result: passed (5 checks matched).
+
+Case 29: First overlong line
+Expected: A 128-character answer is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: No more input: yes
+Observed: overlong line did not show cards: yes
+Result: passed (5 checks matched).
+
+Case 30: Unknown argument
+Expected: An unknown argument returns 1.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: usage help printed: yes
+Result: passed (2 checks matched).
+
+Case 31: Window on another system
+Expected: The window option explains that Windows is needed and returns 1.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: Windows requirement explained: yes
+Result: passed (2 checks matched).
+
+Summary: 31 passed, 0 failed, 0 skipped.
 Exit status: 0
 
-Command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 tests/testGate1.py /workspace/cardClarityGate2/build/cardClarityClang
-Working folder: /workspace/cardClarityGate2
-Input: None
-Standard output:
+Command: build/cOnly/clang/testGate2 build/cOnly/clang/cardClarity
+Gate 2 C wallet checks
+Date: 2026-10-27 20:48:19 UTC
+Program: /workspace/scratch/sourceNotesFresh/build/cOnly/clang/cardClarity
+Test platform: POSIX
 
-Standard error:
-test_01_menu_has_three_options (__main__.Gate1MenuTests.test_01_menu_has_three_options) ... ok
-test_02_view_all_five_cards (__main__.Gate1MenuTests.test_02_view_all_five_cards) ... ok
-test_03_rates_are_printed (__main__.Gate1MenuTests.test_03_rates_are_printed) ... ok
-test_04_rates_are_labeled_examples (__main__.Gate1MenuTests.test_04_rates_are_labeled_examples) ... ok
-test_05_about_lists_planned_features (__main__.Gate1MenuTests.test_05_about_lists_planned_features) ... ok
-test_06_exit (__main__.Gate1MenuTests.test_06_exit) ... ok
-test_07_text_input (__main__.Gate1MenuTests.test_07_text_input) ... ok
-test_08_zero (__main__.Gate1MenuTests.test_08_zero) ... ok
-test_09_out_of_range (__main__.Gate1MenuTests.test_09_out_of_range) ... ok
-test_10_negative (__main__.Gate1MenuTests.test_10_negative) ... ok
-test_11_empty_answer (__main__.Gate1MenuTests.test_11_empty_answer) ... ok
-test_12_decimal (__main__.Gate1MenuTests.test_12_decimal) ... ok
-test_13_trailing_characters (__main__.Gate1MenuTests.test_13_trailing_characters) ... ok
-test_14_very_large_number (__main__.Gate1MenuTests.test_14_very_large_number) ... ok
-test_15_overlong_text (__main__.Gate1MenuTests.test_15_overlong_text) ... ok
-test_16_valid_after_invalid (__main__.Gate1MenuTests.test_16_valid_after_invalid) ... ok
-test_17_whitespace_around_choice (__main__.Gate1MenuTests.test_17_whitespace_around_choice) ... ok
-test_18_end_of_input (__main__.Gate1MenuTests.test_18_end_of_input) ... ok
-test_19_choice_without_final_newline (__main__.Gate1MenuTests.test_19_choice_without_final_newline) ... ok
-test_20_repeated_choices_return_to_menu (__main__.Gate1MenuTests.test_20_repeated_choices_return_to_menu) ... ok
-test_21_exit_does_not_process_later_input (__main__.Gate1MenuTests.test_21_exit_does_not_process_later_input) ... ok
-test_22_embedded_null_is_rejected (__main__.Gate1MenuTests.test_22_embedded_null_is_rejected) ... ok
-test_23_all_standard_whitespace (__main__.Gate1MenuTests.test_23_all_standard_whitespace) ... ok
-test_24_long_input_is_one_rejected_answer (__main__.Gate1MenuTests.test_24_long_input_is_one_rejected_answer) ... ok
-test_25_invalid_answer_at_eof (__main__.Gate1MenuTests.test_25_invalid_answer_at_eof) ... ok
-test_26_blank_whitespace (__main__.Gate1MenuTests.test_26_blank_whitespace) ... ok
-test_27_read_error_is_not_normal_eof (__main__.Gate1MenuTests.test_27_read_error_is_not_normal_eof) ... ok
-test_28_last_fitting_answer_at_eof (__main__.Gate1MenuTests.test_28_last_fitting_answer_at_eof) ... ok
-test_29_overlong_answer_at_eof (__main__.Gate1MenuTests.test_29_overlong_answer_at_eof) ... ok
-test_30_unknown_argument (__main__.Gate1MenuTests.test_30_unknown_argument) ... ok
-test_31_window_on_other_systems (__main__.Gate1MenuTests.test_31_window_on_other_systems) ... ok
+Case 1: Start empty
+Expected: A missing file starts an empty wallet without writing a save.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: no saved file yet: yes
+Observed: Your wallet is empty: yes
+Observed: viewing created no save: yes
+Result: passed (5 checks matched).
 
-----------------------------------------------------------------------
-Ran 31 tests in 0.031s
+Case 2: Stable card IDs
+Expected: The five names keep IDs 1 through 5 and example labels.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 1: Travel Sample: yes
+Observed: Card 2: Points Sample: yes
+Observed: Card 3: Cashback Sample: yes
+Observed: Card 4: Everyday Sample: yes
+Observed: Card 5: Starter Sample: yes
+Observed: not real bank offers: yes
+Result: passed (8 checks matched).
 
-OK
+Case 3: Add and view
+Expected: Adding card 3 displays Cashback Sample and saves ID 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Added Cashback Sample.: yes
+Observed: Card 3: Cashback Sample | Example base rate: 1.00%: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (5 checks matched).
 
+Case 4: Duplicate card
+Expected: Adding card 1 twice is rejected and saves it once.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: already in your wallet: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 5: Remove middle
+Expected: Removing 3 from [1,3,5] saves [1,5].
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Removed Cashback Sample.: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 6: Remove absent card
+Expected: Removing an absent ID keeps the current list.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: isn't in your wallet: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 7: Remove from empty
+Expected: An empty list explains that there is nothing to remove.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Your wallet is empty: yes
+Observed: unwanted text is absent: yes
+Result: passed (4 checks matched).
+
+Case 8: Full wallet
+Expected: A full five-card list refuses another addition.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Your wallet is full: yes
+Observed: My card wallet (5 of 5 cards): yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (5 checks matched).
+
+Case 9: Save and restart
+Expected: A new process reloads the saved cards 1 and 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Loaded your saved card list: yes
+Observed: My card wallet (2 of 5 cards): yes
+Observed: Card 1: Travel Sample |: yes
+Observed: Card 3: Cashback Sample |: yes
+Observed: unwanted text is absent: yes
+Result: passed (10 checks matched).
+
+Case 10: Removal after restart
+Expected: A removed and saved card stays removed after restarting.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Observed: My card wallet (2 of 5 cards): yes
+Observed: unwanted text is absent: yes
+Result: passed (7 checks matched).
+
+Case 11: Save empty wallet
+Expected: Removing the last card saves a valid empty wallet.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Your wallet is empty: yes
+Result: passed (6 checks matched).
+
+Case 12: Reload saved list
+Expected: Reload restores [1] after an unsaved addition of card 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Reload reported a second successful load: yes
+Observed: one saved card restored: yes
+Observed: unsaved card removed by Reload: yes
+Observed: unsaved flag cleared: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (7 checks matched).
+
+Case 13: Missing reload
+Expected: A missing reload keeps an unsaved card available for saving.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Your current list hasn't changed: yes
+Observed: Card 1: Travel Sample |: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (5 checks matched).
+
+Case 14: Space after removal
+Expected: Removal frees a slot and adding appends the card.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (3 checks matched).
+
+Case 15: Bad menu choices
+Expected: Bad answers at both menus allow recovery.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Result: passed (40 checks matched).
+
+Case 16: Bad card numbers
+Expected: Six invalid card answers are rejected before a valid answer.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: six bad answers rejected: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 17: Long and hidden input
+Expected: A long answer and hidden null are rejected before adding card 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: both invalid lines rejected: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 18: Cancel actions
+Expected: Zero cancels add and remove without changing [1].
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Add cancelled: yes
+Observed: Remove cancelled: yes
+Observed: unwanted text is absent: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (6 checks matched).
+
+Case 19: End of input
+Expected: Input ending at nested questions exits without saving.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No more input. Goodbye!: yes
+Observed: end of input did not create a save: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No more input. Goodbye!: yes
+Observed: end of input did not create a save: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No more input. Goodbye!: yes
+Observed: end of input did not create a save: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No more input. Goodbye!: yes
+Observed: end of input did not create a save: yes
+Result: passed (16 checks matched).
+
+Case 20: Save on exit
+Expected: Save and exit writes the unsaved card first.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Save and exit: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 21: Discard changes
+Expected: Exit without saving preserves the older saved list.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (3 checks matched).
+
+Case 22: Keep editing
+Expected: Keep editing returns to the menu and later saving works.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: only the final Exit closed the program: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 23: Default save path
+Expected: Normal launch saves and reloads savedCards.txt in its current folder.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 5: Starter Sample |: yes
+Result: passed (6 checks matched).
+
+Case 24: Path with spaces
+Expected: A selected filename containing spaces works across restarts.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 2: Points Sample |: yes
+Result: passed (6 checks matched).
+
+Case 25: Damaged files
+Expected: All 22 malformed files are rejected without rewriting them.
+Damaged-file example: empty
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: wrong header
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: header only
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: negative count
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: too many cards
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: huge count
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: text count
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: decimal count
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: zero ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: unknown ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: negative ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: duplicate
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: missing ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: extra ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: extra blank line
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: hidden null in header
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: hidden null in count
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: hidden null in ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: long header
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: long ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: byte-order mark
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: ID followed by letters
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Result: passed (110 checks matched).
+
+Case 26: Windows line endings
+Expected: Windows line endings load cards 1 and 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 1: Travel Sample |: yes
+Observed: Card 3: Cashback Sample |: yes
+Result: passed (4 checks matched).
+
+Case 27: No final newline
+Expected: The final ID is accepted without a newline.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 5: Starter Sample |: yes
+Result: passed (3 checks matched).
+
+Case 28: Directory as save
+Expected: A directory used as a save reports an error and keeps its contents.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't read your saved cards: yes
+Observed: directory contents preserved: yes
+Result: passed (4 checks matched).
+
+Case 29: Missing folder
+Expected: A missing destination folder causes a save error without losing the live wallet.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't save your cards: yes
+Observed: Card 1: Travel Sample |: yes
+Observed: no save created in missing folder: yes
+Result: passed (5 checks matched).
+
+Case 30: Existing temporary file
+Expected: An existing temporary file blocks saving and stays unchanged.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't save your cards: yes
+Observed: Card 3: Cashback Sample |: yes
+Observed: saved bytes match the expected IDs: yes
+Observed: old temporary file preserved: yes
+Result: passed (6 checks matched).
+
+Case 31: Failed replacement
+Expected: Failed replacement keeps the directory and removes the newly written temporary file.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't save your cards: yes
+Observed: new temporary file removed: yes
+Observed: directory contents preserved: yes
+Result: passed (5 checks matched).
+
+Case 32: Failed save on exit
+Expected: Failed Save and exit keeps the menu usable.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't save your cards: yes
+Observed: Card 1: Travel Sample |: yes
+Observed: failure did not close the program early: yes
+Result: passed (5 checks matched).
+
+Case 33: Damage after startup
+Expected: Damage after startup causes Reload to keep the live card 1.
+Observed: initial save loaded before damage: yes
+Observed: program stayed usable after failed Reload: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Card 1: Travel Sample |: yes
+Observed: unwanted text is absent: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (6 checks matched).
+
+Case 34: Numeric whitespace
+Expected: Surrounding whitespace is allowed in numeric lines.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 3: Cashback Sample |: yes
+Result: passed (3 checks matched).
+
+Case 35: Remove first and last
+Expected: Removing first and last leaves the middle ID 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (3 checks matched).
+
+Case 36: Real read error
+Expected: A genuine stdin read error returns 1.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: real read error explained: yes
+Observed: unwanted text is absent: yes
+Result: passed (3 checks matched).
+
+Case 37: Bad arguments
+Expected: Unknown, incomplete, and empty arguments return 1 without saving.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Result: passed (24 checks matched).
+
+Case 38: Long save path
+Expected: An overlong save path reports a save error without overflowing.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't save your cards: yes
+Observed: overlong save path created no file: yes
+Observed: overlong save path created no temporary file: yes
+Result: passed (5 checks matched).
+
+Case 39: Chosen window path on another system
+Expected: The chosen window path is parsed before explaining that Windows is required.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: chosen window path accepted: yes
+Observed: valid window arguments did not print usage help: yes
+Observed: unsupported window created no save: yes
+Result: passed (4 checks matched).
+
+Summary: 39 passed, 0 failed, 0 skipped.
 Exit status: 0
 
-Command: /workspace/cardClarityGate2/build/cardClarityClangModules
-Working folder: /workspace/cardClarityGate2
-Input: None
-Standard output:
+Command: build/cOnly/clang/testModules
 0.000 ms [Info] Logger initialized.
-0.036 ms [Info] Sample cards are ready.
+0.032 ms [Info] Sample cards are ready.
 All 40 module checks passed, including the practice reward examples.
-
-Standard error:
-
 Exit status: 0
 
-Command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 tests/testGate2.py /workspace/cardClarityGate2/build/cardClarityChecked
-Working folder: /workspace/cardClarityGate2
-Input: None
-Standard output:
+Command: build/cOnly/clang/demoGate2 build/cOnly/clang/cardClarity
+Gate 2 C save-and-reload demonstration
+Date: 2026-10-27 20:48:21 UTC
+Program: /workspace/scratch/sourceNotesFresh/build/cOnly/clang/cardClarity
+Test platform: POSIX
 
-Standard error:
-test_01_start_empty (__main__.Gate2Tests.test_01_start_empty)
-A missing file starts an empty wallet and creates no file just by viewing. ... ok
-test_02_catalog_has_stable_numbers (__main__.Gate2Tests.test_02_catalog_has_stable_numbers)
-The five sample names have card numbers 1 to 5 and example labels. ... ok
-test_03_add_and_view (__main__.Gate2Tests.test_03_add_and_view)
-Adding card 3 shows only Cashback Sample in the wallet, then saves ID 3. ... ok
-test_04_duplicate (__main__.Gate2Tests.test_04_duplicate)
-A duplicate card is rejected and the saved list contains it only once. ... ok
-test_05_remove_middle_card (__main__.Gate2Tests.test_05_remove_middle_card)
-Removing card 3 from [1, 3, 5] saves [1, 5] in order. ... ok
-test_06_remove_absent_card (__main__.Gate2Tests.test_06_remove_absent_card)
-Removing a valid catalog ID not in the wallet leaves the saved list alone. ... ok
-test_07_remove_from_empty (__main__.Gate2Tests.test_07_remove_from_empty)
-Removing from an empty wallet explains the empty list and does not ask for an ID. ... ok
-test_08_full_wallet (__main__.Gate2Tests.test_08_full_wallet)
-A five-card wallet refuses another addition and saves all five IDs unchanged. ... ok
-test_09_save_and_restart (__main__.Gate2Tests.test_09_save_and_restart)
-After adding and saving cards 1 and 3, a second process loads those two cards. ... ok
-test_10_removal_survives_restart (__main__.Gate2Tests.test_10_removal_survives_restart)
-A removed and saved card stays removed after restarting. ... ok
-test_11_empty_save (__main__.Gate2Tests.test_11_empty_save)
-Removing the final card writes a valid zero-count save that reloads empty. ... ok
-test_12_reload_replaces_unsaved_changes (__main__.Gate2Tests.test_12_reload_replaces_unsaved_changes)
-Reloading restores the saved [1] list after adding unsaved card 3. ... ok
-test_13_missing_reload_keeps_current_cards (__main__.Gate2Tests.test_13_missing_reload_keeps_current_cards)
-Reloading a missing file leaves an unsaved card in memory so it can still be saved. ... ok
-test_14_room_after_removal (__main__.Gate2Tests.test_14_room_after_removal)
-Removing from a full wallet frees a slot and adding again appends the card. ... ok
-test_15_bad_main_and_wallet_choices (__main__.Gate2Tests.test_15_bad_main_and_wallet_choices)
-Blank, text, decimal, negative, zero, and out-of-range choices allow recovery. ... ok
-test_16_bad_card_numbers (__main__.Gate2Tests.test_16_bad_card_numbers)
-Invalid card answers are rejected before a valid card 3 is added. ... ok
-test_17_overlong_and_hidden_null_input (__main__.Gate2Tests.test_17_overlong_and_hidden_null_input)
-Overlong answers and hidden null bytes do not add a card or spoil the next answer. ... ok
-test_18_cancel_add_and_remove (__main__.Gate2Tests.test_18_cancel_add_and_remove)
-Zero cancels an add or removal and leaves [1] unchanged. ... ok
-test_19_end_of_input (__main__.Gate2Tests.test_19_end_of_input)
-End of input at nested prompts exits without a crash or an unexpected save. ... ok
-test_20_save_on_exit (__main__.Gate2Tests.test_20_save_on_exit)
-Save and exit writes unsaved card 1 before closing. ... ok
-test_21_exit_without_saving (__main__.Gate2Tests.test_21_exit_without_saving)
-Exit without saving preserves the older save [1] instead of writing [1, 3]. ... ok
-test_22_keep_editing (__main__.Gate2Tests.test_22_keep_editing)
-Cancelling exit returns to the menu and a later save keeps the edits. ... ok
-test_23_default_path (__main__.Gate2Tests.test_23_default_path)
-Normal launch saves and reloads savedCards.txt in the current folder. ... ok
-test_24_path_with_spaces (__main__.Gate2Tests.test_24_path_with_spaces)
-A chosen save filename containing spaces works across two launches. ... ok
-test_25_damaged_files (__main__.Gate2Tests.test_25_damaged_files)
-Malformed headers, counts, IDs, duplicates, missing data, and extra data are rejected unchanged. ... ok
-test_26_windows_line_endings (__main__.Gate2Tests.test_26_windows_line_endings)
-A valid CRLF file loads the same IDs as an LF file. ... ok
-test_27_no_final_newline (__main__.Gate2Tests.test_27_no_final_newline)
-A valid file without a newline after its last ID still loads. ... ok
-test_28_directory_is_not_a_save (__main__.Gate2Tests.test_28_directory_is_not_a_save)
-A directory at the save path reports a read error and leaves its contents alone. ... ok
-test_29_save_missing_folder (__main__.Gate2Tests.test_29_save_missing_folder)
-Saving into a missing folder fails clearly while the current wallet remains usable. ... ok
-test_30_stale_temporary_file (__main__.Gate2Tests.test_30_stale_temporary_file)
-An existing temporary file blocks saving without changing it or the previous save. ... ok
-test_31_failed_replacement_cleans_own_temp (__main__.Gate2Tests.test_31_failed_replacement_cleans_own_temp)
-A failed replacement of a directory removes the new temp and preserves the directory. ... ok
-test_32_failed_save_on_exit_returns_to_menu (__main__.Gate2Tests.test_32_failed_save_on_exit_returns_to_menu)
-A failed Save and exit leaves the program open for editing or explicit discard. ... ok
-test_33_reload_damaged_file_keeps_current_wallet (__main__.Gate2Tests.test_33_reload_damaged_file_keeps_current_wallet)
-If the file is damaged after startup, Reload leaves the already-loaded card 1 intact. ... ok
-test_34_whitespace_in_numeric_lines (__main__.Gate2Tests.test_34_whitespace_in_numeric_lines)
-Whitespace around a count or ID is accepted and the correct card loads. ... ok
-test_35_remove_first_and_last (__main__.Gate2Tests.test_35_remove_first_and_last)
-Removing the first and last IDs leaves the middle card correctly saved. ... ok
-test_36_real_input_error (__main__.Gate2Tests.test_36_real_input_error)
-A real stdin read error returns status 1 rather than claiming a normal exit. ... ok
-test_37_bad_arguments (__main__.Gate2Tests.test_37_bad_arguments)
-Unknown, incomplete, or empty command arguments return status 1 and do not save. ... ok
-test_38_too_long_save_path (__main__.Gate2Tests.test_38_too_long_save_path)
-An overlong save path is rejected without overflowing the temporary-path buffer. ... ok
-test_39_window_path_on_other_systems (__main__.Gate2Tests.test_39_window_path_on_other_systems)
-The window accepts a chosen save path, then explains that it needs Windows without writing. ... ok
+Case 1: Three separate program runs
+Expected: A saved removal survives two restarts.
 
-----------------------------------------------------------------------
-Ran 39 tests in 0.208s
+Run 1
+Answers, one per line:
+2
+2
+1
+2
+3
+1
+4
+6
+3
 
-OK
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Actual standard output:
+CardClarity
+You don't need to enter card numbers or bank passwords.
+Saved-card file: /tmp/cardClarityFTC9iv/savedCards.txt
+There's no saved file yet. Your current list hasn't changed.
 
+1. View sample cards
+2. My card wallet
+3. Exit
+Enter 1, 2, or 3: 
+My card wallet (0 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+Sample cards
+These cards and rates are made up for practice, not real bank offers.
+
+Card 1: Travel Sample
+Example base rate: 1.25% | Example annual fee: $95
+Example bonus percentages: Airlines 5.00% | Stores 3.00% | Services 2.00%
+
+Card 2: Points Sample
+Example base rate: 1.00% | Example annual fee: $250
+Example bonus percentages: Airlines 4.00% | Stores 2.00% | Services 1.50%
+
+Card 3: Cashback Sample
+Example base rate: 1.00% | Example annual fee: $0
+Example bonus percentages: Airlines 3.00% | Stores 2.00% | Services 1.00%
+
+Card 4: Everyday Sample
+Example base rate: 1.00% | Example annual fee: $0
+Example bonus percentages: Airlines 3.00% | Stores 2.00% | Services 2.00%
+
+Card 5: Starter Sample
+Example base rate: 1.00% | Example annual fee: $0
+Example bonus percentages: Airlines 4.50% | Stores 2.50% | Services 1.00%
+
+A bonus percentage increases the base reward; it is not a times multiplier.
+These practice values do not compare the cash value of points or miles.
+Enter a card number, or 0 to cancel: Added Travel Sample.
+
+My card wallet (1 of 5 cards)
+You haven't saved your changes yet.
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+Sample cards
+These cards and rates are made up for practice, not real bank offers.
+
+Card 1: Travel Sample
+Example base rate: 1.25% | Example annual fee: $95
+Example bonus percentages: Airlines 5.00% | Stores 3.00% | Services 2.00%
+
+Card 2: Points Sample
+Example base rate: 1.00% | Example annual fee: $250
+Example bonus percentages: Airlines 4.00% | Stores 2.00% | Services 1.50%
+
+Card 3: Cashback Sample
+Example base rate: 1.00% | Example annual fee: $0
+Example bonus percentages: Airlines 3.00% | Stores 2.00% | Services 1.00%
+
+Card 4: Everyday Sample
+Example base rate: 1.00% | Example annual fee: $0
+Example bonus percentages: Airlines 3.00% | Stores 2.00% | Services 2.00%
+
+Card 5: Starter Sample
+Example base rate: 1.00% | Example annual fee: $0
+Example bonus percentages: Airlines 4.50% | Stores 2.50% | Services 1.00%
+
+A bonus percentage increases the base reward; it is not a times multiplier.
+These practice values do not compare the cash value of points or miles.
+Enter a card number, or 0 to cancel: Added Cashback Sample.
+
+My card wallet (2 of 5 cards)
+You haven't saved your changes yet.
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+My card wallet (2 of 5 cards)
+These cards and rates are made up for practice, not real bank offers.
+Card 1: Travel Sample | Example base rate: 1.25%
+Card 3: Cashback Sample | Example base rate: 1.00%
+
+My card wallet (2 of 5 cards)
+You haven't saved your changes yet.
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: Saved your card list to /tmp/cardClarityFTC9iv/savedCards.txt.
+
+My card wallet (2 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+1. View sample cards
+2. My card wallet
+3. Exit
+Enter 1, 2, or 3: Goodbye!
+
+Actual standard error:
+
+Observed: Cashback Sample is visible: yes
+Observed: Travel Sample is visible before removal: yes
+Observed: saved bytes match: yes
+Checked saved bytes:
+cardClarityWallet1
+2
+1
+3
+
+Run 2
+Answers, one per line:
+2
+1
+3
+1
+4
+5
+1
+6
+3
+
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Actual standard output:
+CardClarity
+You don't need to enter card numbers or bank passwords.
+Saved-card file: /tmp/cardClarityFTC9iv/savedCards.txt
+Loaded your saved card list.
+
+1. View sample cards
+2. My card wallet
+3. Exit
+Enter 1, 2, or 3: 
+My card wallet (2 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+My card wallet (2 of 5 cards)
+These cards and rates are made up for practice, not real bank offers.
+Card 1: Travel Sample | Example base rate: 1.25%
+Card 3: Cashback Sample | Example base rate: 1.00%
+
+My card wallet (2 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+My card wallet (2 of 5 cards)
+These cards and rates are made up for practice, not real bank offers.
+Card 1: Travel Sample | Example base rate: 1.25%
+Card 3: Cashback Sample | Example base rate: 1.00%
+Enter the card number to remove, or 0 to cancel: Removed Travel Sample.
+
+My card wallet (1 of 5 cards)
+You haven't saved your changes yet.
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: Saved your card list to /tmp/cardClarityFTC9iv/savedCards.txt.
+
+My card wallet (1 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: Loaded your saved card list.
+
+My card wallet (1 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+My card wallet (1 of 5 cards)
+These cards and rates are made up for practice, not real bank offers.
+Card 3: Cashback Sample | Example base rate: 1.00%
+
+My card wallet (1 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+1. View sample cards
+2. My card wallet
+3. Exit
+Enter 1, 2, or 3: Goodbye!
+
+Actual standard error:
+
+Observed: Cashback Sample is visible: yes
+Observed: new process loaded the save: yes
+Observed: Travel Sample was removed: yes
+Observed: saved bytes match: yes
+Checked saved bytes:
+cardClarityWallet1
+1
+3
+
+Run 3
+Answers, one per line:
+2
+1
+6
+3
+
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Actual standard output:
+CardClarity
+You don't need to enter card numbers or bank passwords.
+Saved-card file: /tmp/cardClarityFTC9iv/savedCards.txt
+Loaded your saved card list.
+
+1. View sample cards
+2. My card wallet
+3. Exit
+Enter 1, 2, or 3: 
+My card wallet (1 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+My card wallet (1 of 5 cards)
+These cards and rates are made up for practice, not real bank offers.
+Card 3: Cashback Sample | Example base rate: 1.00%
+
+My card wallet (1 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+1. View sample cards
+2. My card wallet
+3. Exit
+Enter 1, 2, or 3: Goodbye!
+
+Actual standard error:
+
+Observed: Cashback Sample is visible: yes
+Observed: new process loaded the save: yes
+Observed: removed card stayed absent after restart: yes
+Observed: saved bytes match: yes
+Checked saved bytes:
+cardClarityWallet1
+1
+3
+Result: passed (17 checks matched).
+
+Summary: 1 passed, 0 failed, 0 skipped.
 Exit status: 0
 
-Command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 tests/testGate1.py /workspace/cardClarityGate2/build/cardClarityChecked
-Working folder: /workspace/cardClarityGate2
-Input: None
-Standard output:
+Checked build: ASAN_OPTIONS=detect_leaks=0. Leak checking was not run.
 
-Standard error:
-test_01_menu_has_three_options (__main__.Gate1MenuTests.test_01_menu_has_three_options) ... ok
-test_02_view_all_five_cards (__main__.Gate1MenuTests.test_02_view_all_five_cards) ... ok
-test_03_rates_are_printed (__main__.Gate1MenuTests.test_03_rates_are_printed) ... ok
-test_04_rates_are_labeled_examples (__main__.Gate1MenuTests.test_04_rates_are_labeled_examples) ... ok
-test_05_about_lists_planned_features (__main__.Gate1MenuTests.test_05_about_lists_planned_features) ... ok
-test_06_exit (__main__.Gate1MenuTests.test_06_exit) ... ok
-test_07_text_input (__main__.Gate1MenuTests.test_07_text_input) ... ok
-test_08_zero (__main__.Gate1MenuTests.test_08_zero) ... ok
-test_09_out_of_range (__main__.Gate1MenuTests.test_09_out_of_range) ... ok
-test_10_negative (__main__.Gate1MenuTests.test_10_negative) ... ok
-test_11_empty_answer (__main__.Gate1MenuTests.test_11_empty_answer) ... ok
-test_12_decimal (__main__.Gate1MenuTests.test_12_decimal) ... ok
-test_13_trailing_characters (__main__.Gate1MenuTests.test_13_trailing_characters) ... ok
-test_14_very_large_number (__main__.Gate1MenuTests.test_14_very_large_number) ... ok
-test_15_overlong_text (__main__.Gate1MenuTests.test_15_overlong_text) ... ok
-test_16_valid_after_invalid (__main__.Gate1MenuTests.test_16_valid_after_invalid) ... ok
-test_17_whitespace_around_choice (__main__.Gate1MenuTests.test_17_whitespace_around_choice) ... ok
-test_18_end_of_input (__main__.Gate1MenuTests.test_18_end_of_input) ... ok
-test_19_choice_without_final_newline (__main__.Gate1MenuTests.test_19_choice_without_final_newline) ... ok
-test_20_repeated_choices_return_to_menu (__main__.Gate1MenuTests.test_20_repeated_choices_return_to_menu) ... ok
-test_21_exit_does_not_process_later_input (__main__.Gate1MenuTests.test_21_exit_does_not_process_later_input) ... ok
-test_22_embedded_null_is_rejected (__main__.Gate1MenuTests.test_22_embedded_null_is_rejected) ... ok
-test_23_all_standard_whitespace (__main__.Gate1MenuTests.test_23_all_standard_whitespace) ... ok
-test_24_long_input_is_one_rejected_answer (__main__.Gate1MenuTests.test_24_long_input_is_one_rejected_answer) ... ok
-test_25_invalid_answer_at_eof (__main__.Gate1MenuTests.test_25_invalid_answer_at_eof) ... ok
-test_26_blank_whitespace (__main__.Gate1MenuTests.test_26_blank_whitespace) ... ok
-test_27_read_error_is_not_normal_eof (__main__.Gate1MenuTests.test_27_read_error_is_not_normal_eof) ... ok
-test_28_last_fitting_answer_at_eof (__main__.Gate1MenuTests.test_28_last_fitting_answer_at_eof) ... ok
-test_29_overlong_answer_at_eof (__main__.Gate1MenuTests.test_29_overlong_answer_at_eof) ... ok
-test_30_unknown_argument (__main__.Gate1MenuTests.test_30_unknown_argument) ... ok
-test_31_window_on_other_systems (__main__.Gate1MenuTests.test_31_window_on_other_systems) ... ok
+Build: checked
 
-----------------------------------------------------------------------
-Ran 31 tests in 0.076s
+Command: build/cOnly/checked/testGate1 build/cOnly/checked/cardClarity
+Gate 1 C menu checks
+Date: 2026-10-27 20:48:22 UTC
+Program: /workspace/scratch/sourceNotesFresh/build/cOnly/checked/cardClarity
+Test platform: POSIX
 
-OK
+Case 1: Three-option menu
+Expected: Exactly three numbered choices appear.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: 1. View sample cards: yes
+Observed: 2. About CardClarity: yes
+Observed: 3. Exit: yes
+Observed: exactly three numbered choices: yes
+Result: passed (6 checks matched).
 
+Case 2: Five sample names
+Expected: Each of the five names appears once.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Travel Sample: yes
+Observed: Points Sample: yes
+Observed: Cashback Sample: yes
+Observed: Everyday Sample: yes
+Observed: Starter Sample: yes
+Result: passed (7 checks matched).
+
+Case 3: Exact example values
+Expected: All base rates, fees, and category bonuses match the sample records.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Travel Sample: yes
+Observed: Points Sample: yes
+Observed: Cashback Sample: yes
+Observed: Everyday Sample: yes
+Observed: Starter Sample: yes
+Observed: it is not a times multiplier: yes
+Result: passed (8 checks matched).
+
+Case 4: Example labels
+Expected: Values are labeled as made-up examples and no words are all capitals.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: made up for practice, not real bank offers: yes
+Observed: no all-capital words in the display: yes
+Result: passed (4 checks matched).
+
+Case 5: Four planned features
+Expected: About lists the wallet, benefits, calculator, and recommendations.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card wallet:: yes
+Observed: Benefits display:: yes
+Observed: Rewards calculator:: yes
+Observed: Card recommendations:: yes
+Result: passed (6 checks matched).
+
+Case 6: Exit
+Expected: Goodbye appears and the program returns 0.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Goodbye!: yes
+Result: passed (3 checks matched).
+
+Case 7: Text input
+Expected: Text is rejected and exit still works.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 8: Zero
+Expected: Zero is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 9: Out-of-range choice
+Expected: Choice 9 is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 10: Negative choice
+Expected: A negative choice is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 11: Blank answer
+Expected: An empty answer is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 12: Decimal choice
+Expected: A decimal is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 13: Trailing characters
+Expected: Letters after a number are rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 14: Oversized numbers
+Expected: Both 30-digit and 300-digit numbers are rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (6 checks matched).
+
+Case 15: Long text
+Expected: A 600-character answer is one invalid answer.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 16: Recovery after bad input
+Expected: A bad answer is rejected, then cards display and exit works.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Travel Sample: yes
+Observed: Goodbye!: yes
+Result: passed (5 checks matched).
+
+Case 17: Surrounding spaces
+Expected: Spaces and a tab around 1 are accepted.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Travel Sample: yes
+Result: passed (3 checks matched).
+
+Case 18: End of input
+Expected: End of input closes normally.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No more input: yes
+Result: passed (3 checks matched).
+
+Case 19: No final newline
+Expected: Exit works without a final newline.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Goodbye!: yes
+Result: passed (3 checks matched).
+
+Case 20: Repeated choices
+Expected: View and About return to the same menu.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: cards shown twice: yes
+Observed: four menu visits: yes
+Observed: one exit message: yes
+Result: passed (5 checks matched).
+
+Case 21: Input after exit
+Expected: Exit does not process another choice after it.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: no cards shown after Exit: yes
+Observed: one menu visit: yes
+Result: passed (4 checks matched).
+
+Case 22: Hidden null
+Expected: Hidden nulls are rejected, including at end of input.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Goodbye!: yes
+Observed: hidden answer did not show cards: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Goodbye!: yes
+Observed: hidden answer did not show cards: yes
+Result: passed (10 checks matched).
+
+Case 23: Standard whitespace
+Expected: All ordinary surrounding whitespace is accepted.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Travel Sample: yes
+Observed: no retry needed: yes
+Result: passed (4 checks matched).
+
+Case 24: Whole overlong line
+Expected: One overlong line causes one error, then the next answer works.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: one rejected line: yes
+Observed: next choice worked once: yes
+Observed: Goodbye!: yes
+Result: passed (5 checks matched).
+
+Case 25: Bad answer at end
+Expected: A bad final answer is rejected before input ends.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: No more input: yes
+Observed: one rejected final answer: yes
+Result: passed (5 checks matched).
+
+Case 26: Whitespace-only answer
+Expected: A whitespace-only line is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Goodbye!: yes
+Result: passed (4 checks matched).
+
+Case 27: Real read error
+Expected: A genuine read error returns 1 and does not say Goodbye.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: read error explained: yes
+Observed: no normal exit claim: yes
+Result: passed (3 checks matched).
+
+Case 28: Largest fitting line
+Expected: A 127-character answer ending with spaces is accepted.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Travel Sample: yes
+Observed: No more input: yes
+Observed: largest fitting line accepted: yes
+Result: passed (5 checks matched).
+
+Case 29: First overlong line
+Expected: A 128-character answer is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: No more input: yes
+Observed: overlong line did not show cards: yes
+Result: passed (5 checks matched).
+
+Case 30: Unknown argument
+Expected: An unknown argument returns 1.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: usage help printed: yes
+Result: passed (2 checks matched).
+
+Case 31: Window on another system
+Expected: The window option explains that Windows is needed and returns 1.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: Windows requirement explained: yes
+Result: passed (2 checks matched).
+
+Summary: 31 passed, 0 failed, 0 skipped.
 Exit status: 0
 
-Command: /workspace/cardClarityGate2/build/cardClarityCheckedModules
-Working folder: /workspace/cardClarityGate2
-Input: None
-Standard output:
+Command: build/cOnly/checked/testGate2 build/cOnly/checked/cardClarity
+Gate 2 C wallet checks
+Date: 2026-10-27 20:48:23 UTC
+Program: /workspace/scratch/sourceNotesFresh/build/cOnly/checked/cardClarity
+Test platform: POSIX
+
+Case 1: Start empty
+Expected: A missing file starts an empty wallet without writing a save.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: no saved file yet: yes
+Observed: Your wallet is empty: yes
+Observed: viewing created no save: yes
+Result: passed (5 checks matched).
+
+Case 2: Stable card IDs
+Expected: The five names keep IDs 1 through 5 and example labels.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 1: Travel Sample: yes
+Observed: Card 2: Points Sample: yes
+Observed: Card 3: Cashback Sample: yes
+Observed: Card 4: Everyday Sample: yes
+Observed: Card 5: Starter Sample: yes
+Observed: not real bank offers: yes
+Result: passed (8 checks matched).
+
+Case 3: Add and view
+Expected: Adding card 3 displays Cashback Sample and saves ID 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Added Cashback Sample.: yes
+Observed: Card 3: Cashback Sample | Example base rate: 1.00%: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (5 checks matched).
+
+Case 4: Duplicate card
+Expected: Adding card 1 twice is rejected and saves it once.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: already in your wallet: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 5: Remove middle
+Expected: Removing 3 from [1,3,5] saves [1,5].
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Removed Cashback Sample.: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 6: Remove absent card
+Expected: Removing an absent ID keeps the current list.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: isn't in your wallet: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 7: Remove from empty
+Expected: An empty list explains that there is nothing to remove.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Your wallet is empty: yes
+Observed: unwanted text is absent: yes
+Result: passed (4 checks matched).
+
+Case 8: Full wallet
+Expected: A full five-card list refuses another addition.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Your wallet is full: yes
+Observed: My card wallet (5 of 5 cards): yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (5 checks matched).
+
+Case 9: Save and restart
+Expected: A new process reloads the saved cards 1 and 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Loaded your saved card list: yes
+Observed: My card wallet (2 of 5 cards): yes
+Observed: Card 1: Travel Sample |: yes
+Observed: Card 3: Cashback Sample |: yes
+Observed: unwanted text is absent: yes
+Result: passed (10 checks matched).
+
+Case 10: Removal after restart
+Expected: A removed and saved card stays removed after restarting.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Observed: My card wallet (2 of 5 cards): yes
+Observed: unwanted text is absent: yes
+Result: passed (7 checks matched).
+
+Case 11: Save empty wallet
+Expected: Removing the last card saves a valid empty wallet.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Your wallet is empty: yes
+Result: passed (6 checks matched).
+
+Case 12: Reload saved list
+Expected: Reload restores [1] after an unsaved addition of card 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Reload reported a second successful load: yes
+Observed: one saved card restored: yes
+Observed: unsaved card removed by Reload: yes
+Observed: unsaved flag cleared: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (7 checks matched).
+
+Case 13: Missing reload
+Expected: A missing reload keeps an unsaved card available for saving.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Your current list hasn't changed: yes
+Observed: Card 1: Travel Sample |: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (5 checks matched).
+
+Case 14: Space after removal
+Expected: Removal frees a slot and adding appends the card.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (3 checks matched).
+
+Case 15: Bad menu choices
+Expected: Bad answers at both menus allow recovery.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Result: passed (40 checks matched).
+
+Case 16: Bad card numbers
+Expected: Six invalid card answers are rejected before a valid answer.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: six bad answers rejected: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 17: Long and hidden input
+Expected: A long answer and hidden null are rejected before adding card 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: both invalid lines rejected: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 18: Cancel actions
+Expected: Zero cancels add and remove without changing [1].
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Add cancelled: yes
+Observed: Remove cancelled: yes
+Observed: unwanted text is absent: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (6 checks matched).
+
+Case 19: End of input
+Expected: Input ending at nested questions exits without saving.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No more input. Goodbye!: yes
+Observed: end of input did not create a save: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No more input. Goodbye!: yes
+Observed: end of input did not create a save: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No more input. Goodbye!: yes
+Observed: end of input did not create a save: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No more input. Goodbye!: yes
+Observed: end of input did not create a save: yes
+Result: passed (16 checks matched).
+
+Case 20: Save on exit
+Expected: Save and exit writes the unsaved card first.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Save and exit: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 21: Discard changes
+Expected: Exit without saving preserves the older saved list.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (3 checks matched).
+
+Case 22: Keep editing
+Expected: Keep editing returns to the menu and later saving works.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: only the final Exit closed the program: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 23: Default save path
+Expected: Normal launch saves and reloads savedCards.txt in its current folder.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 5: Starter Sample |: yes
+Result: passed (6 checks matched).
+
+Case 24: Path with spaces
+Expected: A selected filename containing spaces works across restarts.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 2: Points Sample |: yes
+Result: passed (6 checks matched).
+
+Case 25: Damaged files
+Expected: All 22 malformed files are rejected without rewriting them.
+Damaged-file example: empty
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: wrong header
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: header only
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: negative count
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: too many cards
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: huge count
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: text count
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: decimal count
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: zero ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: unknown ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: negative ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: duplicate
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: missing ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: extra ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: extra blank line
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: hidden null in header
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: hidden null in count
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: hidden null in ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: long header
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: long ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: byte-order mark
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: ID followed by letters
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Result: passed (110 checks matched).
+
+Case 26: Windows line endings
+Expected: Windows line endings load cards 1 and 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 1: Travel Sample |: yes
+Observed: Card 3: Cashback Sample |: yes
+Result: passed (4 checks matched).
+
+Case 27: No final newline
+Expected: The final ID is accepted without a newline.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 5: Starter Sample |: yes
+Result: passed (3 checks matched).
+
+Case 28: Directory as save
+Expected: A directory used as a save reports an error and keeps its contents.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't read your saved cards: yes
+Observed: directory contents preserved: yes
+Result: passed (4 checks matched).
+
+Case 29: Missing folder
+Expected: A missing destination folder causes a save error without losing the live wallet.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't save your cards: yes
+Observed: Card 1: Travel Sample |: yes
+Observed: no save created in missing folder: yes
+Result: passed (5 checks matched).
+
+Case 30: Existing temporary file
+Expected: An existing temporary file blocks saving and stays unchanged.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't save your cards: yes
+Observed: Card 3: Cashback Sample |: yes
+Observed: saved bytes match the expected IDs: yes
+Observed: old temporary file preserved: yes
+Result: passed (6 checks matched).
+
+Case 31: Failed replacement
+Expected: Failed replacement keeps the directory and removes the newly written temporary file.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't save your cards: yes
+Observed: new temporary file removed: yes
+Observed: directory contents preserved: yes
+Result: passed (5 checks matched).
+
+Case 32: Failed save on exit
+Expected: Failed Save and exit keeps the menu usable.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't save your cards: yes
+Observed: Card 1: Travel Sample |: yes
+Observed: failure did not close the program early: yes
+Result: passed (5 checks matched).
+
+Case 33: Damage after startup
+Expected: Damage after startup causes Reload to keep the live card 1.
+Observed: initial save loaded before damage: yes
+Observed: program stayed usable after failed Reload: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Card 1: Travel Sample |: yes
+Observed: unwanted text is absent: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (6 checks matched).
+
+Case 34: Numeric whitespace
+Expected: Surrounding whitespace is allowed in numeric lines.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 3: Cashback Sample |: yes
+Result: passed (3 checks matched).
+
+Case 35: Remove first and last
+Expected: Removing first and last leaves the middle ID 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (3 checks matched).
+
+Case 36: Real read error
+Expected: A genuine stdin read error returns 1.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: real read error explained: yes
+Observed: unwanted text is absent: yes
+Result: passed (3 checks matched).
+
+Case 37: Bad arguments
+Expected: Unknown, incomplete, and empty arguments return 1 without saving.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Result: passed (24 checks matched).
+
+Case 38: Long save path
+Expected: An overlong save path reports a save error without overflowing.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't save your cards: yes
+Observed: overlong save path created no file: yes
+Observed: overlong save path created no temporary file: yes
+Result: passed (5 checks matched).
+
+Case 39: Chosen window path on another system
+Expected: The chosen window path is parsed before explaining that Windows is required.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: chosen window path accepted: yes
+Observed: valid window arguments did not print usage help: yes
+Observed: unsupported window created no save: yes
+Result: passed (4 checks matched).
+
+Summary: 39 passed, 0 failed, 0 skipped.
+Exit status: 0
+
+Command: build/cOnly/checked/testModules
 0.000 ms [Info] Logger initialized.
-0.069 ms [Info] Sample cards are ready.
+0.139 ms [Info] Sample cards are ready.
 All 40 module checks passed, including the practice reward examples.
-
-Standard error:
-
 Exit status: 0
 
-Recorded summary:
-cardClarity: clean C11 build; 39 Gate 2 tests, 31 Gate 1 checks, and 40 module checks passed.
-cardClarityClang: clean C11 build; 39 Gate 2 tests, 31 Gate 1 checks, and 40 module checks passed.
-cardClarityChecked: clean C11 build; 39 Gate 2 tests, 31 Gate 1 checks, and 40 module checks passed.
-The Windows cross-build passed. Windows runtime and MSVC were not tested.
-The three-process save, remove, and reload demonstration passed.
+Command: build/cOnly/checked/demoGate2 build/cOnly/checked/cardClarity
+Gate 2 C save-and-reload demonstration
+Date: 2026-10-27 20:48:25 UTC
+Program: /workspace/scratch/sourceNotesFresh/build/cOnly/checked/cardClarity
+Test platform: POSIX
 
-Font changes checked: 2026-10-26T20:18:29.805458-04:00
-Command: python3 tests/testGate2.py build/cardClarity
-Result: all 39 tests passed on Linux. Exit status: 0.
-These tests do not check the appearance of the Windows window.
+Case 1: Three separate program runs
+Expected: A saved removal survives two restarts.
+
+Run 1
+Answers, one per line:
+2
+2
+1
+2
+3
+1
+4
+6
+3
+
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Actual standard output:
+CardClarity
+You don't need to enter card numbers or bank passwords.
+Saved-card file: /tmp/cardClarity4wLpzX/savedCards.txt
+There's no saved file yet. Your current list hasn't changed.
+
+1. View sample cards
+2. My card wallet
+3. Exit
+Enter 1, 2, or 3: 
+My card wallet (0 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+Sample cards
+These cards and rates are made up for practice, not real bank offers.
+
+Card 1: Travel Sample
+Example base rate: 1.25% | Example annual fee: $95
+Example bonus percentages: Airlines 5.00% | Stores 3.00% | Services 2.00%
+
+Card 2: Points Sample
+Example base rate: 1.00% | Example annual fee: $250
+Example bonus percentages: Airlines 4.00% | Stores 2.00% | Services 1.50%
+
+Card 3: Cashback Sample
+Example base rate: 1.00% | Example annual fee: $0
+Example bonus percentages: Airlines 3.00% | Stores 2.00% | Services 1.00%
+
+Card 4: Everyday Sample
+Example base rate: 1.00% | Example annual fee: $0
+Example bonus percentages: Airlines 3.00% | Stores 2.00% | Services 2.00%
+
+Card 5: Starter Sample
+Example base rate: 1.00% | Example annual fee: $0
+Example bonus percentages: Airlines 4.50% | Stores 2.50% | Services 1.00%
+
+A bonus percentage increases the base reward; it is not a times multiplier.
+These practice values do not compare the cash value of points or miles.
+Enter a card number, or 0 to cancel: Added Travel Sample.
+
+My card wallet (1 of 5 cards)
+You haven't saved your changes yet.
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+Sample cards
+These cards and rates are made up for practice, not real bank offers.
+
+Card 1: Travel Sample
+Example base rate: 1.25% | Example annual fee: $95
+Example bonus percentages: Airlines 5.00% | Stores 3.00% | Services 2.00%
+
+Card 2: Points Sample
+Example base rate: 1.00% | Example annual fee: $250
+Example bonus percentages: Airlines 4.00% | Stores 2.00% | Services 1.50%
+
+Card 3: Cashback Sample
+Example base rate: 1.00% | Example annual fee: $0
+Example bonus percentages: Airlines 3.00% | Stores 2.00% | Services 1.00%
+
+Card 4: Everyday Sample
+Example base rate: 1.00% | Example annual fee: $0
+Example bonus percentages: Airlines 3.00% | Stores 2.00% | Services 2.00%
+
+Card 5: Starter Sample
+Example base rate: 1.00% | Example annual fee: $0
+Example bonus percentages: Airlines 4.50% | Stores 2.50% | Services 1.00%
+
+A bonus percentage increases the base reward; it is not a times multiplier.
+These practice values do not compare the cash value of points or miles.
+Enter a card number, or 0 to cancel: Added Cashback Sample.
+
+My card wallet (2 of 5 cards)
+You haven't saved your changes yet.
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+My card wallet (2 of 5 cards)
+These cards and rates are made up for practice, not real bank offers.
+Card 1: Travel Sample | Example base rate: 1.25%
+Card 3: Cashback Sample | Example base rate: 1.00%
+
+My card wallet (2 of 5 cards)
+You haven't saved your changes yet.
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: Saved your card list to /tmp/cardClarity4wLpzX/savedCards.txt.
+
+My card wallet (2 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+1. View sample cards
+2. My card wallet
+3. Exit
+Enter 1, 2, or 3: Goodbye!
+
+Actual standard error:
+
+Observed: Cashback Sample is visible: yes
+Observed: Travel Sample is visible before removal: yes
+Observed: saved bytes match: yes
+Checked saved bytes:
+cardClarityWallet1
+2
+1
+3
+
+Run 2
+Answers, one per line:
+2
+1
+3
+1
+4
+5
+1
+6
+3
+
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Actual standard output:
+CardClarity
+You don't need to enter card numbers or bank passwords.
+Saved-card file: /tmp/cardClarity4wLpzX/savedCards.txt
+Loaded your saved card list.
+
+1. View sample cards
+2. My card wallet
+3. Exit
+Enter 1, 2, or 3: 
+My card wallet (2 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+My card wallet (2 of 5 cards)
+These cards and rates are made up for practice, not real bank offers.
+Card 1: Travel Sample | Example base rate: 1.25%
+Card 3: Cashback Sample | Example base rate: 1.00%
+
+My card wallet (2 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+My card wallet (2 of 5 cards)
+These cards and rates are made up for practice, not real bank offers.
+Card 1: Travel Sample | Example base rate: 1.25%
+Card 3: Cashback Sample | Example base rate: 1.00%
+Enter the card number to remove, or 0 to cancel: Removed Travel Sample.
+
+My card wallet (1 of 5 cards)
+You haven't saved your changes yet.
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: Saved your card list to /tmp/cardClarity4wLpzX/savedCards.txt.
+
+My card wallet (1 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: Loaded your saved card list.
+
+My card wallet (1 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+My card wallet (1 of 5 cards)
+These cards and rates are made up for practice, not real bank offers.
+Card 3: Cashback Sample | Example base rate: 1.00%
+
+My card wallet (1 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+1. View sample cards
+2. My card wallet
+3. Exit
+Enter 1, 2, or 3: Goodbye!
+
+Actual standard error:
+
+Observed: Cashback Sample is visible: yes
+Observed: new process loaded the save: yes
+Observed: Travel Sample was removed: yes
+Observed: saved bytes match: yes
+Checked saved bytes:
+cardClarityWallet1
+1
+3
+
+Run 3
+Answers, one per line:
+2
+1
+6
+3
+
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Actual standard output:
+CardClarity
+You don't need to enter card numbers or bank passwords.
+Saved-card file: /tmp/cardClarity4wLpzX/savedCards.txt
+Loaded your saved card list.
+
+1. View sample cards
+2. My card wallet
+3. Exit
+Enter 1, 2, or 3: 
+My card wallet (1 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+My card wallet (1 of 5 cards)
+These cards and rates are made up for practice, not real bank offers.
+Card 3: Cashback Sample | Example base rate: 1.00%
+
+My card wallet (1 of 5 cards)
+1. View my cards
+2. Add a card
+3. Remove a card
+4. Save my cards
+5. Reload my last save (undoes unsaved changes)
+6. Back
+Choose 1 to 6: 
+1. View sample cards
+2. My card wallet
+3. Exit
+Enter 1, 2, or 3: Goodbye!
+
+Actual standard error:
+
+Observed: Cashback Sample is visible: yes
+Observed: new process loaded the save: yes
+Observed: removed card stayed absent after restart: yes
+Observed: saved bytes match: yes
+Checked saved bytes:
+cardClarityWallet1
+1
+3
+Result: passed (17 checks matched).
+
+Summary: 1 passed, 0 failed, 0 skipped.
+Exit status: 0

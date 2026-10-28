@@ -1,16 +1,30 @@
-Gate 2 save-and-reload demonstration
-Date: 2026-10-26T17:52:56.509506-04:00
-Environment: Linux-6.18.55-x86_64-with-glibc2.41
+Gate 2 C save-and-reload demonstration
+Date: 2026-10-27 20:48:17 UTC
+Program: /workspace/scratch/sourceNotesFresh/build/cOnly/gcc/cardClarity
+Test platform: POSIX
 
-Expected first run: add cards 1 and 3, view them, and save their IDs.
+Case 1: Three separate program runs
+Expected: A saved removal survives two restarts.
 
-Command: /workspace/cardClarityGate2/build/cardClarity
-Working folder: /tmp/cardClarityDemooqwdavg_
-Input: '2\n2\n1\n2\n3\n1\n4\n6\n3\n'
-Standard output:
+Run 1
+Answers, one per line:
+2
+2
+1
+2
+3
+1
+4
+6
+3
+
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Actual standard output:
 CardClarity
 You don't need to enter card numbers or bank passwords.
-Saved-card file: savedCards.txt
+Saved-card file: /tmp/cardClarityaYMRHR/savedCards.txt
 There's no saved file yet. Your current list hasn't changed.
 
 1. View sample cards
@@ -110,7 +124,7 @@ You haven't saved your changes yet.
 4. Save my cards
 5. Reload my last save (undoes unsaved changes)
 6. Back
-Choose 1 to 6: Saved your card list to savedCards.txt.
+Choose 1 to 6: Saved your card list to /tmp/cardClarityaYMRHR/savedCards.txt.
 
 My card wallet (2 of 5 cards)
 1. View my cards
@@ -125,20 +139,36 @@ Choose 1 to 6:
 3. Exit
 Enter 1, 2, or 3: Goodbye!
 
-Standard error:
+Actual standard error:
 
-Exit status: 0
-Actual saved file after first run: b'cardClarityWallet1\n2\n1\n3\n'
+Observed: Cashback Sample is visible: yes
+Observed: Travel Sample is visible before removal: yes
+Observed: saved bytes match: yes
+Checked saved bytes:
+cardClarityWallet1
+2
+1
+3
 
-Expected second run: automatically load both cards, remove card 1, save, and reload card 3.
+Run 2
+Answers, one per line:
+2
+1
+3
+1
+4
+5
+1
+6
+3
 
-Command: /workspace/cardClarityGate2/build/cardClarity
-Working folder: /tmp/cardClarityDemooqwdavg_
-Input: '2\n1\n3\n1\n4\n5\n1\n6\n3\n'
-Standard output:
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Actual standard output:
 CardClarity
 You don't need to enter card numbers or bank passwords.
-Saved-card file: savedCards.txt
+Saved-card file: /tmp/cardClarityaYMRHR/savedCards.txt
 Loaded your saved card list.
 
 1. View sample cards
@@ -180,7 +210,7 @@ You haven't saved your changes yet.
 4. Save my cards
 5. Reload my last save (undoes unsaved changes)
 6. Back
-Choose 1 to 6: Saved your card list to savedCards.txt.
+Choose 1 to 6: Saved your card list to /tmp/cardClarityaYMRHR/savedCards.txt.
 
 My card wallet (1 of 5 cards)
 1. View my cards
@@ -216,20 +246,31 @@ Choose 1 to 6:
 3. Exit
 Enter 1, 2, or 3: Goodbye!
 
-Standard error:
+Actual standard error:
 
-Exit status: 0
-Actual saved file after second run: b'cardClarityWallet1\n1\n3\n'
+Observed: Cashback Sample is visible: yes
+Observed: new process loaded the save: yes
+Observed: Travel Sample was removed: yes
+Observed: saved bytes match: yes
+Checked saved bytes:
+cardClarityWallet1
+1
+3
 
-Expected third run: after another restart, only Cashback Sample is saved.
+Run 3
+Answers, one per line:
+2
+1
+6
+3
 
-Command: /workspace/cardClarityGate2/build/cardClarity
-Working folder: /tmp/cardClarityDemooqwdavg_
-Input: '2\n1\n6\n3\n'
-Standard output:
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Actual standard output:
 CardClarity
 You don't need to enter card numbers or bank passwords.
-Saved-card file: savedCards.txt
+Saved-card file: /tmp/cardClarityaYMRHR/savedCards.txt
 Loaded your saved card list.
 
 1. View sample cards
@@ -261,7 +302,18 @@ Choose 1 to 6:
 3. Exit
 Enter 1, 2, or 3: Goodbye!
 
-Standard error:
+Actual standard error:
 
-Exit status: 0
-Result: passed. All five actions and persistence across separate processes were observed.
+Observed: Cashback Sample is visible: yes
+Observed: new process loaded the save: yes
+Observed: removed card stayed absent after restart: yes
+Observed: saved bytes match: yes
+Checked saved bytes:
+cardClarityWallet1
+1
+3
+Result: passed (17 checks matched).
+
+Summary: 1 passed, 0 failed, 0 skipped.
+
+Demo exit status: 0

@@ -1,3 +1,14 @@
+/*
+Evan Zhuang - my assigned direct card checks
+
+I check the card functions without going through the menu. I use Joe's sample
+names, fees, base rates, and three category bonuses as the expected values.
+I check seven things per card, two invalid IDs, and three practice calculations:
+35 + 2 + 3 gives 40 checks. I include the headers twice to check their guards.
+I use a small tolerance for the nonzero double results, not exact equality.
+I print a failed check and return 1 if anything differs. I only print the
+40-check success message after the error count stays zero.
+*/
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -42,7 +53,7 @@ int main(void) {
 	}
 	errors += check(getCardById(0) == NULL, "Zero is not a saved card ID");
 	errors += check(getCardById(SAMPLE_CARD_COUNT + 1) == NULL, "Unknown card ID is rejected");
-	/* Worked by hand: $10 at 1.25%, with a 2% bonus, is 0.1275 units. */
+	/* I expect 10 * 0.0125 * 1.02 = 0.1275 reward units for this example. */
 	errors += check(fabs(calculateReward(*testGetCard(0), SERVICES, 10) - 0.1275) < 0.000001,
 		"Service reward with a bonus");
 	errors += check(calculateReward(*testGetCard(0), SERVICES, 0) == 0,

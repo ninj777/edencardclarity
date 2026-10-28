@@ -1,3 +1,39 @@
+/*
+Oliver Dolfin - my assigned Windows window work
+
+I use the Windows API directly from C. CreateWindowW opens the main window,
+and makeControl creates labels, lists, and buttons inside it. I keep their
+handles together in WindowControls so I can move or update a specific control.
+I use messages from Windows instead of writing a loop that checks every button.
+
+I put the catalog on the left, the selected card's details on the right, and
+My wallet below the catalog. I use Tahoma throughout, smaller titles and reward
+numbers, bold headings, dark gray writing, and a light cream background.
+I keep the regular Windows list and button behavior, including keyboard use.
+
+I store a catalog ID with each list row using LB_SETITEMDATA. A row number can
+change when I remove something, so I do not save the row as the card's identity.
+I use Joe's getCardById to look up the record and Eden's wallet/storage code
+for the actions. I do not maintain another save system just for the window.
+
+I let showCardDetails fill the labels and fillWalletList rebuild the wallet
+list after an edit. I disable Add for a duplicate or full wallet. I keep Remove
+disabled until a wallet card is actually selected. After removing or reloading,
+I leave no automatic selection that could remove the wrong card on a click.
+
+I handle clicks and selections in WM_COMMAND, resizing in WM_SIZE, painting in
+WM_PAINT, and unsaved edits in WM_CLOSE. I use IsDialogMessageW so Tab can move
+between controls. I keep a minimum size because the fixed-size lists and footer
+still need enough room. I release fonts and brushes after the window closes.
+
+I ask before reloading over unsaved changes. When closing, I offer save, discard,
+or cancel. If saving fails, I leave the window open with the current list.
+I use savedCards.txt by default, or the path supplied by --wallet-file.
+
+I leave the Windows appearance, resize behavior, buttons, and save replacement
+for a real desktop check. A cross-build checks compilation, not those actions.
+On other systems I explain that the window needs Windows and return 1.
+*/
 #include <stdio.h>
 #include "window.h"
 
@@ -42,6 +78,7 @@ static HBRUSH backgroundBrush, panelBrush;
 
 static HWND makeControl(HWND parent, const wchar_t* type, const wchar_t* text,
 	DWORD style, int id, HFONT font) {
+	/* I reuse this setup so the controls get the same font and basic window styles. */
 	HWND control = CreateWindowExW(0, type, text, WS_CHILD | WS_VISIBLE | style,
 		0, 0, 1, 1, parent, (HMENU)(INT_PTR)id, GetModuleHandleW(NULL), NULL);
 	if (control) {
@@ -55,6 +92,7 @@ static void setStatus(const wchar_t* text) {
 }
 
 static int selectedCardId(HWND list) {
+	/* I read the stored card ID; an empty selection is not a real card. */
 	LRESULT row = SendMessageW(list, LB_GETCURSEL, 0, 0);
 	if (row == LB_ERR) {
 		return 0;
@@ -67,6 +105,7 @@ static int selectedCardId(HWND list) {
 }
 
 static void updateButtons(void) {
+	/* I prevent an invalid action before the click and still check it in wallet.c. */
 	int cardId = selectedCardId(controls.catalogList);
 	bool canAdd = cardId != 0 && windowWallet.count < MAX_WALLET_CARDS
 		&& !walletHasCard(&windowWallet, cardId);
@@ -96,6 +135,7 @@ static void showCardDetails(int cardId) {
 static bool fillWalletList(int keepSelectedId) {
 	SendMessageW(controls.walletList, LB_RESETCONTENT, 0, 0);
 	int selectedRow = -1;
+	/* I only restore a selection if its requested ID is still in the wallet. */
 	for (int i = 0; i < windowWallet.count; i++) {
 		int cardId = windowWallet.cardIds[i];
 		wchar_t name[128];
@@ -122,6 +162,7 @@ static bool fillWalletList(int keepSelectedId) {
 }
 
 static bool saveFromWindow(void) {
+	/* I leave changed set when saving fails, so closing cannot hide an unsaved edit. */
 	if (saveWallet(savePath, &windowWallet) != STORAGE_OK) {
 		setStatus(L"Couldn't save. Check the folder and any old .tmp file, then try again.");
 		return false;
@@ -133,6 +174,7 @@ static bool saveFromWindow(void) {
 }
 
 static void reloadFromWindow(HWND hwnd) {
+	/* I ask before replacing a list that has unsaved changes. */
 	if (changed && MessageBoxW(hwnd,
 		L"Reload your last save? Changes you haven't saved will be lost.",
 		L"Reload cards", MB_YESNO | MB_ICONQUESTION | MB_DEFBUTTON2) != IDYES) {
@@ -159,7 +201,7 @@ static void handleWindowAction(HWND hwnd, int id, int notification) {
 	} else if (id == ID_WALLET && notification == LBN_SELCHANGE) {
 		int cardId = selectedCardId(controls.walletList);
 		if (cardId) {
-			/* Keep Add and the details pane pointed at the same card. */
+			/* I keep Add and the details panel pointed at the same card. */
 			SendMessageW(controls.catalogList, LB_SETCURSEL, (WPARAM)(cardId - 1), 0);
 			showCardDetails(cardId);
 		}
@@ -206,6 +248,7 @@ static void onWindowResize(HWND hwnd) {
 		return;
 	}
 	int detailWidth = width - 400;
+	/* I keep the left list width fixed and let the detail panel use the extra space. */
 	MoveWindow(controls.title, 24, 24, width - 48, 32, TRUE);
 	MoveWindow(controls.subtitle, 24, 64, width - 48, 26, TRUE);
 	MoveWindow(controls.catalogHeading, 24, 112, 300, 26, TRUE);
@@ -265,6 +308,7 @@ static bool loadWindowWidgets(HWND hwnd) {
 		}
 	}
 	for (int cardId = 1; cardId <= SAMPLE_CARD_COUNT; cardId++) {
+		/* I attach the real ID to each row instead of using a wallet position. */
 		const Card* card = getCardById(cardId);
 		wchar_t rowText[128];
 		swprintf_s(rowText, 128, L"%hs - %.2f%% base", card->issuer, card->rate);
@@ -293,6 +337,7 @@ static bool detailLabel(HWND control) {
 }
 
 static LRESULT CALLBACK applicationWindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
+	/* I route each Windows message to the part of the interface it affects. */
 	switch (message) {
 	case WM_CREATE:
 		return loadWindowWidgets(hwnd) ? 0 : -1;
@@ -351,6 +396,7 @@ static LRESULT CALLBACK applicationWindowProc(HWND hwnd, UINT message, WPARAM wP
 }
 
 static void releaseWindowResources(void) {
+	/* I release these objects after the controls no longer need their fonts or colors. */
 	if (bodyFont) {
 		DeleteObject(bodyFont);
 	}
@@ -379,7 +425,7 @@ int runWindow(const char* filePath) {
 	savePath = filePath;
 	backgroundBrush = CreateSolidBrush(RGB(245, 244, 240));
 	panelBrush = CreateSolidBrush(RGB(255, 255, 255));
-	/* Use one plain font, with bold text just for the section headings. */
+	/* I use one plain font and bold text just for the section headings. */
 	bodyFont = CreateFontW(-16, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, DEFAULT_PITCH, L"Tahoma");
 	titleFont = CreateFontW(-24, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
@@ -413,6 +459,7 @@ int runWindow(const char* filePath) {
 		MSG message;
 		int result;
 		while ((result = GetMessageW(&message, NULL, 0, 0)) > 0) {
+			/* I let Tab move between controls before sending ordinary window messages. */
 			if (!IsDialogMessageW(hwnd, &message)) {
 				TranslateMessage(&message);
 				DispatchMessageW(&message);
