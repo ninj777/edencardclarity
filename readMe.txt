@@ -57,7 +57,7 @@ msbuild CreditCardThing\CreditCardThing.vcxproj /t:Rebuild /p:Configuration=Debu
 cl /nologo /std:c11 /TC /W4 /D_CRT_SECURE_NO_WARNINGS tests\testGate1.c tests\testSupport.c /Febuild\testGate1.exe /Fobuild\
 cl /nologo /std:c11 /TC /W4 /D_CRT_SECURE_NO_WARNINGS tests\testGate2.c tests\testSupport.c /Febuild\testGate2.exe /Fobuild\
 cl /nologo /std:c11 /TC /W4 /D_CRT_SECURE_NO_WARNINGS tests\demoGate2.c tests\testSupport.c /Febuild\demoGate2.exe /Fobuild\
-cl /nologo /std:c11 /TC /W4 /D_CRT_SECURE_NO_WARNINGS tests\testModules.c CreditCardThing\cards.c CreditCardThing\logger.c /Febuild\testModules.exe /Fobuild\ /link ole32.lib
+cl /nologo /std:c11 /TC /W4 /D_CRT_SECURE_NO_WARNINGS tests\testModules.c CreditCardThing\cards.c CreditCardThing\logger.c /Febuild\testModules.exe /Fobuild\
 build\testGate1.exe build\windows\CreditCardThing.exe > docs\windowsGate1Log.txt 2>&1
 build\testGate2.exe build\windows\CreditCardThing.exe > docs\windowsGate2Log.txt 2>&1
 build\testModules.exe > docs\windowsModuleLog.txt 2>&1
@@ -165,30 +165,29 @@ milestones. The current program does not yet complete the full purchase tool.
 
 Current assigned source sizes, including these comments
 
-Oliver: 891 lines across the assigned source and headers.
-  CreditCardThing/main.c: 322
-  CreditCardThing/window.c: 479
+Oliver: 887 lines across the assigned source and headers.
+  CreditCardThing/main.c: 318
+  CreditCardThing/window.c: 478
   CreditCardThing/window.h: 14
-  CreditCardThing/logger.c: 55
+  CreditCardThing/logger.c: 56
   CreditCardThing/logger.h: 21
-Eden: 481 lines across the assigned source and headers.
-  CreditCardThing/input.c: 114
-  CreditCardThing/input.h: 30
-  CreditCardThing/wallet.c: 106
-  CreditCardThing/wallet.h: 40
-  CreditCardThing/storage.c: 162
-  CreditCardThing/storage.h: 29
-Joe: 306 lines across the assigned source and headers.
-  CreditCardThing/cards.c: 216
-  CreditCardThing/cards.h: 90
-Evan: 1,452 lines across the assigned source and headers.
-  tests/testGate1.c: 302
-  tests/testGate2.c: 441
-  tests/testModules.c: 68
-  tests/testSupport.c: 526
-  tests/testSupport.h: 58
-  tests/demoGate2.c: 57
+Eden: 479 lines across the assigned source and headers.
+  CreditCardThing/input.c: 113
+  CreditCardThing/input.h: 29
+  CreditCardThing/wallet.c: 105
+  CreditCardThing/wallet.h: 39
+  CreditCardThing/storage.c: 165
+  CreditCardThing/storage.h: 28
+Joe: 262 lines across the assigned source and headers.
+  CreditCardThing/cards.c: 181
+  CreditCardThing/cards.h: 81
+Evan: 1,437 lines across the assigned source and headers.
+  tests/testGate1.c: 299
+  tests/testGate2.c: 437
+  tests/testModules.c: 69
+  tests/testSupport.c: 520
+  tests/testSupport.h: 56
+  tests/demoGate2.c: 56
 
 These are file sizes, including comments and blank lines, not personal
 authorship or time measurements. The pre-annotation snapshot is in main.c.
-The unused pagereader.c stub is excluded from these active source amounts.

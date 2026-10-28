@@ -1,47 +1,46 @@
 /*
-Eden Yun Yu - my assigned input checking
+Eden Yun Yu - checking answers
 
-My part is making sure an answer is complete and valid before the menus use it.
-I had input checking in the Gate 1 starter's main.c. For Gate 2 I keep the shared
-reader here because I also need the same number rules when loading a saved file.
-I separate reading a line from deciding whether that line is a valid number.
+My job here is to check the complete answer before the menu uses it. Gate 1
+had the input check in main.c. For Gate 2, I keep the reader here because the
+saved-file code needs the same number rules. Reading a line and deciding
+whether that line is a number are separate steps.
 
-I use readLine to finish one whole answer. I read characters with fgetc until
-I reach a newline or the end of the stream. I keep ch as an int because fgetc
-must represent both a character and EOF. I keep the used length as size_t,
-which is the size type used by arrays and the standard library.
+In readLine, I use fgetc until the newline or end of input. The character
+variable is an int because it needs to hold either a character or EOF.
+The length uses size_t, which is the library's type for buffer sizes.
 
-I leave room for the ending null character. That is what lets later string
-functions know where the text ends. If the answer is too long, I mark it bad
-but keep reading the rest of that line. Otherwise the next question could read
-leftover characters as if the person had typed another answer.
+I leave one space for the ending null character. If an answer is too long,
+the reader marks it invalid but still finishes that line. This matters:
+stopping at the buffer limit would leave the rest as input for the next
+question, even though the person only typed one answer.
 
-I also reject a null character hidden inside the input. A string function would
-stop there even if more bytes followed it. I finish that line before returning
-INPUT_INVALID. I keep an actual read failure separate from ordinary end of
-input, because a broken stream should not be reported as a normal goodbye.
+A hidden null also makes the line invalid. Normal string functions would
+stop there and miss the following bytes, so I don't let that partly hidden
+answer through. An actual read failure gets a different result from ordinary
+end of input. That lets Oliver explain a problem instead of saying Goodbye
+as if everything ended normally.
 
-I remove a final carriage return for Windows files that use carriage return
-plus newline. I accept a last line without a newline when it still contains a
-valid answer. I return INPUT_END only when there is no next answer to read.
+For Windows text files, I remove the final carriage return before the newline.
+A last line without a newline can still be valid. INPUT_END means there was
+no next answer, not just that the last answer was missing its newline.
 
-I use parseNumber to convert the finished text. strtol gives me a long and a
-pointer to the first character it could not convert. I clear errno first, then
-check for ERANGE in case the number is too large even for long.
+I use strtol with base 10 in parseNumber. It returns a long and leaves end
+pointing to the first character it couldn't convert. Clearing errno first
+lets me detect ERANGE for a number too large even for long.
 
-I allow surrounding whitespace but reject any other leftover character. For
-example, I accept 2 and ' 2 ', but reject a blank line, 2hello, and 1.5. I also
-check the caller's minimum and maximum, so 9 is not a valid three-option choice.
-I only write through the output pointer after all those checks succeed.
+Spaces around a number are fine; other leftover characters are not. I accept
+2 and ' 2 ', but reject blank input, 2hello, and 1.5. The caller also supplies
+the allowed range, so 9 fails for a menu limited to 1 through 3. The output
+number is only assigned after the complete check succeeds.
 
-I combine the two steps in readNumber using a 128-character buffer. The enum
-in input.h names four results: valid input, end of input, invalid input, and
-read error. I use names rather than expecting each caller to remember numbers.
-I let Oliver decide whether the menu should repeat or close for each result.
+readNumber joins those steps using a 128-character buffer. The enum in
+input.h names valid input, invalid input, end of input, and read failure.
+I use these names so callers don't have to guess what a returned number means.
 
-I keep this file about whole-number choices and IDs. For a later purchase
-calculator, I still need separate amount rules and consistent whole-cent
-rounding. I do not use the menu-number reader as a finished money parser.
+These checks are for menu choices and card IDs. A later purchase calculator
+still needs its own amount rules and whole-cent rounding. This is not yet
+a money parser.
 */
 #include <ctype.h>
 #include <errno.h>

@@ -1,39 +1,33 @@
 /*
-Evan Zhuang - my assigned C test support
+Evan Zhuang - C test support
 
-I keep the process and file setup here so the menu cases can focus on answers
-and expected behavior. Standard C does not provide child processes with input
-pipes and time limits. I use Windows functions under _WIN32 and POSIX functions
-on the other supported systems. Both branches are C, not another language.
+I keep process and file setup here so the menu cases mostly show answers and
+expected behavior. Standard C has no child-process API with input pipes and
+a timeout, so I use Windows functions under _WIN32 and POSIX functions elsewhere.
 
-I resolve the application's path before entering a temporary folder. I make
-that folder for each case, with its own savedCards.txt, output.txt, and errors.txt.
-I remove only that temporary folder after recording the result. I never need
-to clean or overwrite the person's normal saved wallet for a test.
+I resolve the application path before entering a temporary folder. Each case
+gets its own savedCards.txt, output.txt, and errors.txt. Cleanup only removes
+that folder, leaving the normal saved wallet alone.
 
-I start the compiled program directly. On Windows I use CreateProcessA and
-inheritable file/pipe handles. I quote each argument, including backslashes,
-so a save path with spaces stays one argument. On POSIX I use pipe, fork,
-dup2, and execv. I pass the arguments as separate array entries there.
+On Windows I use CreateProcessA with input and output handles. Arguments are
+quoted, including their backslashes, so a path with spaces stays one argument.
+On POSIX I use pipe, fork, dup2, and execv with separate argument entries.
 
-I send answers through the pipe and then close it to signal EOF. I accept an
-explicit byte length so a test can send hidden nulls rather than stopping at
-the first one. I wait up to five seconds. If the child takes too long, I stop
-it and record a failure. I close the process and input handles after use.
+I send the requested bytes and close input to signal EOF. An explicit length
+lets a case include hidden nulls. The five-second wait stops an unresponsive
+child and records failure. Process and input handles are closed after use.
 
-I capture the output in files instead of filling an unread output pipe.
-I compare text after normalizing Windows line endings, but I compare saved
-files as exact bytes. I keep those two checks separate because a correct
-message does not prove the save contains the right IDs.
+Output goes to files so an unread output pipe cannot fill up. I normalize
+text line endings for comparisons, but saved files are checked as exact bytes.
+A correct message alone would not prove the right IDs were written.
 
-I use expect for one yes-or-no observation, finishCase for the result of a
-whole case, and finishTests for the final passed/failed/skipped totals.
-I return a nonzero status for any failure so a build log cannot hide it.
-I skip platform-only cases explicitly. A skip is not a successful desktop test.
+expect records one observation; finishCase decides whether the case passed.
+finishTests prints the totals and returns failure if any case failed.
+I record platform-only skips separately from passes.
 
-For the live damaged-file test, I leave input open, wait for the initial load
-message, replace the fixture, and only then send Reload. I need that order to
-check that the loaded wallet survives a file becoming damaged during a session.
+For the live damaged-file case, I leave input open, wait for the successful
+load message, change the fixture, and then send Reload. That order checks
+damage during a session, rather than just starting with an already bad file.
 */
 #ifndef _WIN32
 #define _POSIX_C_SOURCE 200809L

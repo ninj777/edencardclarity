@@ -1,11 +1,10 @@
 /*
-Eden Yun Yu - my assigned file interface
+Eden Yun Yu - save and load declarations
 
-I return StorageResult so Oliver can explain success, a missing file, a bad
-format, or a read/write failure. I keep the two public functions here and the
-file-format details in storage.c. I only replace the live wallet after a full
-successful load. I use a const wallet when saving because writing the file
-does not need to change the selected IDs in memory.
+I return StorageResult so the caller can explain a missing file, bad format,
+read failure, or write failure. The format itself is described in storage.c.
+A load replaces the wallet only after every check succeeds. Saving takes a
+const wallet because writing a file should not alter its selected IDs.
 */
 #ifndef STORAGE_H
 #define STORAGE_H

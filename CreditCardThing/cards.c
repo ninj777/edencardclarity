@@ -1,35 +1,32 @@
 /*
-Joe Kwon - my assigned sample cards and ID checks
+Joe Kwon - sample catalog
 
-I keep the card records here. These are made-up examples, not current offers.
-For Gate 1 I need at least three named cards and labeled example rates.
-I keep five: Travel Sample, Points Sample, Cashback Sample, Everyday Sample,
-and Starter Sample. Only Travel has a 1.25% base rate; the other four use 1%.
-I keep the exact fees and category bonuses beside each record below.
+My part is the card data and stable IDs. These are made-up examples, not
+current offers. Gate 1 needs at least three; I keep all five:
+Travel Sample, Points Sample, Cashback Sample, Everyday Sample, Starter Sample.
+Travel uses a 1.25% base rate. The other four use 1%. The exact fees and
+category bonuses are next to their records below.
 
-For Gate 2 I need the saved IDs to keep matching those same records:
-    1 Travel Sample       2 Points Sample       3 Cashback Sample
-    4 Everyday Sample     5 Starter Sample
-I do not renumber the catalog when someone removes a card from their wallet.
-I check IDs before calling the older zero-based testGetCard function because
-its fallback is the first card. I return NULL for an unknown public ID.
+The IDs stay 1 through 5 in that order. I don't renumber them when a wallet
+card is removed. One lookup serves the menu, save file, window, and tests.
+An unknown ID returns NULL. There is no need for a second zero-based lookup
+or a random identifier.
 
-I use registerCard to fill the main fields and addMultiplier for the category
-bonuses. I leave unassigned bonuses at zero. I use printSampleCards for console
-output and the two shorter formatting functions for the Windows detail labels.
+I use registerCard for the main fields and addMultiplier for bonuses.
+Unset bonuses stay zero. The console prints the same records used for the
+shorter Windows detail labels.
 
-I keep the existing practice formula: amount * rate/100 * (1 + bonus/100).
-I mean an extra 5% of the base reward when I store a bonus of 5, not five times
-the reward. For 10 at 1.25% with a 2% bonus I expect 0.1275 reward units.
-I do not call points equal to dollars or subtract annual fees with this formula.
+For the practice formula I use amount * rate/100 * (1 + bonus/100).
+A bonus of 5 means 1.05 times the base reward, not five times. An amount of
+10 at 1.25% with a 2% bonus gives 0.1275 reward units. This does not value
+points as dollars or subtract annual fees.
 
-For Gate 4 I still need sources and check dates for real benefits, six checked
-purchase cases, ties, limits, activation rules, and expiration notes. I keep
-the sample warning until the data is actually researched and checked.
+For Gate 4, I still need benefit sources and dates, six checked purchases,
+ties, limits, activation rules, and expiration notes. Until then, these
+values stay labeled as samples.
 */
 #include <stdio.h>
 #ifdef _WIN32
-#include <windows.h>
 #include <wchar.h>
 #endif
 
@@ -37,14 +34,14 @@ the sample warning until the data is actually researched and checked.
 #include "cards.h"
 
 #ifdef _WIN32
-const wchar_t* networkNames[] = {
+static const wchar_t* networkNames[] = {
 	L"Visa",
 	L"Mastercard",
 	L"American Express",
 	L"Discover"
 };
 
-const wchar_t* rewardTitles[] = {
+static const wchar_t* rewardTitles[] = {
 	L"Cash Back",
 	L"Points",
 	L"Miles"
@@ -52,22 +49,14 @@ const wchar_t* rewardTitles[] = {
 
 #endif
 
-Card cardA = { 0 };
-Card cardB = { 0 };
-Card cardC = { 0 };
-Card cardD = { 0 };
-Card cardE = { 0 };
+static Card cardA = { 0 };
+static Card cardB = { 0 };
+static Card cardC = { 0 };
+static Card cardD = { 0 };
+static Card cardE = { 0 };
 
 Card registerCard(char* issuer, enum Network network, int annualFee, enum Reward reward, double rate) {
 	Card card = { 0 };
-
-#ifdef _WIN32
-	GUID guid = { 0 };
-	if (!SUCCEEDED(CoCreateGuid(&guid))) {
-		logMessage("Could not create a card identifier.", LOG_ERROR);
-	}
-	card.guid = guid;
-#endif
 
 	card.issuer = issuer;
 	card.network = network;
@@ -78,25 +67,8 @@ Card registerCard(char* issuer, enum Network network, int annualFee, enum Reward
 }
 
 #ifdef _WIN32
-LPCWSTR getGUIDAsLPCWSTR(GUID guid) {
-	/* I keep this buffer valid after returning; the window copies the text. */
-	static wchar_t buf[37];
-
-	swprintf_s(
-		buf, 
-		37, 
-		L"%08lx-%04hx-%04hx-%02hhx%02hhx-%02hhx%02hhx%02hhx%02hhx%02hhx%02hhx",
-		guid.Data1,
-		guid.Data2,
-		guid.Data3,
-		guid.Data4[0], guid.Data4[1],
-		guid.Data4[2], guid.Data4[3], guid.Data4[4],
-		guid.Data4[5], guid.Data4[6], guid.Data4[7]);
-
-	return buf;
-}
-
 LPCWSTR getBaseInfo(Card card) {
+	/* I keep this buffer valid after returning; the window copies the text. */
 	static wchar_t buf[256];
 	
 	swprintf_s(
@@ -143,29 +115,22 @@ double calculateReward(Card card, enum MerchantCategory category, double amount)
 	return baseReward * (1 + multiplier / 100);
 }
 
-Card* testGetCard(int id) {
-	switch (id) {
-	case (0):
+Card* getCardById(int cardId) {
+	/* I keep the public IDs the same in the menu, save file, and window. */
+	switch (cardId) {
+	case 1:
 		return &cardA;
-	case (1):
+	case 2:
 		return &cardB;
-	case (2):
+	case 3:
 		return &cardC;
-	case (3):
+	case 4:
 		return &cardD;
-	case (4):
+	case 5:
 		return &cardE;
 	default:
-		return &cardA;
-	}
-}
-
-Card* getCardById(int cardId) {
-	/* I check the public ID before using the older function's fallback. */
-	if (cardId < 1 || cardId > SAMPLE_CARD_COUNT) {
 		return NULL;
 	}
-	return testGetCard(cardId - 1);
 }
 
 void initTestCards(void) {
@@ -202,7 +167,7 @@ void printSampleCards(void) {
 	puts("\nSample cards");
 	puts("These cards and rates are made up for practice, not real bank offers.");
 	for (int i = 0; i < SAMPLE_CARD_COUNT; i++) {
-		Card* card = testGetCard(i);
+		Card* card = getCardById(i + 1);
 		printf("\nCard %d: %s\n", i + 1, card->issuer);
 		printf("Example base rate: %.2f%% | Example annual fee: $%d\n",
 			card->rate, card->annualFee);

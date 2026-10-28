@@ -1,57 +1,60 @@
 /*
-Eden Yun Yu - my assigned saving and loading
+Eden Yun Yu - keeping the wallet between runs
 
-I save card types, not payment details. I use a short text file so the selected
-IDs are easy to inspect while checking Gate 2. My default filename is
-savedCards.txt, but Oliver can pass another path from either interface.
+I save card types, not payment details. A short text format lets me check
+which IDs were actually written. The default is savedCards.txt, but main
+can supply another path for either the menu or window.
 
-For Travel Sample and Cashback Sample, I use these four lines:
+For Travel Sample and Cashback Sample, the file looks like this:
     cardClarityWallet1
     2
     1
     3
-I use the first line to identify the format, the next to give the number of
-records, and one following line for each catalog ID. For an empty wallet I
-write the same header and a count of 0. I do not write any ID lines after it.
-I keep the ID mapping in Joe's cards.c rather than saving names and rates too.
+The first line identifies the format. The count says how many ID lines follow.
+For an empty wallet, I write the header and 0, then no IDs. Names and rates
+come from Joe's catalog instead of another copy in the file.
 
-I allow zero through five unique IDs. I accept Windows or Linux line endings,
-surrounding whitespace on number lines, and a last ID without a newline.
-I require the header to match exactly, with no byte-order mark. I reject
-unknown IDs, duplicates, missing records, and anything after the stated count,
-even an extra blank line. I also reject long lines and hidden null characters
-through the shared input reader. I do not silently load only the good part.
+I allow zero through five unique IDs. Number lines can have surrounding
+whitespace, either line-ending style works, and the last ID doesn't need a
+newline. The header must match exactly, with no byte-order mark. Unknown or
+duplicate IDs, missing records, and anything after the declared count fail.
+That includes an extra blank line. Long lines and hidden nulls are rejected
+by the shared reader.
 
-I open a save with rb and build a temporary Wallet called loaded. I check the
-whole file and close it before copying it over the live wallet. For example,
-a file declaring two cards but containing IDs 1 and 1 must fail. If a file is
-damaged during a session, a failed Reload must leave the open list available.
-I distinguish a file that does not exist from other open/read errors because
-a first-time user normally has no saved file yet.
+When loading, I open with rb and fill a separate Wallet called loaded.
+Only a complete valid file, followed by a successful close, replaces the
+live list. Otherwise a file with a good first ID and damaged second ID could
+leave half a wallet loaded. A declared count of 2 followed by IDs 1 and 1,
+for example, must fail without changing the current list.
 
-When saving, I validate the current wallet before opening any destination.
-I make a temporary path by adding .tmp. The path plus suffix and ending null
-must fit in the 1,024-character array; the operating system can have a shorter
-limit. I check snprintf rather than assuming the path fitted.
+A missing file is normal for someone who hasn't saved yet. I distinguish
+that from other open or read failures so the menu can explain the difference.
 
-I open the temporary file with wbx. The x means it must be a new file. If an
-old temporary file is there, I leave it alone and report failure. I check each
-write and the file close before replacing the older save. On Linux I use
-rename, and on Windows I use MoveFileExA with replacement enabled.
+Before saving, I validate the wallet and make a path ending in .tmp.
+The path, suffix, and ending null must fit in the 1,024-character buffer.
+snprintf tells me if they didn't fit; the file system may have a shorter
+limit too.
 
-If writing or replacement fails, I try to remove only the new temporary file
-from this attempt. I keep the result as an error, so Oliver does not clear the
-unsaved flag or close as if saving succeeded. This avoids truncating the old
-save at the start of an ordinary attempt. I do not treat it as a backup system
-or a guarantee against every disk or power failure. I use one program copy at
-a time because this version does not merge separate people's changes.
+I open the temporary file with wbx. The x prevents overwriting a temporary
+file that was already there. Each write and the close must succeed before
+the older save is replaced. Linux uses rename; Windows uses MoveFileExA
+with replacement enabled.
 
-For Gate 2, I need add, view, remove, save, and reload to work across a restart.
-Evan's cases also check missing files, bad headers/counts/IDs, duplicate IDs,
-existing temporary files, a missing folder, and a failed replacement. I can
-find the actual output in docs/gate2TestLog.txt and the three-run example in
-docs/gate2DemoLog.txt. I leave the Windows replacement and prompts for a real
-Windows run; compiling that branch does not establish its runtime result.
+If writing or replacement fails, I try to remove only the new temporary
+file from that attempt and return an error. Oliver can then keep the
+unsaved flag and leave the program open. The old save is not truncated
+just because a new attempt started.
+
+This is not a backup system or a promise against every disk or power
+failure. I use one running copy at a time because separate edits aren't
+merged. An old .tmp file should be inspected before moving or deleting it.
+
+For Gate 2 I need all five wallet actions and a saved list that returns after
+restarting. Evan's cases also cover bad headers/counts/IDs, duplicate IDs,
+missing folders, existing temporary files, and failed replacements.
+The actual observations are in docs/gate2TestLog.txt; the three-run example
+is in docs/gate2DemoLog.txt. I still need the Windows replacement and prompts
+checked on a real Windows computer.
 */
 #include <errno.h>
 #include <stdio.h>

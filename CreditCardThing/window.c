@@ -1,38 +1,37 @@
 /*
-Oliver Dolfin - my assigned Windows window work
+Oliver Dolfin - Windows window notes
 
-I use the Windows API directly from C. CreateWindowW opens the main window,
-and makeControl creates labels, lists, and buttons inside it. I keep their
-handles together in WindowControls so I can move or update a specific control.
-I use messages from Windows instead of writing a loop that checks every button.
+I use the Windows API from C to make this window. CreateWindowW opens it, and
+makeControl adds its labels, lists, and buttons. WindowControls keeps the
+handles together so I can update the right control when something changes.
 
-I put the catalog on the left, the selected card's details on the right, and
-My wallet below the catalog. I use Tahoma throughout, smaller titles and reward
-numbers, bold headings, dark gray writing, and a light cream background.
-I keep the regular Windows list and button behavior, including keyboard use.
+The catalog is on the left, the details are on the right, and My wallet is
+below the catalog. I use Tahoma, smaller titles and rates, bold headings,
+dark gray text, and a cream background. The controls keep their usual Windows
+behavior, including moving around with the keyboard.
 
-I store a catalog ID with each list row using LB_SETITEMDATA. A row number can
-change when I remove something, so I do not save the row as the card's identity.
-I use Joe's getCardById to look up the record and Eden's wallet/storage code
-for the actions. I do not maintain another save system just for the window.
+I attach the real catalog ID to each list row with LB_SETITEMDATA. A wallet
+row can move after a removal, so its position is not a reliable saved ID.
+Joe's getCardById supplies the record. Eden's functions handle the wallet
+and file actions, just as they do in the console.
 
-I let showCardDetails fill the labels and fillWalletList rebuild the wallet
-list after an edit. I disable Add for a duplicate or full wallet. I keep Remove
-disabled until a wallet card is actually selected. After removing or reloading,
-I leave no automatic selection that could remove the wrong card on a click.
+showCardDetails fills the labels; fillWalletList refreshes the selected-card
+list. I disable Add for a duplicate or full list, and Remove until a wallet
+card is selected. After a removal or reload, there is no automatic wallet
+selection that could make the next click remove a different card.
 
-I handle clicks and selections in WM_COMMAND, resizing in WM_SIZE, painting in
-WM_PAINT, and unsaved edits in WM_CLOSE. I use IsDialogMessageW so Tab can move
-between controls. I keep a minimum size because the fixed-size lists and footer
-still need enough room. I release fonts and brushes after the window closes.
+I handle clicks in WM_COMMAND, resizing in WM_SIZE, drawing in WM_PAINT, and
+closing in WM_CLOSE. IsDialogMessageW handles Tab navigation. The minimum size
+leaves room for the lists, detail panel, and footer. Fonts and brushes are
+released after the controls are finished with them.
 
-I ask before reloading over unsaved changes. When closing, I offer save, discard,
-or cancel. If saving fails, I leave the window open with the current list.
-I use savedCards.txt by default, or the path supplied by --wallet-file.
+Before reloading over unsaved edits, I ask whether to continue. Closing gives
+save, discard, and cancel choices. A failed save leaves the window open.
+The save path comes from main; the usual default is savedCards.txt.
 
-I leave the Windows appearance, resize behavior, buttons, and save replacement
-for a real desktop check. A cross-build checks compilation, not those actions.
-On other systems I explain that the window needs Windows and return 1.
+The window cross-compiles, but I still need a real Windows check for its
+appearance, buttons, resizing, keyboard use, and file replacement. On another
+system, this mode explains that Windows is needed and returns 1.
 */
 #include <stdio.h>
 #include "window.h"

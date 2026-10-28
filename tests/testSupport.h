@@ -1,11 +1,9 @@
 /*
-Evan Zhuang - my assigned shared test declarations
+Evan Zhuang - shared test declarations
 
-I group each runner's paths, captured output, counts, and child-process handles
-in TestContext. I share these declarations so both menu suites and the demo
-use the same setup and cleanup. I keep the Windows handles and POSIX process
-numbers under separate compile conditions because those systems use different
-process APIs. I keep the test code in C on both systems.
+I group the paths, captured output, counts, and process handles in TestContext.
+Both menu suites and the demo share this setup. Windows handles and POSIX
+process numbers need separate declarations, but both versions are C.
 */
 #ifndef TEST_SUPPORT_H
 #define TEST_SUPPORT_H

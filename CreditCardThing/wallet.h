@@ -1,11 +1,10 @@
 /*
-Eden Yun Yu - my assigned wallet structure
+Eden Yun Yu - wallet declarations
 
-I store catalog IDs in cardIds and the used length in count. I use the same
-five-card limit as the catalog so every type can be selected once. I return a
-named WalletResult for invalid IDs, duplicates, and a full wallet. I keep the
-modifying parameters as Wallet* and read-only parameters as const Wallet*.
-I explain additions and moving entries after removal in wallet.c.
+I store catalog IDs in cardIds and the used length in count. The five-slot
+limit matches the catalog. WalletResult gives the caller a reason when an
+addition fails: unknown ID, full list, or duplicate. Modifying functions take
+Wallet*; read-only functions take const Wallet*. The steps are in wallet.c.
 */
 #ifndef WALLET_H
 #define WALLET_H

@@ -1,33 +1,30 @@
 /*
-Evan Zhuang - my assigned Gate 1 checks
+Evan Zhuang - Gate 1 menu checks
 
-I check the compiled program, not just whether the source looks right. I start
-it with --gate1, send answers, and compare the output and exit status. I use
-31 cases so the normal menu and the bad-answer recovery both get checked.
-I put the expected behavior in the expected array beside the case names.
-I print each actual observation through expect and return failure if a check
-fails. I keep the compile command and its result in docs/gate2BuildLog.txt.
+I run the compiled program with --gate1, send answers, and check the output
+and exit status. There are 31 cases. Their names and expected results are in
+the arrays before the switch. expect prints what actually matched; a failed
+check gives the runner a failure status.
 
-For the proposal's five required checks, I use:
-  Compilation: I expect C11 with warnings enabled and no build errors.
-  Startup: in case 1 I expect exactly three numbered menu options.
-  Samples: in cases 2-4 I expect five names, exact rates, and example labels.
-  Invalid input: in case 7 I expect hello to be rejected before Exit works.
-  Exit: in case 6 I expect Goodbye and status 0.
-For the extra recovery check in case 16, I send a bad answer, then 1, then 3.
-I expect a retry message, the sample cards, and a clean exit in that order.
-I keep the actual run observations in docs/gate2TestLog.txt.
+For the five required checks, I use:
+  Compilation: the C11 command and actual result in docs/gate2BuildLog.txt.
+  Startup: case 1 expects exactly three numbered choices.
+  Samples: cases 2-4 expect five names, the exact rates, and sample labels.
+  Invalid input: case 7 sends hello, then checks that Exit still works.
+  Exit: case 6 expects Goodbye and status 0.
+Case 16 is the extra recovery check: a bad answer, then 1, then 3 should
+reject the first answer, display the cards, and exit. The actual case
+observations are in docs/gate2TestLog.txt.
 
-I also check zero, negatives, blank answers, decimals, trailing letters,
-large numbers, long lines, hidden nulls, whitespace, repeated choices, and EOF.
-I check the largest fitting line and the first overlong line separately.
-I use a real Linux read error in case 27 and the unsupported-window path in
-case 31. I skip those two on Windows rather than claiming the window was tested.
+I also check zero, negatives, blanks, decimals, trailing letters, large
+numbers, long lines, hidden nulls, whitespace, repeated choices, and EOF.
+The largest fitting and first overlong lines have separate cases.
+Case 27 needs a Linux read error, and case 31 checks the unsupported-window
+message elsewhere. Those two are skipped on Windows, not called a window test.
 
-For Gate 1, I need every required file and five passing checks for a 3.
-For a possible 4, I also need an extra passing test and a teammate code review.
-I cannot replace that review with another test count. I leave this record for
-an actual reviewer to fill in after reading the code and trying the program:
+For a possible Gate 1 rating of 4, I need the extra case and a real teammate
+code review as well as the five required checks. More test cases don't replace
+the review. I leave this record for someone to complete after doing it:
 
   Reviewer and date: _________________________________________________
   Commit or ZIP reviewed: ____________________________________________
@@ -37,9 +34,9 @@ an actual reviewer to fill in after reading the code and trying the program:
   Problems found and retest: _________________________________________
   Review conclusion and signature: ___________________________________
 
-I leave the actual Windows build and run for the demo computer. I record its
-compiler, inputs, expected and actual behavior, and any retest in readMe.txt.
-I leave the gate rating to the teacher and the staffing exception to staff.
+The Windows build and run still need the demo computer's actual results.
+I keep space in readMe.txt for its compiler, observations, and retest notes.
+The teacher gives the rating; staff confirm the staffing exception.
 */
 #include <ctype.h>
 #include <stdio.h>

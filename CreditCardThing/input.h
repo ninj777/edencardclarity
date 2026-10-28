@@ -1,11 +1,10 @@
 /*
-Eden Yun Yu - my assigned input interface
+Eden Yun Yu - shared input functions
 
-I declare the reader here so the menu and storage code can use the same rules.
-I use InputResult to distinguish a valid answer, invalid answer, ordinary end,
-and genuine read failure. I pass the output number by pointer, and I only set
-it after conversion succeeds. I need capacity to include room for the ending
-null character. I explain the line and conversion checks in input.c.
+I declare the reader here for the menu and saved-file code. InputResult keeps
+a valid answer, bad answer, ordinary end, and real read failure separate.
+The output pointer is only assigned when conversion succeeds. A buffer's
+capacity must include room for its ending null. The steps are in input.c.
 */
 #ifndef INPUT_H
 #define INPUT_H
