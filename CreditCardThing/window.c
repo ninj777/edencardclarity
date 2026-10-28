@@ -35,14 +35,6 @@ system, this mode explains that Windows is needed and returns 1.
 */
 #include <stdio.h>
 #include "window.h"
-
-#ifndef _WIN32
-int runWindow(const char* filePath) {
-	(void)filePath;
-	fputs("The window preview needs Windows. Run without --gui for the menu.\n", stderr);
-	return 1;
-}
-#else
 #include <windows.h>
 #include <stdbool.h>
 #include <wchar.h>
@@ -418,6 +410,7 @@ static void releaseWindowResources(void) {
 
 int runWindow(const char* filePath) {
 	initLogger();
+
 	initWallet(&windowWallet);
 	changed = false;
 	controlsReady = false;
@@ -475,4 +468,3 @@ int runWindow(const char* filePath) {
 	releaseWindowResources();
 	return exitCode;
 }
-#endif

@@ -59,9 +59,7 @@ checked on a real Windows computer.
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
-#ifdef _WIN32
 #include <windows.h>
-#endif
 #include "input.h"
 #include "storage.h"
 
@@ -150,13 +148,9 @@ enum StorageResult saveWallet(const char* filePath, const Wallet* wallet) {
 		remove(temporaryPath);
 		return STORAGE_WRITE_ERROR;
 	}
-#ifdef _WIN32
 	/* I use this Windows function to replace an older save after writing succeeds. */
 	bool replaced = MoveFileExA(temporaryPath, filePath,
 		MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH) != 0;
-#else
-	bool replaced = rename(temporaryPath, filePath) == 0;
-#endif
 	if (!replaced) {
 		remove(temporaryPath);
 		return STORAGE_WRITE_ERROR;

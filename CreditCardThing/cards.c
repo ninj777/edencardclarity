@@ -26,34 +26,29 @@ ties, limits, activation rules, and expiration notes. Until then, these
 values stay labeled as samples.
 */
 #include <stdio.h>
-#ifdef _WIN32
 #include <wchar.h>
-#endif
 
 #include "logger.h"
 #include "cards.h"
 
-#ifdef _WIN32
-static const wchar_t* networkNames[] = {
+const wchar_t* networkNames[] = {
 	L"Visa",
 	L"Mastercard",
 	L"American Express",
 	L"Discover"
 };
 
-static const wchar_t* rewardTitles[] = {
+const wchar_t* rewardTitles[] = {
 	L"Cash Back",
 	L"Points",
 	L"Miles"
 };
 
-#endif
-
-static Card cardA = { 0 };
-static Card cardB = { 0 };
-static Card cardC = { 0 };
-static Card cardD = { 0 };
-static Card cardE = { 0 };
+Card cardA = { 0 };
+Card cardB = { 0 };
+Card cardC = { 0 };
+Card cardD = { 0 };
+Card cardE = { 0 };
 
 Card registerCard(char* issuer, enum Network network, int annualFee, enum Reward reward, double rate) {
 	Card card = { 0 };
@@ -66,7 +61,6 @@ Card registerCard(char* issuer, enum Network network, int annualFee, enum Reward
 	return card;
 }
 
-#ifdef _WIN32
 LPCWSTR getBaseInfo(Card card) {
 	/* I keep this buffer valid after returning; the window copies the text. */
 	static wchar_t buf[256];
@@ -97,8 +91,6 @@ LPCWSTR getMultiplierInfo(Card card) {
 
 	return buf;
 }
-
-#endif
 
 void addMultiplier(Card* card, enum MerchantCategory category, double multiplier) {
 	Multiplier newMultiplier = { 0 };

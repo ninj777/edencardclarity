@@ -73,9 +73,7 @@ Card* getCardById(int cardId);
 void initTestCards(void);
 void printSampleCards(void);
 
-#ifdef _WIN32
 LPCWSTR getBaseInfo(Card card);
 LPCWSTR getMultiplierInfo(Card card);
-#endif
 
 #endif
