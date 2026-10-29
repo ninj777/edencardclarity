@@ -42,6 +42,8 @@ void initCatalogWallet(CatalogWallet* wallet);
 int findWalletEntry(const CatalogWallet* wallet, const char* entryKey);
 bool addCatalogCard(Catalog* catalog, CatalogWallet* wallet, const char* cardKey, char* error, size_t capacity);
 bool addUnlistedCard(CatalogWallet* wallet, const char* name, const char* issuer, char* error, size_t capacity);
+bool linkUnlistedCard(Catalog* catalog, CatalogWallet* wallet, int position,
+    const char* cardKey, char* error, size_t capacity);
 bool removeCatalogCard(CatalogWallet* wallet, int position);
 bool validateCatalogWallet(const CatalogWallet* wallet);
 enum SavedWalletResult loadCatalogWallet(const char* path, CatalogWallet* wallet, char* error, size_t capacity);
@@ -49,6 +51,7 @@ enum SavedWalletResult saveCatalogWallet(const char* path, CatalogWallet* wallet
 bool importLegacyWallet(Catalog* catalog, const char* path, CatalogWallet* wallet, char* error, size_t capacity);
 WalletTrack* findWalletTrack(WalletEntry* entry, const char* key, const char* period, int kind);
 bool setWalletTrack(CatalogWallet* wallet, int position, const WalletTrack* track);
+bool removeWalletTrack(CatalogWallet* wallet, int position, int trackPosition);
 bool setWalletReminder(CatalogWallet* wallet, const WalletReminder* reminder);
 bool removeWalletReminder(CatalogWallet* wallet, int position);
 bool reminderSummary(Catalog* catalog, const CatalogWallet* wallet, const char* today, char* text, size_t capacity);

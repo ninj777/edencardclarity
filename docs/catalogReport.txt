@@ -1,6 +1,11 @@
 CardClarity catalog check notes
 October 29, 2026
 
+This report records the first catalog version. Eden's later continuation,
+current source coverage and new results are documented in edenWork.txt and
+the eden build/menu/sanitizer/Windows logs. Keep these earlier observations
+as their recorded version rather than silently changing their test counts.
+
 What changed
 
 The previous main branch was b9079592f2ddbfaf24f2fb18b6b09d2ae58f7a9b.

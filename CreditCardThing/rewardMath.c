@@ -3,6 +3,7 @@
    conditions visible. A manual estimate is not a bank transaction guarantee. */
 #include "rewardMath.h"
 #include "catalogText.h"
+#include <ctype.h>
 #include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,8 +11,31 @@
 
 const char* const spendingCategories[] = { "other", "groceries", "dining", "gas",
     "travel", "hotels", "airlines", "drugstores", "entertainment", "streaming",
-    "onlineShopping", "transit", "utilities", "wholesale", "rent", "carRentals", "vacationRentals" };
+    "onlineShopping", "transit", "utilities", "wholesale", "rent", "carRentals", "vacationRentals", "phonePlans" };
 const int spendingCategoryCount = (int)(sizeof(spendingCategories) / sizeof(spendingCategories[0]));
+
+/* Eden's input continuation: a typed label must not silently miss a bonus.
+   Spaces, hyphens, underscores and letter case may vary; unknown names fail. */
+static bool normalizedLabel(const char* text,char label[80]) {
+    int length=0;
+    for (;*text;text++) {
+        unsigned char ch=(unsigned char)*text;
+        if (isspace(ch)||ch=='-'||ch=='_') continue;
+        if (!isalnum(ch)||length==79) return false;
+        label[length++]=(char)tolower(ch);
+    }
+    label[length]='\0'; return length>0;
+}
+
+bool normalizeSpendingCategory(const char* text,char category[40]) {
+    char typed[80],known[80];
+    if (!normalizedLabel(text,typed)) return false;
+    for (int i=0;i<spendingCategoryCount;i++) {
+        normalizedLabel(spendingCategories[i],known);
+        if (!strcmp(typed,known)) return copyText(category,40,spendingCategories[i]);
+    }
+    return false;
+}
 
 static bool multiply(int64_t a, int64_t b, int64_t* result) {
     if (a < 0 || b < 0 || (b && a > INT64_MAX / b)) return false;
@@ -81,6 +105,11 @@ static bool ruleValue(const RewardRule* rule, WalletEntry* entry, const Purchase
 bool estimateReward(Catalog* catalog, WalletEntry* entry, const Purchase* purchase, RewardEstimate* result) {
     memset(result, 0, sizeof(*result));
     if (purchase->amount < 0 || purchase->amount > INT64_C(100000000000) || !validDate(purchase->date)) return false;
+    Purchase checked=*purchase; char channel[80];
+    if (!normalizeSpendingCategory(purchase->category,checked.category)||!normalizedLabel(purchase->channel,channel)) return false;
+    if (!strcmp(channel,"issuerportal")) copyText(channel,sizeof(channel),"portal");
+    if (strcmp(channel,"direct")&&strcmp(channel,"portal")&&strcmp(channel,"online")) return false;
+    copyText(checked.channel,sizeof(checked.channel),channel); purchase=&checked;
     CatalogCard card;
     if (!entry->cardKey[0] || !findCatalogCard(catalog, entry->cardKey, &card)) {
         copyText(result->explanation, sizeof(result->explanation), "Unlisted or unresolved card: no supported reward rules."); return true;

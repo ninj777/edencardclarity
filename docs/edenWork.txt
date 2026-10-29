@@ -1,0 +1,121 @@
+Eden's storage and catalog continuation
+October 29, 2026
+
+This continuation belongs under Eden's assigned wallet, input and storage work.
+The original menu/window, card research and test responsibilities are still
+listed in the earlier source comments. The sections below describe the actual
+changes and recorded runs; they are not a personal authorship or review log.
+
+Keeping the tooling in C
+
+The old .sh and .cmd helpers have been removed. tools/buildProject.c now builds
+the application, builds the C checks and runs them. It uses fixed compiler
+commands, checks each result, and stops at the first failed command. Wallet
+input is never used as a compiler command.
+
+The helper scans source folders before building. Markdown files, Python, C++,
+JavaScript, HTML/CSS and executable scripts fail this check. Build output,
+Visual Studio's temporary folder and Git's database are skipped. Project files,
+the Windows manifest, card data and plain-text notes are still necessary data,
+not another programming-language implementation.
+
+There were no Markdown files in the source folder when this continuation
+started. None were created. The ignore rules and C source audit guard against
+accidentally adding them later. Documentation stays in C comments and .txt.
+
+Linking a missing card later
+
+An unlisted card used to need removing and adding again when its product
+became available. That could lose its note. linkUnlistedCard now checks the
+entry position, looks up a permanent catalog key, checks duplicates and rejects
+archived samples. It copies the selected product name, issuer and key into
+the existing WalletEntry. It keeps the local entry key, note, favorite,
+valuation and reminder links. The wallet count does not change.
+
+The menu and window show the selected product and ask for confirmation.
+A spelling suggestion never performs a link by itself. A record that already
+has a catalog identity cannot be silently switched to another product.
+Save writes the linked identity; Reload still validates a separate wallet
+before assigning it to the open one.
+
+Tracker history
+
+A card has 64 tracking slots. Before this change there was no way to remove
+an old period in the interface. removeWalletTrack checks the wallet and history
+positions, shifts the later tracks left with memmove, clears the last slot and
+decreases trackCount. It does not change the number of cards. Both interfaces
+ask before removing a selected history item.
+
+The window now keeps the selected entry after Save and other list refreshes.
+Enter in the search box searches, Control+F focuses search, and Control+S saves.
+The exact catalog key is visible in the card details for explicit linking.
+
+Typed categories are checked too. Phone Plans, phone-plans and phonePlans
+all match the same supported category. An unknown category or channel now
+fails instead of quietly using a base reward and giving a misleading result.
+
+More supported records
+
+The catalog has 76 real product names and five archived samples. Nine real
+records now have supported earning rules checked. Venture X and Discover Miles
+were expanded from their individual issuer pages. Active Cash and Autograph
+were added from Wells Fargo's individual product pages.
+
+Venture X distinguishes direct bookings, Capital One Travel and Capital One
+Entertainment. Discover Miles keeps the first-year match separate from the
+normal earning rate. Autograph includes a separate phonePlans category.
+Points and miles still need an explicit redemption assumption. Published
+introductory APRs are not treated as permanent rates or a prediction of
+someone's personal account offer.
+
+Source notes are in data/sourceReview.txt. A checked earning profile is not
+a claim that every account agreement, insurance policy or future offer has
+been verified. Remaining partial records stay visibly incomplete.
+
+How to build
+
+From the project root on Linux:
+  cc -std=c11 -Wall -Wextra -Wpedantic -Werror tools/buildProject.c -o buildProject
+  ./buildProject
+
+From an x64 Native Tools Command Prompt for Visual Studio:
+  cl /nologo /TC /std:c11 /W4 /D_CRT_SECURE_NO_WARNINGS tools\buildProject.c /FebuildProject.exe
+  buildProject.exe
+
+The Windows build then runs with:
+  build\cardClarity.exe --gui
+
+For just the source-file audit:
+  ./buildProject --audit
+or on Windows:
+  buildProject.exe --audit
+
+Use --build-only to build without running tests. On Linux with MinGW installed,
+--cross compiles the Windows application and checks without trying to run them.
+A real Windows run is still needed for the controls and dialogs.
+
+Recorded checks
+
+The new core cases check linking, duplicate and archived targets, preserving
+notes through save/load, removing one history period, invalid positions and
+the four newly supported earning profiles. The menu cases check a confirmed
+link, a canceled link and deleting history followed by restart.
+
+Actual results are in edenBuildLog.txt, edenMenuLog.txt, edenSanitizerLog.txt
+and edenWindowsBuildLog.txt. The original catalog logs describe the preceding
+version. Counts and failures are recorded from the programs, not filled in
+as if someone had completed a desktop review.
+
+The completed local run has 93 passing core checks and 13 passing menu cases.
+The C builder also completes its 10000-record synthetic search check. The
+Clang address/undefined-behavior sanitizer run uses the same core cases with
+leak detection disabled because this environment cannot run LeakSanitizer.
+The full Windows app, C builder and changed checks compile with warnings
+treated as errors. Windows execution is still unverified.
+
+Still open
+
+The remaining product records need individual terms review. Windows runtime,
+screen readers, large text and the demo-computer checks are not verified in
+this environment. These are not marked complete or assigned a made-up
+teammate signature. The teacher still decides the gate result.

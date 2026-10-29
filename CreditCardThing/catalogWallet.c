@@ -80,6 +80,29 @@ bool removeCatalogCard(CatalogWallet* wallet, int position) {
     wallet->changed = true; return true;
 }
 
+/* Eden's continuation: choosing a researched version must not erase a user's
+   existing note, favorite, reminder links or local entry identity. A linked
+   product cannot be silently switched into a different product here. */
+bool linkUnlistedCard(Catalog* catalog, CatalogWallet* wallet, int position,
+    const char* cardKey, char* error, size_t size) {
+    if (position < 0 || position >= wallet->count || wallet->entries[position].cardKey[0]) {
+        copyText(error,size,"Choose an unlisted wallet entry first."); return false;
+    }
+    for (int i=0;i<wallet->count;i++) if (!strcmp(wallet->entries[i].cardKey,cardKey)) {
+        copyText(error,size,"That exact version is already in your wallet."); return false;
+    }
+    CatalogCard card;
+    if (!findCatalogCard(catalog,cardKey,&card)||card.archived) {
+        copyText(error,size,"Choose an available catalog product, not an archived sample."); return false;
+    }
+    WalletEntry* entry=&wallet->entries[position];
+    copyText(entry->cardKey,sizeof(entry->cardKey),card.key);
+    copyText(entry->name,sizeof(entry->name),card.name);
+    copyText(entry->issuer,sizeof(entry->issuer),card.issuer);
+    wallet->changed=true;
+    return true;
+}
+
 static bool validTrack(const WalletTrack* track) {
     return track->ruleKey[0] && track->periodKey[0] && track->kind >= 0 && track->kind <= 1
         && track->activated >= -1 && track->activated <= 1 && track->amount >= 0
@@ -135,6 +158,17 @@ bool setWalletTrack(CatalogWallet* wallet, int position, const WalletTrack* trac
         current = &entry->tracks[entry->trackCount++];
     }
     *current = *track; wallet->changed = true; return true;
+}
+
+/* Removing one history item frees a slot without clearing other periods. */
+bool removeWalletTrack(CatalogWallet* wallet,int position,int trackPosition) {
+    if (position<0||position>=wallet->count) return false;
+    WalletEntry* entry=&wallet->entries[position];
+    if (trackPosition<0||trackPosition>=entry->trackCount) return false;
+    memmove(&entry->tracks[trackPosition],&entry->tracks[trackPosition+1],
+        sizeof(WalletTrack)*(size_t)(entry->trackCount-trackPosition-1));
+    memset(&entry->tracks[--entry->trackCount],0,sizeof(WalletTrack));
+    wallet->changed=true; return true;
 }
 
 bool setWalletReminder(CatalogWallet* wallet, const WalletReminder* reminder) {

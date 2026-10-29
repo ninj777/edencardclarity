@@ -34,7 +34,7 @@ int main(int argc,char* argv[]) {
     if (!page||!w||!loaded||!before||!app||!text) return 1;
     initCatalogWallet(w); initCatalogWallet(loaded);
     CatalogFilter filter; initCatalogFilter(&filter);
-    check(searchCatalog(&catalog,&filter,0,page)&&page->count==20&&page->total==74,"First page has 20 of 74 real products; legacy hidden");
+    check(searchCatalog(&catalog,&filter,0,page)&&page->count==20&&page->total==76,"First page has 20 of 76 real products; legacy hidden");
     char first[64]; copyText(first,sizeof(first),page->cards[0].key);
     check(searchCatalog(&catalog,&filter,20,page)&&strcmp(first,page->cards[0].key),"Next page has a different first product");
     copyText(filter.query,160,"QUICKSILVER");
@@ -173,6 +173,51 @@ int main(int argc,char* argv[]) {
     check(filled&&loaded->count==100&&!addUnlistedCard(loaded,"One too many","Fixture issuer",error,sizeof(error))&&loaded->count==100,"Wallet capacity is 100 independently of the larger public catalog");
     app->wallet=loaded; *before=*loaded; app->undoReady=removeCatalogCard(loaded,50);
     check(undoWalletRemoval(app)&&loaded->count==100&&!app->undoReady,"Undo restores the removed entry and is used only once");
+    /* Eden's continuation cases: keep a local identity when an unlisted card
+       is finally matched to a researched product. Use a separate wallet. */
+    initCatalogWallet(loaded);
+    check(addUnlistedCard(loaded,"My travel card","Unknown issuer",error,sizeof(error)),"Create an unlisted entry for linking");
+    copyText(loaded->entries[0].note,800,"Keep this personal note"); loaded->entries[0].favorite=true;
+    char localKey[64]; copyText(localKey,sizeof(localKey),loaded->entries[0].key);
+    check(linkUnlistedCard(&catalog,loaded,0,"capitalOneVentureX",error,sizeof(error))&&loaded->count==1
+        &&!strcmp(loaded->entries[0].key,localKey)&&loaded->entries[0].favorite
+        &&!strcmp(loaded->entries[0].note,"Keep this personal note"),"Linking keeps the entry key, count, note and favorite");
+    *before=*loaded;
+    check(!linkUnlistedCard(&catalog,loaded,0,"capitalOneSavor",error,sizeof(error))&&!memcmp(before,loaded,sizeof(*before)),"Link cannot silently replace an already linked product");
+    check(addUnlistedCard(loaded,"Second entry","Unknown issuer",error,sizeof(error))
+        &&!linkUnlistedCard(&catalog,loaded,1,"capitalOneVentureX",error,sizeof(error)),"Link cannot introduce a duplicate product");
+    check(!linkUnlistedCard(&catalog,loaded,1,"legacy001",error,sizeof(error))
+        &&!linkUnlistedCard(&catalog,loaded,1,"missingProduct",error,sizeof(error)),"Link rejects archived and missing targets");
+    path(argv[2],"linked.db",candidate);
+    check(saveCatalogWallet(candidate,loaded,error,sizeof(error))==SAVED_OK
+        &&loadCatalogWallet(candidate,before,error,sizeof(error))==SAVED_OK
+        &&!strcmp(before->entries[0].cardKey,"capitalOneVentureX")
+        &&!strcmp(before->entries[0].note,"Keep this personal note"),"Linked identity and the original note survive saving and loading");
+    copyText(t.ruleKey,64,"historyA"); copyText(t.periodKey,24,"2026-Q3"); t.amount=100;
+    setWalletTrack(loaded,0,&t); copyText(t.periodKey,24,"2026-Q4"); setWalletTrack(loaded,0,&t);
+    check(removeWalletTrack(loaded,0,0)&&loaded->entries[0].trackCount==1
+        &&!strcmp(loaded->entries[0].tracks[0].periodKey,"2026-Q4")&&loaded->count==2,"Removing old tracking keeps the newer period and wallet count");
+    *before=*loaded;
+    check(!removeWalletTrack(loaded,0,99)&&!removeWalletTrack(loaded,-1,0)&&!memcmp(before,loaded,sizeof(*before)),"Invalid history positions leave all wallet data unchanged");
+    p.amount=10000; copyText(p.category,40,"hotels"); copyText(p.channel,40,"portal");
+    loaded->entries[0].valuation=1000;
+    check(estimateReward(&catalog,&loaded->entries[0],&p,&e)&&e.cashCents==1000&&e.rankable,"Venture X portal hotels earn 1000 miles on 100.00, valued at 10.00 under a one-cent assumption");
+    copyText(p.channel,40,"direct");
+    check(estimateReward(&catalog,&loaded->entries[0],&p,&e)&&e.cashCents==200,"Direct Venture X hotel booking stays at the two-mile base rate");
+    check(linkUnlistedCard(&catalog,loaded,1,"wellsActiveCash",error,sizeof(error))
+        &&estimateReward(&catalog,&loaded->entries[1],&p,&e)&&e.cashCents==200&&e.rankable,"Active Cash estimates 2.00 on an eligible 100.00 purchase");
+    check(addCatalogCard(&catalog,loaded,"wellsAutograph",error,sizeof(error)),"Autograph is a separate points record");
+    loaded->entries[2].valuation=1000; copyText(p.category,40,"phonePlans");
+    check(estimateReward(&catalog,&loaded->entries[2],&p,&e)&&e.cashCents==300&&e.rankable,"Autograph phone plans use three points per dollar with an explicit valuation");
+    check(addCatalogCard(&catalog,loaded,"discoverMiles",error,sizeof(error)),"Discover Miles keeps its own stable product identity");
+    loaded->entries[3].valuation=1000;
+    check(estimateReward(&catalog,&loaded->entries[3],&p,&e)&&e.cashCents==150&&e.rankable,"Discover Miles uses 1.5 miles per dollar without automatically doubling a first-year offer");
+    copyText(p.category,40," Phone Plans "); copyText(p.channel,40,"DIRECT");
+    check(estimateReward(&catalog,&loaded->entries[2],&p,&e)&&e.cashCents==300,"Human-readable category spacing and letter case still select the correct bonus");
+    copyText(p.category,40,"unknown category");
+    check(!estimateReward(&catalog,&loaded->entries[2],&p,&e),"An unknown typed category is rejected instead of silently paying the base rate");
+    copyText(p.category,40,"dining"); copyText(p.channel,40,"unknown channel");
+    check(!estimateReward(&catalog,&loaded->entries[2],&p,&e),"An unknown booking channel is rejected instead of inventing a comparison");
     closeCatalog(&catalog); free(page); free(w); free(loaded); free(before); free(app); free(text);
     printf("\n%d of %d checks passed.\n",total-failed,total); return failed?1:0;
 }

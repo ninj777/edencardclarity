@@ -362,6 +362,7 @@ bool describeCatalogCard(Catalog* catalog, const char* key, char* text, size_t s
     text[0] = '\0';
     bool okay = appendText(text, size, "%s\n%s | %s | %s / %s\n%s\n\n", card.name,
         card.issuer, card.network[0] ? card.network : "network not confirmed", card.country, card.currency, card.archived ? "Archived record; legacy samples are not bank offers" : "Catalog product snapshot");
+    okay = okay && appendText(text,size,"Catalog key: %s\n",card.key);
     okay = okay && describeFee(text, size, "First-year annual fee", card.firstFee)
         && describeFee(text, size, "Ongoing annual fee", card.ongoingFee);
     if (card.aprMin >= 0 && card.aprMax >= 0) okay = okay && appendText(text, size,

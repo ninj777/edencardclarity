@@ -1,7 +1,7 @@
 CardClarity
 
-This version adds the real-card catalog to our earlier wallet. The application
-and test programs are C11. SQLite is a separate public-domain C library in
+This version adds the real-card catalog to our earlier wallet. The application,
+tests and build tool use C11. SQLite is a separate public-domain C library in
 thirdParty. There is no Python, C++, HTML or CSS in this project.
 
 Start on Windows
@@ -21,18 +21,17 @@ If Visual Studio's file sidebar is hidden, use View > Solution Explorer.
 If your installed toolset is different, retarget the project to the installed
 Visual Studio toolset rather than changing the source language.
 
-Another Windows build option is buildProject.cmd from an x64 Native Tools
-Command Prompt. After building:
+Another Windows build option is the C helper from an x64 Native Tools Command
+Prompt. Compile it, then run it from the project root:
+  cl /nologo /TC /std:c11 /W4 /D_CRT_SECURE_NO_WARNINGS tools\buildProject.c /FebuildProject.exe
+  buildProject.exe
+After building:
   build\cardClarity.exe --gui
 For the numbered catalog console:
   build\cardClarity.exe
 For another personal save:
   build\cardClarity.exe --gui --wallet myWallet.db
 
-After a Windows command-prompt build, run testProject.cmd to compile and run
-the C checks on that computer. Use testProject.cmd > windowsTestLog.txt 2>&1
-if you want to keep its actual output. The script has been cross-checked for
-compilation, but its Windows command-prompt execution still needs checking.
 
 The Windows executable in the download is a cross-build. Its compilation
 passed, but this environment could not run a Windows desktop. Build and check
@@ -55,10 +54,10 @@ practice data. The original text file is left alone.
 
 What is in the catalog
 
-There are 74 real product names from seven issuer groups and five archived
-practice records. Five real records have supported earning rules checked:
-Quicksilver Rewards, Savor Rewards, Venture Rewards, VentureOne Rewards and
-Freedom Unlimited. Freedom Flex has partial rules and stays incomplete.
+There are 76 real product names from eight issuer groups and five archived
+practice records. Nine real records have supported earning rules checked:
+Quicksilver Rewards, Savor Rewards, Venture Rewards, VentureOne Rewards,
+Freedom Unlimited, Venture X Rewards, Discover it Miles, Active Cash and Autograph. Freedom Flex has partial rules and stays incomplete.
 Other real records have partial profiles or are names awaiting detailed review.
 We did not fill their missing information with guesses.
 
@@ -106,6 +105,11 @@ checks the saved file in a temporary wallet before replacing the open list.
 A damaged load leaves the current list alone. Closing with edits offers Save,
 Discard or Cancel. An older open copy cannot overwrite a newer save revision.
 Undo last removal is available until another edit replaces that undo point.
+Wallet > Link an unlisted card attaches an exact confirmed catalog key to an
+existing entry without losing its note or favorite. The entry details show
+that key. Wallet > Remove an old tracker item frees one history slot while
+keeping the other periods. Control+F focuses search, Enter searches, and
+Control+S saves in the window.
 
 Notes and settings include favorites, your point/mile valuation, an anniversary,
 a statement day and one actual selected category. A selected category must
@@ -142,18 +146,22 @@ local files, not encrypted vaults. Keep personal files out of GitHub.
 Build and checks on Linux
 
 Run:
-  sh buildProject.sh
+  cc -std=c11 -Wall -Wextra -Wpedantic -Werror tools/buildProject.c -o buildProject
+  ./buildProject
 
-This builds the portable catalog console, the SQLite dependency and three C
-check programs, then runs them. It requires a C11 compiler and the C library
+The C helper builds the portable catalog console, SQLite and three C check
+programs, then runs them. There are no shell or batch helper scripts. It requires a C11 compiler and the C library
 and math library. It does not build or run the original Windows-only files.
 
 To use the built catalog console:
-  build/native/cardClarity
+  build/cardClarity
 To use another catalog or wallet:
-  build/native/cardClarity --catalog data/cardCatalog.db --wallet myWallet.db
+  build/cardClarity --catalog data/cardCatalog.db --wallet myWallet.db
 
-Actual recorded commands and results are in docs/catalogBuildLog.txt,
+Current continuation notes and results are in docs/edenWork.txt and the
+edenBuildLog.txt, edenMenuLog.txt, edenSanitizerLog.txt and edenWindowsBuildLog.txt
+files. This storage/catalog continuation is filed under Eden's assigned area.
+Earlier recorded commands and results are in docs/catalogBuildLog.txt,
 catalogTestLog.txt, catalogMenuLog.txt, catalogScaleLog.txt and
 catalogSanitizerLog.txt. docs/catalogReport.txt explains the results and
 remaining checks. The older gate2 logs describe their earlier version; they

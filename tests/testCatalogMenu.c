@@ -3,6 +3,13 @@
 #include "testSupport.h"
 #include <stdio.h>
 #include <string.h>
+#ifdef _WIN32
+#include <direct.h>
+#define currentFolder _getcwd
+#else
+#include <unistd.h>
+#define currentFolder getcwd
+#endif
 static TestContext test;
 static char catalog[TEST_PATH_SIZE];
 static void run(const char* answers) {
@@ -13,7 +20,13 @@ static void contains(const char* text) { expect(&test,strstr(test.output,text)!=
 int main(int argc,char* argv[]) {
     if (argc!=3) { puts("Use testCatalogMenu absoluteProgramPath absoluteCatalogPath"); return 1; }
     if (strlen(argv[2])>=sizeof(catalog)) return 1;
-    strcpy(catalog,argv[2]); initTests(&test,argv[1],"Catalog menu checks");
+    if (argv[2][0]=='/'||argv[2][0]=='\\'||(strlen(argv[2])>1&&argv[2][1]==':')) strcpy(catalog,argv[2]);
+    else {
+        char folder[TEST_PATH_SIZE];
+        if (!currentFolder(folder,sizeof(folder))) return 1;
+        joinPath(catalog,sizeof(catalog),folder,argv[2]);
+    }
+    initTests(&test,argv[1],"Catalog menu checks");
     startCase(&test,1,"Menu and exit","The numbered catalog menu opens and exits successfully.");
     run("0\n"); contains("Browse cards"); contains("Goodbye!"); finishCase(&test);
     startCase(&test,2,"Invalid menu answer","Text and an out-of-range choice recover before Exit.");
@@ -51,5 +64,16 @@ int main(int argc,char* argv[]) {
     runProgram(&test,arguments,"",0,1,false);
     expect(&test,strstr(test.errors,"Could not open the catalog")!=NULL,"catalog-open error is explained");
     expect(&test,!pathExists(test.save)&&!pathExists(absent),"no empty catalog or wallet was created"); finishCase(&test);
+    startCase(&test,11,"Link an unlisted card","Confirming a specific catalog key keeps one entry and saves the matched product.");
+    run("1\n10\nMy travel card\nUnknown issuer\n11\n1\ncapitalOneVentureX\n1\n4\n0\n0\n");
+    contains("Linked the product"); run("1\n1\n1\n0\n0\n");
+    contains("Venture X Rewards"); contains("Catalog key: capitalOneVentureX"); finishCase(&test);
+    startCase(&test,12,"Clear old tracking","Removing one history item stays removed after saving and reopening.");
+    run("2\n21\nfreedom flex\n1\n1\n0\n1\n7\n1\n1\n10\n1\n12\n1\n1\n1\n4\n0\n0\n");
+    contains("Removed that history item"); run("1\n1\n1\n0\n0\n");
+    expect(&test,strstr(test.output,"Manual cap/condition:")==NULL,"deleted tracker is absent after restarting"); finishCase(&test);
+    startCase(&test,13,"Cancel linking","Declining the selected product keeps the original unlisted name.");
+    run("1\n10\nKeep my original name\nUnknown issuer\n11\n1\ncapitalOneVentureX\n0\n4\n0\n0\n");
+    run("1\n1\n1\n0\n0\n"); contains("Keep my original name"); contains("not been verified"); finishCase(&test);
     return finishTests(&test);
 }

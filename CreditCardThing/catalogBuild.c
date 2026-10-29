@@ -126,7 +126,7 @@ bool buildCatalog(const char* folder, const char* destination, char* error, size
         "INSERT INTO benefits VALUES(?,?,?,?,?,?,?,?,?)", 9, error, size);
     if (okay) okay = execute(db,
         "INSERT INTO cardSearch(key,name,issuer,aliases) SELECT key,name,issuer,aliases FROM cards;"
-        "INSERT INTO meta VALUES('release','2026-10-29.1');"
+        "INSERT INTO meta VALUES('release','2026-10-29.2');"
         "INSERT INTO meta VALUES('coverage','U.S. public product snapshots; individual offers can differ.');"
         "PRAGMA application_id=1128481073; PRAGMA user_version=1; COMMIT;", error, size);
     if (!okay && db) sqlite3_exec(db, "ROLLBACK", NULL, NULL, NULL);

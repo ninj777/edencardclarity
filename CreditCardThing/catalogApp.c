@@ -316,11 +316,36 @@ static void reminders(CatalogApp* app) {
     free(text);
 }
 
+/* Eden's wallet continuation. Linking uses the exact key printed in the card
+   details, followed by confirmation. It is never a spelling-based guess. */
+static void linkEntry(CatalogApp* app) {
+    int position=chooseEntry(app); if (position<0) return;
+    char key[CARD_KEY_SIZE]; CatalogCard card;
+    if (!askText(app,"Exact catalog key from Browse cards, blank cancels: ",key,sizeof(key))||!key[0]) return;
+    if (!findCatalogCard(&app->catalog,key,&card)) { puts("That key is not in this catalog."); return; }
+    printf("Selected product: %s | %s\n",card.name,card.issuer);
+    if (askChoice(app,"Link this exact product to the unlisted entry? 0 no, 1 yes: ",1)!=1) return;
+    if (linkUnlistedCard(&app->catalog,app->wallet,position,key,app->status,sizeof(app->status))) {
+        app->undoReady=false; puts("Linked the product. Your note, favorite and entry identity were kept. Save to keep it.");
+    } else puts(app->status);
+}
+
+static void clearTrack(CatalogApp* app) {
+    int position=chooseEntry(app); if (position<0) return;
+    WalletEntry* entry=&app->wallet->entries[position];
+    for (int i=0;i<entry->trackCount;i++) printf("%d. %s | %s\n",i+1,entry->tracks[i].ruleKey,entry->tracks[i].periodKey);
+    int choice=askChoice(app,"Remove which history item? 0 cancels: ",entry->trackCount);
+    if (choice>0&&askChoice(app,"Remove this saved history item? 0 no, 1 yes: ",1)==1
+        &&removeWalletTrack(app->wallet,position,choice-1)) {
+        app->undoReady=false; puts("Removed that history item. Other periods were kept. Save to keep the change.");
+    }
+}
+
 static void walletMenu(CatalogApp* app) {
     while (!app->ended) {
         printWallet(app);
-        puts("1. View a card\n2. Add from catalog\n3. Remove a card\n4. Save\n5. Reload (undoes unsaved changes)\n6. Notes, favorite, and valuation\n7. Track caps and benefits\n8. Reminders\n9. Undo last removal\n10. Add an unlisted card\n0. Back");
-        int choice = askChoice(app, "Choose an action: ", 10);
+        puts("1. View a card\n2. Add from catalog\n3. Remove a card\n4. Save\n5. Reload (undoes unsaved changes)\n6. Notes, favorite, and valuation\n7. Track caps and benefits\n8. Reminders\n9. Undo last removal\n10. Add an unlisted card\n11. Link an unlisted card\n12. Remove an old tracker item\n0. Back");
+        int choice = askChoice(app, "Choose an action: ", 12);
         if (choice <= 0) return;
         if (choice == 1) {
             int selected = chooseEntry(app); char* text = malloc(CATALOG_TEXT_SIZE);
@@ -338,6 +363,8 @@ static void walletMenu(CatalogApp* app) {
         else if (choice == 8) reminders(app);
         else if (choice == 9) puts(undoWalletRemoval(app) ? app->status : "There is no removal to undo after the latest edits.");
         else if (choice == 10) unlisted(app);
+        else if (choice == 11) linkEntry(app);
+        else if (choice == 12) clearTrack(app);
     }
 }
 

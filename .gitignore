@@ -12,6 +12,7 @@ Release/
 
 # I leave build output out so the source folder stays easy to share.
 build/
+/buildProject
 *.exe
 *.o
 *.obj
@@ -39,3 +40,8 @@ walletCards.db*
 *.restore
 *.update
 data/cardCatalog.db*
+
+# Eden: project notes belong in C comments or plain text.
+*.[mM][dD]
+*.[mM][dD][xX]
+*.[mM][aA][rR][kK][dD][oO][wW][nN]

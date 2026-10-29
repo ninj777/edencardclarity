@@ -17,16 +17,17 @@ enum { ID_WALLET=101, ID_CATALOG, ID_SEARCH, ID_FIND, ID_FILTER, ID_CLEAR,
     ID_PREVIOUS, ID_NEXT, ID_LIST, ID_DETAILS, ID_ADD, ID_REMOVE, ID_SAVE,
     ID_RELOAD, ID_EDIT, ID_UNLISTED, ID_UNDO, ID_COMPARE, ID_YEAR, ID_TRACK,
     ID_REMINDERS, ID_BACKUP, ID_RESTORE, ID_IMPORT, ID_UPDATE, ID_EXPORT,
-    ID_COVERAGE, ID_PAIR };
+    ID_COVERAGE, ID_PAIR, ID_LINK, ID_CLEAR_TRACK };
 typedef struct { const char* label; char* value; size_t capacity; } Field;
 typedef struct {
-    HWND window, edits[24]; Field* fields; int count, result; HFONT font;
+    HWND window, edits[24]; Field* fields; int count, result;
 } Form;
 typedef struct {
     CatalogApp* app; HWND window, list, details, search, summary, status;
-    HWND controls[20]; int controlCount; HFONT font, heading;
+    HWND controls[20]; int controlCount; HFONT font;
     CatalogFilter filter; CatalogPage* page; bool browsing; int offset, scale;
     char* text;
+    char selectedKey[CARD_KEY_SIZE];
 } View;
 
 static wchar_t* wideText(const char* text) {
@@ -90,7 +91,7 @@ static LRESULT CALLBACK formProc(HWND window,UINT message,WPARAM w,LPARAM l) {
    Cancel therefore leaves the wallet alone, even after several fields change. */
 static bool form(View* view,const wchar_t* title,Field* fields,int count) {
     if (count<1 || count>24) return false;
-    Form state={0}; state.fields=fields; state.count=count; state.font=view->font;
+    Form state={0}; state.fields=fields; state.count=count;
     WNDCLASSW cls={0}; cls.lpfnWndProc=formProc; cls.hInstance=GetModuleHandleW(NULL);
     cls.lpszClassName=L"CardClarityForm"; cls.hCursor=LoadCursorW(NULL,IDC_ARROW);
     cls.hbrBackground=(HBRUSH)(COLOR_WINDOW+1); RegisterClassW(&cls);
@@ -137,6 +138,7 @@ static int selection(View* view) {
 static void details(View* view) {
     int selected=selection(view);
     if (selected<0) { setText(view->details,"Choose a card to see its fees, reward rules and sources."); return; }
+    copyText(view->selectedKey,sizeof(view->selectedKey),view->browsing?view->page->cards[selected].key:view->app->wallet->entries[selected].key);
     bool okay=view->browsing ? describeCatalogCard(&view->app->catalog,view->page->cards[selected].key,view->text,CATALOG_TEXT_SIZE)
         : describeWalletEntry(view->app,selected,view->text,CATALOG_TEXT_SIZE);
     setText(view->details,okay?view->text:"Could not read the details. Your saved wallet is unchanged.");
@@ -163,7 +165,11 @@ static void refresh(View* view) {
         if (!view->page->count) setText(view->details,
             "No matches with these filters. Try another name or clear the filters.\r\n\r\n"
             "If your card is missing, add it as unlisted. We will keep its name without making up reward rates.");
-        else { SendMessageW(view->list,LB_SETCURSEL,0,0); details(view); }
+        else {
+            int selected=0;
+            for (int i=0;i<view->page->count;i++) if (!strcmp(view->selectedKey,view->page->cards[i].key)) selected=i;
+            SendMessageW(view->list,LB_SETCURSEL,selected,0); details(view);
+        }
     } else {
         snprintf(label,sizeof(label),"My wallet: %d card(s)%s",view->app->wallet->count,view->app->wallet->changed?" | unsaved changes":"");
         setText(view->summary,label);
@@ -174,7 +180,10 @@ static void refresh(View* view) {
             if (converted) SendMessageW(view->list,LB_ADDSTRING,0,(LPARAM)converted);
             free(converted);
         }
-        if (view->app->wallet->count) { SendMessageW(view->list,LB_SETCURSEL,0,0); details(view); }
+        if (view->app->wallet->count) {
+            int selected=findWalletEntry(view->app->wallet,view->selectedKey);
+            SendMessageW(view->list,LB_SETCURSEL,selected<0?0:selected,0); details(view);
+        }
         else setText(view->details,"Your wallet is empty. Browse cards to add a specific version, or add an unlisted card.");
     }
 }
@@ -248,6 +257,7 @@ static void filter(View* view) {
         start=end+1;
     }
     if (country[0]&&strlen(country)!=2) okay=false;
+    if (category[0]) { char normalized[40]; if (!normalizeSpendingCategory(category,normalized)) okay=false; else copyText(category,sizeof(category),normalized); }
     if (!okay) { tell(view,"Check the filter values. The previous filters are still active."); return; }
     changed.unit=type-1; changed.sort=order; changed.includeArchived=old!=0; changed.checkedOnly=reviewed!=0;
     copyText(changed.category,sizeof(changed.category),category); copyText(changed.country,sizeof(changed.country),country);
@@ -264,6 +274,36 @@ static void unlisted(View* view) {
         refresh(view); tell(view,view->app->status);
     }
 }
+/* Eden's continuation: linking only changes the catalog identity after the
+   user confirms the exact product. The saved note stays on the same entry. */
+static void linkEntry(View* view) {
+    int position=walletSelection(view); if (position<0) return;
+    char key[CARD_KEY_SIZE]=""; CatalogCard card;
+    Field field={"Exact catalog key from card details",key,sizeof(key)};
+    if (!form(view,L"Link an unlisted card",&field,1)) return;
+    if (!findCatalogCard(&view->app->catalog,key,&card)) { tell(view,"That key is not in the catalog."); return; }
+    char question[500]; snprintf(question,sizeof(question),"Link this entry to %s by %s? Your note and favorite will stay.",card.name,card.issuer);
+    wchar_t* text=wideText(question); bool accepted=text&&confirm(view,text); free(text);
+    if (!accepted) return;
+    if (linkUnlistedCard(&view->app->catalog,view->app->wallet,position,key,view->app->status,sizeof(view->app->status))) {
+        view->app->undoReady=false; refresh(view); tell(view,"Linked the exact product. Save to keep the change.");
+    } else tell(view,view->app->status);
+}
+
+static void clearTrack(View* view) {
+    int position=walletSelection(view); if (position<0) return;
+    WalletEntry* entry=&view->app->wallet->entries[position]; view->text[0]='\0';
+    for (int i=0;i<entry->trackCount;i++) appendText(view->text,CATALOG_TEXT_SIZE,"%d. %s | %s\r\n",i+1,entry->tracks[i].ruleKey,entry->tracks[i].periodKey);
+    setText(view->details,entry->trackCount?view->text:"There is no tracker history to remove.");
+    if (!entry->trackCount) return;
+    char number[10]=""; Field field={"History number shown in the details",number,sizeof(number)}; int choice;
+    if (!form(view,L"Remove one history item",&field,1)) return;
+    if (!parseNumber(number,1,entry->trackCount,&choice)) { tell(view,"Choose a listed history number."); return; }
+    if (confirm(view,L"Remove this history item? Other periods will stay.")&&removeWalletTrack(view->app->wallet,position,choice-1)) {
+        view->app->undoReady=false; refresh(view); tell(view,"Removed one history item. Save to keep the change.");
+    }
+}
+
 static void compare(View* view) {
     char amount[40]="",category[40]="groceries",channel[40]="direct",date[11];
     copyText(date,sizeof(date),view->app->today);
@@ -449,6 +489,8 @@ static void command(View* view,int id) {
     } else if (id==ID_UNDO) { bool restored=undoWalletRemoval(app); if (restored) refresh(view); tell(view,restored?app->status:"Use Undo immediately after a removal, before another edit."); }
     else if (id==ID_EDIT) edit(view);
     else if (id==ID_UNLISTED) unlisted(view);
+    else if (id==ID_LINK) linkEntry(view);
+    else if (id==ID_CLEAR_TRACK) clearTrack(view);
     else if (id==ID_COMPARE) compare(view);
     else if (id==ID_YEAR) year(view);
     else if (id==ID_TRACK) track(view);
@@ -545,6 +587,8 @@ int runCatalogWindow(CatalogApp* app) {
     HMENU walletMenu=CreatePopupMenu(),compareMenu=CreatePopupMenu();
     AppendMenuW(walletMenu,MF_STRING,ID_UNDO,L"Undo last removal");
     AppendMenuW(walletMenu,MF_STRING,ID_TRACK,L"Track cap and benefit usage");
+    AppendMenuW(walletMenu,MF_STRING,ID_CLEAR_TRACK,L"Remove an old tracker item");
+    AppendMenuW(walletMenu,MF_STRING,ID_LINK,L"Link an unlisted card");
     AppendMenuW(walletMenu,MF_STRING,ID_REMINDERS,L"Reminders");
     AppendMenuW(compareMenu,MF_STRING,ID_COMPARE,L"Purchase rewards");
     AppendMenuW(compareMenu,MF_STRING,ID_YEAR,L"Yearly estimate");
@@ -561,6 +605,11 @@ int runCatalogWindow(CatalogApp* app) {
     layout(view); refresh(view); tell(view,app->status); ShowWindow(window,SW_SHOW); UpdateWindow(window);
     MSG message; int received;
     while ((received=(int)GetMessageW(&message,NULL,0,0))>0) {
+        if (message.message==WM_KEYDOWN&&message.wParam==VK_RETURN&&GetFocus()==view->search) { command(view,ID_FIND); continue; }
+        if (message.message==WM_KEYDOWN&&GetKeyState(VK_CONTROL)<0) {
+            if (message.wParam=='F') { SetFocus(view->search); SendMessageW(view->search,EM_SETSEL,0,-1); continue; }
+            if (message.wParam=='S') { command(view,ID_SAVE); continue; }
+        }
         if (!IsDialogMessageW(window,&message)) { TranslateMessage(&message); DispatchMessageW(&message); }
     }
     DeleteObject(view->font); free(view->page); free(view->text); free(view);

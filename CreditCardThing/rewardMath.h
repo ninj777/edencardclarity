@@ -19,6 +19,7 @@ typedef struct {
     int conditionalPurchases;
 } YearEstimate;
 bool estimateReward(Catalog* catalog, WalletEntry* entry, const Purchase* purchase, RewardEstimate* result);
+bool normalizeSpendingCategory(const char* text, char category[40]);
 bool formatReward(const RewardEstimate* result, char* text, size_t capacity);
 bool compareWallet(Catalog* catalog, CatalogWallet* wallet, const Purchase* purchase, char* text, size_t capacity);
 bool estimateYear(Catalog* catalog, const WalletEntry* entry, const int64_t* monthly,

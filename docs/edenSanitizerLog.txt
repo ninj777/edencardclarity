@@ -1,0 +1,284 @@
++ /workspace/tools/bin/clang -std=c11 -Wall -Wextra -Wpedantic -Werror -fsanitize=address,undefined -fno-omit-frame-pointer -g tests/testCatalog.c CreditCardThing/catalog.c CreditCardThing/catalogBuild.c CreditCardThing/catalogText.c CreditCardThing/catalogWallet.c CreditCardThing/catalogFiles.c CreditCardThing/catalogApp.c CreditCardThing/rewardMath.c CreditCardThing/input.c build/native/sqliteSanitized.o -lm -o build/native/testEdenSanitized
++ ASAN_OPTIONS=detect_leaks=0
++ build/native/testEdenSanitized data/cardCatalog.db build/edenSanitized2
+01. Distributed catalog validates
+Expected: pass
+Actual: pass
+02. First page has 20 of 76 real products; legacy hidden
+Expected: pass
+Actual: pass
+03. Next page has a different first product
+Expected: pass
+Actual: pass
+04. Case-insensitive prefix search finds variants
+Expected: pass
+Actual: pass
+05. Spaced alias finds the intended card
+Expected: pass
+Actual: pass
+06. Misspelling gives labeled suggestions
+Expected: pass
+Actual: pass
+07. Search text cannot become a SQL command
+Expected: pass
+Actual: pass
+08. Punctuation alone cannot act as a match-all wildcard
+Expected: pass
+Actual: pass
+09. Issuer filters use either/or: 23 Chase plus 22 Capital One
+Expected: pass
+Actual: pass
+10. Fee and review filters narrow results together
+Expected: pass
+Actual: pass
+11. Unknown and nonzero fees fail a zero-fee limit
+Expected: pass
+Actual: pass
+12. Missing card returns no invented record
+Expected: pass
+Actual: pass
+13. 12.34 becomes 1234 cents
+Expected: pass
+Actual: pass
+14. Invalid decimal inputs are rejected
+Expected: pass
+Actual: pass
+15. Leap years are checked
+Expected: pass
+Actual: pass
+16. Quarter follows the purchase date
+Expected: pass
+Actual: pass
+17. Missing statement day stays unknown
+Expected: pass
+Actual: pass
+18. Add real card by permanent key
+Expected: pass
+Actual: pass
+19. Duplicate leaves count unchanged
+Expected: pass
+Actual: pass
+20. Add second real card
+Expected: pass
+Actual: pass
+21. Keep an unlisted card without guessed rates
+Expected: pass
+Actual: pass
+22. 100.00 at 1.5 percent gives 1.50
+Expected: pass
+Actual: pass
+23. One-cent purchase rounds at the final reward
+Expected: pass
+Actual: pass
+24. 100.00 dining at 3 percent gives 3.00
+Expected: pass
+Actual: pass
+25. Portal hotel rate is 5 percent total
+Expected: pass
+Actual: pass
+26. Direct booking does not get the portal bonus
+Expected: pass
+Actual: pass
+27. Tie and unknown-card warning both appear
+Expected: pass
+Actual: pass
+28. Add miles card
+Expected: pass
+Actual: pass
+29. 200 miles are separate from an unknown cash value
+Expected: pass
+Actual: pass
+30. One-cent-per-mile assumption gives 2.00
+Expected: pass
+Actual: pass
+31. Add incomplete rotating-category card
+Expected: pass
+Actual: pass
+32. Unknown cap and activation give conditional 1.00 to 5.00
+Expected: pass
+Actual: pass
+33. Record 1490.00 used against the quarterly cap
+Expected: pass
+Actual: pass
+34. Cap split: 10.00 at 5 percent plus 90.00 at 1 percent gives 1.40
+Expected: pass
+Actual: pass
+35. An unactivated bonus falls back to the base rate
+Expected: pass
+Actual: pass
+36. A new quarter does not reuse the previous quarter's cap history
+Expected: pass
+Actual: pass
+37. A different category does not receive a selected-category bonus
+Expected: pass
+Actual: pass
+38. A zero purchase gives zero reward
+Expected: pass
+Actual: pass
+39. Out-of-range purchase is rejected
+Expected: pass
+Actual: pass
+40. Twelve monthly 100.00 purchases give 18.00
+Expected: pass
+Actual: pass
+41. Yearly miles value subtracts the 95.00 annual fee
+Expected: pass
+Actual: pass
+42. Create manual reminder
+Expected: pass
+Actual: pass
+43. Save commits and advances revision
+Expected: pass
+Actual: pass
+44. Separate load restores notes, favorites, selection and tracking
+Expected: pass
+Actual: pass
+45. Reminder summary includes entered due date and anniversary
+Expected: pass
+Actual: pass
+46. Remove shifts later entries without changing identity
+Expected: pass
+Actual: pass
+47. Second save succeeds
+Expected: pass
+Actual: pass
+48. Stale open copy cannot overwrite newer revision
+Expected: pass
+Actual: pass
+49. SQLite backup succeeds
+Expected: pass
+Actual: pass
+50. Existing backup is not overwritten
+Expected: pass
+Actual: pass
+51. Damaged load keeps every byte of open wallet unchanged
+Expected: pass
+Actual: pass
+52. Invalid restore keeps open wallet unchanged
+Expected: pass
+Actual: pass
+53. Valid restore preserves previous save
+Expected: pass
+Actual: pass
+54. Restore advances revision so an older open instance cannot overwrite it
+Expected: pass
+Actual: pass
+55. Prepare damaged identity-counter fixture
+Expected: pass
+Actual: pass
+56. Colliding identity counter is rejected before replacing memory
+Expected: pass
+Actual: pass
+57. Hidden null text in a saved field is rejected without changing memory
+Expected: pass
+Actual: pass
+58. Old sample IDs remain samples during import
+Expected: pass
+Actual: pass
+59. Create independent catalog fixtures
+Expected: pass
+Actual: pass
+60. Prepare changed catalog fixture
+Expected: pass
+Actual: pass
+61. Catalog update counts one changed record
+Expected: pass
+Actual: pass
+62. Bad catalog update leaves the current catalog open
+Expected: pass
+Actual: pass
+63. Failed source import preserves previous catalog
+Expected: pass
+Actual: pass
+64. Unlisted-card export succeeds without personal notes
+Expected: pass
+Actual: pass
+65. Request export contains name and issuer, not notes or cap history
+Expected: pass
+Actual: pass
+66. Add the separately identified Customized Cash Rewards product
+Expected: pass
+Actual: pass
+67. Shared cap with 5.00 remaining gives 1.05 on 100.00 groceries
+Expected: pass
+Actual: pass
+68. Selected category uses the same exhausted allowance as groceries
+Expected: pass
+Actual: pass
+69. Add the partially reviewed Blue Cash Everyday record
+Expected: pass
+Actual: pass
+70. Independent annual grocery cap splits a 100.00 purchase into 1.20 reward
+Expected: pass
+Actual: pass
+71. Grocery history does not invent known usage for the separate gas cap
+Expected: pass
+Actual: pass
+72. Add a record with different introductory and ongoing fees
+Expected: pass
+Actual: pass
+73. First-year and ongoing fees remain separate in yearly scenarios
+Expected: pass
+Actual: pass
+74. Wallet capacity is 100 independently of the larger public catalog
+Expected: pass
+Actual: pass
+75. Undo restores the removed entry and is used only once
+Expected: pass
+Actual: pass
+76. Create an unlisted entry for linking
+Expected: pass
+Actual: pass
+77. Linking keeps the entry key, count, note and favorite
+Expected: pass
+Actual: pass
+78. Link cannot silently replace an already linked product
+Expected: pass
+Actual: pass
+79. Link cannot introduce a duplicate product
+Expected: pass
+Actual: pass
+80. Link rejects archived and missing targets
+Expected: pass
+Actual: pass
+81. Linked identity and the original note survive saving and loading
+Expected: pass
+Actual: pass
+82. Removing old tracking keeps the newer period and wallet count
+Expected: pass
+Actual: pass
+83. Invalid history positions leave all wallet data unchanged
+Expected: pass
+Actual: pass
+84. Venture X portal hotels earn 1000 miles on 100.00, valued at 10.00 under a one-cent assumption
+Expected: pass
+Actual: pass
+85. Direct Venture X hotel booking stays at the two-mile base rate
+Expected: pass
+Actual: pass
+86. Active Cash estimates 2.00 on an eligible 100.00 purchase
+Expected: pass
+Actual: pass
+87. Autograph is a separate points record
+Expected: pass
+Actual: pass
+88. Autograph phone plans use three points per dollar with an explicit valuation
+Expected: pass
+Actual: pass
+89. Discover Miles keeps its own stable product identity
+Expected: pass
+Actual: pass
+90. Discover Miles uses 1.5 miles per dollar without automatically doubling a first-year offer
+Expected: pass
+Actual: pass
+91. Human-readable category spacing and letter case still select the correct bonus
+Expected: pass
+Actual: pass
+92. An unknown typed category is rejected instead of silently paying the base rate
+Expected: pass
+Actual: pass
+93. An unknown booking channel is rejected instead of inventing a comparison
+Expected: pass
+Actual: pass
+
+93 of 93 checks passed.
