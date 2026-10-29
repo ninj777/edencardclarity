@@ -1,0 +1,66 @@
+Catalog source files
+
+These are UTF-8 tab-separated text files. Keep the first line unchanged.
+Each record is one line; tabs separate fields, including empty fields.
+A line beginning with # is a comment. A single dash means an unknown SQL
+value only in nullable fields. An empty string means an empty text field.
+Do not put tabs, newlines or hidden nulls inside a field.
+
+cardRecords.tsv has these fields, in order:
+  key, issuer, name, network, country, currency, reward unit,
+  first-year fee, ongoing fee, minimum APR, maximum APR, foreign fee,
+  check date, checked flag, archived flag, aliases, summary, source URL.
+
+Keys are permanent product/version identities. Do not reuse a key for another
+card. Country and currency are codes such as US and USD. Network may be blank
+if it has not been checked. Reward units are 0 cashback, 1 points, 2 miles,
+3 no supported reward rate. Fees use cents; APR and foreign fees use basis
+points, so 1874 means 18.74 percent. A dash stays unknown, not zero.
+Dates use YYYY-MM-DD. Flags use 0 or 1. Aliases are separated by |.
+Checked means the supported key fields were checked, not that every account
+agreement or personal offer was verified. An issuer-list source normally
+supports the name only, so those records stay unchecked.
+
+rewardRules.tsv fields:
+  rule key, card key, category, channel, total rate, cap key,
+  activation/condition flag, fallback rate, start date, end date, notes, source.
+
+Rates use millionths. For cashback, 30000 means 3 percent. For points or miles,
+3000000 means three units per dollar. These are total rates, not amounts to
+add to a base rate. Channels currently include any, direct, portal and online.
+Portal means the specific issuer service named in the rule notes. A blank
+start/end is unbounded. Eligibility or expiring promotions without enough
+structured information stay in notes; do not pretend they are modeled.
+
+The category other is the general base rule. A selected rule uses the wallet's
+manually confirmed category. It supports one actual selected category at a
+time; it is not a guess about the bank's quarterly list. See rewardMath.c for
+the category names accepted by the menus. Each card has at most 40 rules.
+
+capGroups.tsv fields:
+  cap key, card key, spending limit in cents, period, notes, source.
+Period numbers are 1 calendar month, 2 calendar quarter, 3 calendar year,
+4 anniversary year, 5 statement cycle. Multiple rules share the same cap key
+when they share one spending allowance. This schema models spending caps,
+not every possible reward-dollar limit or balance-based tier.
+
+feeNotes.tsv fields:
+  card key, fee kind, explanation, source.
+Use these notes for introductory periods, transfer conditions, exclusions and
+other terms that a single number would hide. The calculator does not turn
+these notes into an interest calculation.
+
+benefitRules.tsv fields:
+  benefit key, card key, label, possible credit in cents, period,
+  activation/condition flag, due date, notes, source.
+Credits are possible conditional benefits. They are not automatically added
+to yearly value. The user enters what they actually expect to use.
+
+Build a candidate with --build-catalog data candidateCatalog.db. Import runs
+inside a separate temporary database. Required files, columns, relationships,
+types, dates and index contents are checked before replacement. Keep sources
+and review their conditions before changing checked to 1. Software validation
+does not check whether the bank changed its offer after our recorded date.
+
+legacy001 through legacy005 are our original invented samples. They remain
+archived for old-wallet import. Do not rename them into real products.

@@ -1,0 +1,26 @@
++ /workspace/tools/bin/x86_64-w64-mingw32-gcc --version
+x86_64-w64-mingw32-gcc-posix (GCC) 14-posix
+Copyright (C) 2024 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
++ /workspace/tools/bin/x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror -DUNICODE -D_UNICODE -c ../CreditCardThing/main.c ../CreditCardThing/cards.c ../CreditCardThing/logger.c ../CreditCardThing/window.c ../CreditCardThing/storage.c ../CreditCardThing/wallet.c ../CreditCardThing/catalog.c ../CreditCardThing/catalogBuild.c ../CreditCardThing/catalogText.c ../CreditCardThing/catalogWallet.c ../CreditCardThing/catalogFiles.c ../CreditCardThing/catalogApp.c ../CreditCardThing/catalogWindow.c ../CreditCardThing/rewardMath.c ../CreditCardThing/input.c
++ /workspace/tools/local/usr/bin/x86_64-w64-mingw32-windres -I ../CreditCardThing --preprocessor=/workspace/tools/bin/x86_64-w64-mingw32-gcc --preprocessor-arg=-E --preprocessor-arg=-xc --preprocessor-arg=-DRC_INVOKED ../CreditCardThing/appResource.rc -O coff -o appResource.o
++ /workspace/tools/bin/x86_64-w64-mingw32-gcc main.o cards.o logger.o window.o storage.o wallet.o catalog.o catalogBuild.o catalogText.o catalogWallet.o catalogFiles.o catalogApp.o catalogWindow.o rewardMath.o input.o sqliteWindows.o appResource.o -luser32 -lgdi32 -lcomctl32 -lm -o cardClarity.exe
++ cardObjects='catalog.o catalogBuild.o catalogText.o catalogWallet.o catalogFiles.o catalogApp.o catalogWindow.o rewardMath.o input.o sqliteWindows.o'
++ for testName in testCatalog testCatalogScale
++ /workspace/tools/bin/x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror ../tests/testCatalog.c catalog.o catalogBuild.o catalogText.o catalogWallet.o catalogFiles.o catalogApp.o catalogWindow.o rewardMath.o input.o sqliteWindows.o -luser32 -lgdi32 -lcomctl32 -lm -o testCatalog.exe
++ for testName in testCatalog testCatalogScale
++ /workspace/tools/bin/x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror ../tests/testCatalogScale.c catalog.o catalogBuild.o catalogText.o catalogWallet.o catalogFiles.o catalogApp.o catalogWindow.o rewardMath.o input.o sqliteWindows.o -luser32 -lgdi32 -lcomctl32 -lm -o testCatalogScale.exe
++ for testName in testCatalogMenu testGate1 testGate2
++ /workspace/tools/bin/x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror ../tests/testCatalogMenu.c ../tests/testSupport.c -o testCatalogMenu.exe
++ for testName in testCatalogMenu testGate1 testGate2
++ /workspace/tools/bin/x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror ../tests/testGate1.c ../tests/testSupport.c -o testGate1.exe
++ for testName in testCatalogMenu testGate1 testGate2
++ /workspace/tools/bin/x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror ../tests/testGate2.c ../tests/testSupport.c -o testGate2.exe
++ /workspace/tools/bin/x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror ../tests/testModules.c cards.o logger.o -lm -o testModules.exe
++ file cardClarity.exe
+cardClarity.exe: PE32+ executable for MS Windows 5.02 (console), x86-64, 19 sections
++ /workspace/tools/bin/x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror -DUNICODE -D_UNICODE -c ../CreditCardThing/catalog.c -o catalog.o
++ /workspace/tools/bin/x86_64-w64-mingw32-gcc main.o cards.o logger.o window.o storage.o wallet.o catalog.o catalogBuild.o catalogText.o catalogWallet.o catalogFiles.o catalogApp.o catalogWindow.o rewardMath.o input.o sqliteWindows.o appResource.o -luser32 -lgdi32 -lcomctl32 -lm -o cardClarity.exe
++ /workspace/tools/bin/x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror ../tests/testCatalog.c catalog.o catalogBuild.o catalogText.o catalogWallet.o catalogFiles.o catalogApp.o catalogWindow.o rewardMath.o input.o sqliteWindows.o -luser32 -lgdi32 -lcomctl32 -lm -o testCatalog.exe

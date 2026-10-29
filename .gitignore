@@ -12,6 +12,7 @@ Release/
 
 # I leave build output out so the source folder stays easy to share.
 build/
+/buildProject
 *.exe
 *.o
 *.obj
@@ -24,3 +25,23 @@ build/
 # I keep a person's saved cards and unfinished save out of the submission.
 savedCards.txt
 savedCards.txt.tmp
+
+# Personal wallet databases and generated catalog output.
+walletCards.db*
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+*.csv
+*.beforeRestore
+*.previous
+*.restore
+*.update
+data/cardCatalog.db*
+
+# Eden: project notes belong in C comments or plain text.
+*.[mM][dD]
+*.[mM][dD][xX]
+*.[mM][aA][rR][kK][dD][oO][wW][nN]

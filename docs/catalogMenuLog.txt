@@ -1,0 +1,111 @@
+Catalog menu checks
+Date: 2026-10-29 23:04:39 UTC
+Program: /workspace/cardClarityCatalog/build/native/cardClarity
+Test platform: POSIX
+
+Case 1: Menu and exit
+Expected: The numbered catalog menu opens and exits successfully.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Browse cards: yes
+Observed: Goodbye!: yes
+Result: passed (4 checks matched).
+
+Case 2: Invalid menu answer
+Expected: Text and an out-of-range choice recover before Exit.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter a whole number: yes
+Observed: Goodbye!: yes
+Result: passed (4 checks matched).
+
+Case 3: Search and add
+Expected: Search an alias, choose its exact version, add it and save.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Quicksilver Rewards: yes
+Observed: Added the selected version: yes
+Observed: Saved your wallet: yes
+Observed: a save file exists: yes
+Result: passed (6 checks matched).
+
+Case 4: Restart
+Expected: A second process loads the exact saved entry.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Loaded your saved wallet: yes
+Observed: Quicksilver Rewards: yes
+Result: passed (6 checks matched).
+
+Case 5: Missing card
+Expected: A card absent from the catalog produces no matches.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No matches: yes
+Result: passed (3 checks matched).
+
+Case 6: Unlisted entry and unsaved exit
+Expected: An unlisted card is kept after save and restart.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Added an unlisted card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: My other card: yes
+Observed: not been verified: yes
+Result: passed (7 checks matched).
+
+Case 7: Discard
+Expected: Discarding an unsaved addition does not rewrite the save.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: discarded entry does not appear after restart: yes
+Observed: Keep me: yes
+Result: passed (8 checks matched).
+
+Case 8: Compare
+Expected: A purchase comparison shows the computed reward and unknown entries.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: 1.50: yes
+Observed: Unlisted or unresolved: yes
+Result: passed (6 checks matched).
+
+Case 9: End of input
+Expected: Ended input closes without saving an unfinished edit.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No more input: yes
+Result: passed (3 checks matched).
+
+Case 10: Missing catalog
+Expected: An unavailable database reports an error instead of claiming no matching cards.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: catalog-open error is explained: yes
+Observed: no empty catalog or wallet was created: yes
+Result: passed (3 checks matched).
+
+Summary: 10 passed, 0 failed, 0 skipped.

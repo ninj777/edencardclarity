@@ -25,10 +25,11 @@ and gets the names from Joe's catalog. Evan's C cases check the results.
 Keeping the rules in those modules also lets the window call the same code.
 
 At startup, I prepare the samples and check the command-line arguments:
-  No argument opens the Gate 2 console menu.
+  No argument opens the new catalog console; --legacy opens Gate 2.
   --gate1 opens the earlier starter.
   --wallet-file path uses another save for the console.
-  --gui opens the Windows window with savedCards.txt.
+  --gui opens the new catalog window with walletCards.db.
+  --legacy --gui opens the earlier sample window with savedCards.txt.
   --gui --wallet-file path uses another save for the window.
 An incomplete or unknown argument returns 1. A normal exit returns 0.
 The actual compiler commands are in readMe.txt.
@@ -72,6 +73,9 @@ and Windows runtime result open until it is checked on the demo computer.
 Staff also need to confirm the four-student/six-investigator exception.
 The teacher decides the gate ratings.
 */
+/* The notes above describe the earlier gate build. The catalog expansion
+   uses catalogApp.c, catalogWindow.c and the catalog/storage/rule modules.
+   It keeps a different wallet database so the sample IDs stay recognizable. */
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
@@ -81,6 +85,7 @@ The teacher decides the gate ratings.
 #include "wallet.h"
 #include "storage.h"
 #include "window.h"
+#include "catalogApp.h"
 
 /* I use -1 for input ending and -2 for an actual read failure. */
 static int readChoice(void) {
@@ -295,6 +300,14 @@ static int runConsoleMenu(bool gate1Mode, const char* filePath) {
 }
 
 int main(int argc, char* argv[]) {
+	/* The earlier gates keep their original menu and sample identities. */
+	if (argc > 1 && strcmp(argv[1], "--legacy") == 0) {
+		argc--; argv++;
+	} else if (!(argc > 1 && (!strcmp(argv[1], "--gate1")
+		|| !strcmp(argv[1], "--wallet-file")))
+		&& !(argc == 4 && !strcmp(argv[1], "--gui") && !strcmp(argv[2], "--wallet-file"))) {
+		return runCatalogApp(argc, argv);
+	}
 	/* I prepare the catalog before any menu, saved ID, or window tries to read it. */
 	initTestCards();
 	if (argc == 2 && strcmp(argv[1], "--gui") == 0) {

@@ -1,0 +1,57 @@
+CardClarity demo checklist
+
+Use a throwaway wallet so a demonstration cannot replace someone's real list:
+  build\cardClarity.exe --gui --wallet demoWallet.db
+
+Build first. Show the successful compiler result, the source folder and the
+recorded C test results. Explain that a cross-build is not a Windows runtime
+test. Record what actually happens on this computer.
+
+1. Open Browse cards. Search quick silver. Read the issuer and product version,
+   add Quicksilver Rewards, open My wallet and Save. Close and reopen with the
+   same --wallet argument. The same card should return.
+
+2. Try a name that is not present. Clear filters, then add an unlisted entry.
+   Explain that it keeps the name without inventing fees or reward rates.
+
+3. Show Filters. A zero annual-fee limit includes confirmed zero-fee records,
+   not unknown fees. Choose a product and point to its source, date, annual
+   fee periods, APR status and booking conditions.
+
+4. Add Freedom Unlimited. Compare a 100.00 dining purchase with channel direct.
+   The stored supported rules give 1.50 for Quicksilver and 3.00 for Freedom
+   Unlimited. These are estimates subject to the displayed account conditions.
+   An unlisted card must remain unranked.
+
+5. Add Venture. Before a valuation is entered, show miles without claiming they
+   are dollars. Enter 1.000 cents per mile as an assumption and compare again.
+   Explain that the yearly view subtracts the annual fee separately.
+
+6. Make a temporary note, remove an entry and undo the removal. Save, make an
+   unsaved change, then Reload and accept the discard prompt. The saved state
+   should return. Try closing with an edit and choose Cancel.
+
+7. With a throwaway copy only, test a damaged wallet, backup and restore.
+   Confirm an invalid reload keeps the open entries. Keep the generated
+   .beforeRestore file. Record the actual result rather than signing it early.
+
+8. Test keyboard-only use, readable focus, resizing, high contrast, large text,
+   dialogs, comparison panes and closing with unsaved edits. These desktop
+   checks were not possible in the implementation environment.
+
+For Gate 1 specifically, run:
+  build\cardClarity.exe --gate1
+Show startup, option 1 with five named example cards, option 2 with the four
+planned features, a bad choice such as hello, then option 3 to Exit.
+Provide main.c, cards.c, cards.h, the feature/owner notes, compile evidence and
+five expected/actual checks. The extra rating also requires a real review.
+
+For questions, describe responsibilities accurately:
+Oliver connects menus and the window. Eden handles input, wallet and storage.
+Joe handles card records and checks benefits. Evan handles checks and bug notes.
+A struct groups fields, an enum names integer choices, and a function performs
+work. Loading into a temporary struct and assigning only after all checks pass
+is how the current wallet survives a damaged input file.
+
+Record the demo date, computer, build result, each desktop observation and the
+name of the person who actually checked it. Leave unperformed checks open.

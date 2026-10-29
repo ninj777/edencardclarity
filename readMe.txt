@@ -1,193 +1,191 @@
-CardClarity, Gates 1 and 2
+CardClarity
 
-All application code, C checks, and the restart demonstration are C11.
-No HTML or CSS is used. That is within the proposal's 5% maximum.
-The five card names and rates are invented practice data, not bank offers.
-The save contains card IDs, not payment details.
+This version adds the real-card catalog to our earlier wallet. The application,
+tests and build tool use C11. SQLite is a separate public-domain C library in
+thirdParty. There is no Python, C++, HTML or CSS in this project.
 
-The explanations are in the code
+Start on Windows
 
-Oliver's assigned menu, feature checklist, gate requirements, and build notes:
-CreditCardThing/main.c, window.c, window.h, logger.c, and logger.h.
+1. Extract the whole folder. Keep data beside CreditCardThing.
+2. Open TestSolution.slnx in Visual Studio. The existing project uses the v145
+   toolset. Install the Desktop development with C++ workload for its C compiler
+   and Windows SDK. This does not make our source C++.
+3. Choose Debug and x64, then Build Solution. The post-build step builds and
+   checks data/cardCatalog.db from the five tab-separated source files.
+4. Press the local Windows debugger button. The launch argument is --gui and
+   the working directory is the project root.
+5. Browse cards, search "quick silver", choose Quicksilver Rewards, then Add
+   selected. Open My wallet to see it. Save wallet keeps it after restarting.
 
-Eden's assigned input, wallet, and saved-file explanations:
-CreditCardThing/input.c, input.h, wallet.c, wallet.h, storage.c, and storage.h.
-The example file format and loading/saving rules are at the top of storage.c.
+If Visual Studio's file sidebar is hidden, use View > Solution Explorer.
+If your installed toolset is different, retarget the project to the installed
+Visual Studio toolset rather than changing the source language.
 
-Joe's assigned card records, types, stable IDs, and practice formula:
-CreditCardThing/cards.c and cards.h. The exact sample values are in initTestCards.
+Another Windows build option is the C helper from an x64 Native Tools Command
+Prompt. Compile it, then run it from the project root:
+  cl /nologo /TC /std:c11 /W4 /D_CRT_SECURE_NO_WARNINGS tools\buildProject.c /FebuildProject.exe
+  buildProject.exe
+After building:
+  build\cardClarity.exe --gui
+For the numbered catalog console:
+  build\cardClarity.exe
+For another personal save:
+  build\cardClarity.exe --gui --wallet myWallet.db
 
-Evan's assigned expected/actual cases and test support:
-tests/testGate1.c, testGate2.c, testModules.c, testSupport.c, testSupport.h,
-and demoGate2.c. The real teammate-review record is at the top of testGate1.c.
 
-Open and run in Visual Studio
+The Windows executable in the download is a cross-build. Its compilation
+passed, but this environment could not run a Windows desktop. Build and check
+it on the demo computer before presenting it. Visual Studio itself has not
+been run here. The source build is the main deliverable.
 
-Extract the whole folder. Open TestSolution.slnx, choose Debug and x64, then
-press Ctrl+Shift+B to build. Press Ctrl+F5 to open the window. If the solution
-will not open, open CreditCardThing/CreditCardThing.vcxproj instead.
+The earlier gates are still available
 
-Visual Studio needs a Windows SDK and its native desktop compiler workload.
-Microsoft calls that installer item Desktop development with C++; this project
-still compiles every application file as C. The project uses toolset v145.
-If it is missing, select an installed toolset in the project's General settings.
-Visual Studio 2022 normally uses v143. Rebuild after changing the toolset.
+  build\cardClarity.exe --gate1
+  build\cardClarity.exe --legacy
+  build\cardClarity.exe --legacy --gui
+  build\cardClarity.exe --wallet-file anotherSave.txt
 
-In the window, select a sample on the left to see its example details. Add to
-my wallet puts it in the lower list. Select a wallet card before removing it.
-Save cards keeps the list; Reload saved restores the last save. The window
-asks before discarding unsaved changes. Tab moves between controls.
+Gate 1 still has exactly three numbered choices, five clearly named example
+cards, input recovery and Exit. The old Gate 2 wallet still uses sample IDs
+1 through 5 and savedCards.txt. Those IDs never become real bank cards.
+The new catalog wallet uses walletCards.db instead. To bring an old sample
+wallet across, use Tools > Import old sample wallet. It stays labeled as
+practice data. The original text file is left alone.
 
-The default save is savedCards.txt in the project root when launched from
-Visual Studio. That is the folder containing this readMe.txt.
+What is in the catalog
 
-Running the executable without arguments opens the console menu.
---gate1 selects the earlier three-option starter.
---wallet-file path selects another save for the console.
---gui opens the window with the default save.
---gui --wallet-file path selects another save for the window.
+There are 76 real product names from eight issuer groups and five archived
+practice records. Nine real records have supported earning rules checked:
+Quicksilver Rewards, Savor Rewards, Venture Rewards, VentureOne Rewards,
+Freedom Unlimited, Venture X Rewards, Discover it Miles, Active Cash and Autograph. Freedom Flex has partial rules and stays incomplete.
+Other real records have partial profiles or are names awaiting detailed review.
+We did not fill their missing information with guesses.
 
-Windows build and C checks
+Each record has a source link and a check date. A listing-page source supports
+the product name, not every fee or benefit. Unknown values say unknown or not
+confirmed. A checked flag means supported key fields were checked against the
+listed source; it does not certify the whole account agreement or a personal
+offer. Public APRs can vary, and introductory terms expire.
 
-Open Developer Command Prompt for Visual Studio in the project root.
-Run the following commands one at a time. Check each build and exit status.
+This is a starting U.S. catalog, not all cards worldwide. Reward eligibility
+still depends on account terms and merchant coding. The large test catalog
+contains 10000 synthetic records and is never shipped as researched bank data.
 
-if not exist build mkdir build
-msbuild CreditCardThing\CreditCardThing.vcxproj /t:Rebuild /p:Configuration=Debug /p:Platform=x64 /p:OutDir=..\build\windows\ /fl /flp:logfile=docs\windowsBuildLog.txt
-cl /nologo /std:c11 /TC /W4 /D_CRT_SECURE_NO_WARNINGS tests\testGate1.c tests\testSupport.c /Febuild\testGate1.exe /Fobuild\
-cl /nologo /std:c11 /TC /W4 /D_CRT_SECURE_NO_WARNINGS tests\testGate2.c tests\testSupport.c /Febuild\testGate2.exe /Fobuild\
-cl /nologo /std:c11 /TC /W4 /D_CRT_SECURE_NO_WARNINGS tests\demoGate2.c tests\testSupport.c /Febuild\demoGate2.exe /Fobuild\
-cl /nologo /std:c11 /TC /W4 /D_CRT_SECURE_NO_WARNINGS tests\testModules.c CreditCardThing\cards.c CreditCardThing\logger.c /Febuild\testModules.exe /Fobuild\
-build\testGate1.exe build\windows\CreditCardThing.exe > docs\windowsGate1Log.txt 2>&1
-build\testGate2.exe build\windows\CreditCardThing.exe > docs\windowsGate2Log.txt 2>&1
-build\testModules.exe > docs\windowsModuleLog.txt 2>&1
-build\demoGate2.exe build\windows\CreditCardThing.exe > docs\windowsDemoLog.txt 2>&1
-build\windows\CreditCardThing.exe --gui
+Using the catalog
 
-The tests use temporary folders rather than the normal saved wallet. On Windows,
-expect 29 passes and two skips for Gate 1, and 37 passes and two skips for Gate 2.
-Those are expected totals, not a completed Windows run. The skipped cases need
-Linux or check the unsupported-window message on another system.
+Search matches card names, issuers and aliases. Results are limited to 20 per
+page. A misspelling may show labeled suggestions; it never adds a suggestion
+for you. Filters combine different groups together. Two issuers mean either
+issuer, while an issuer plus a fee ceiling must meet both. An unknown fee does
+not pass a confirmed-zero-fee filter. Clear filters starts over.
 
-Linux build and C checks
+Filters include issuer, ongoing annual fee, reward type, category, country,
+network, archived status and checked status. Network and country comparisons
+use the recorded spelling/code. Blank means any. A category filter looks for
+a recorded category or a selectable-category rule; it does not prove that an
+unverified rotating offer currently includes that category.
 
-Run these from the project root. Use clang instead of gcc for another compiler.
+If a search fails, clear the filters before deciding the card is missing.
+An unlisted entry keeps your typed name and issuer without making up rates.
+Tools can export those names and issuers to a new CSV file. Notes and tracking
+are excluded, and the app sends nothing online.
 
-mkdir -p build
-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror CreditCardThing/main.c CreditCardThing/cards.c CreditCardThing/logger.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/window.c -o build/cardClarity
-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGate1.c tests/testSupport.c -o build/testGate1
-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGate2.c tests/testSupport.c -o build/testGate2
-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testModules.c CreditCardThing/cards.c CreditCardThing/logger.c -lm -o build/testModules
-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/demoGate2.c tests/testSupport.c -o build/demoGate2
-./build/cardClarity
-./build/testGate1 ./build/cardClarity
-./build/testGate2 ./build/cardClarity
-./build/testModules
-./build/demoGate2 ./build/cardClarity
+The catalog is read-only during normal use. To maintain it, edit the source
+files in data and build a separate candidate:
+  build\cardClarity.exe --build-catalog data candidateCatalog.db
+Use Tools > Install checked catalog to validate and install that file. The
+previous catalog is kept as .previous. Keep or move that backup before a
+second update. Personal wallet entries and notes are stored separately.
+Updates are manual; there is no download service.
 
-Each test runner prints its date, expected results, actual observations, and
-passed/failed/skipped counts. A failed check returns a nonzero exit status.
-The process support stops a program that takes longer than five seconds.
-Redirect the output to a file to keep another run. Keep the compiler output too.
+Wallet, comparisons and extras
 
-What to show for Gate 1
+Add and Remove change the open wallet. Save commits a transaction. Reload
+checks the saved file in a temporary wallet before replacing the open list.
+A damaged load leaves the current list alone. Closing with edits offers Save,
+Discard or Cancel. An older open copy cannot overwrite a newer save revision.
+Undo last removal is available until another edit replaces that undo point.
+Wallet > Link an unlisted card attaches an exact confirmed catalog key to an
+existing entry without losing its note or favorite. The entry details show
+that key. Wallet > Remove an old tracker item frees one history slot while
+keeping the other periods. Control+F focuses search, Enter searches, and
+Control+S saves in the window.
 
-Run build\windows\CreditCardThing.exe --gate1 on Windows, or
-./build/cardClarity --gate1 on Linux. Show the three numbered choices.
-Enter 1 to display all five samples. Enter hello to show a rejected answer,
-then 1 to show that valid input still works. Enter 2 to show the feature plan.
-Enter 3 to show normal exit. Keep the build output and expected/actual results.
-The feature checklist and assigned modules are at the top of main.c.
-A real teammate needs to complete the review record in tests/testGate1.c
-for a possible Gate 1 rating of 4. The teacher determines the actual rating.
+Notes and settings include favorites, your point/mile valuation, an anniversary,
+a statement day and one actual selected category. A selected category must
+match your real account's offer. Anniversary settings do not prove the date
+your bank will post a fee.
 
-What to show for Gate 2
+Compare > Purchase rewards estimates a purchase for the cards in your wallet.
+Amounts use whole cents. Rules describe total earning, not extra multipliers.
+The calculator splits a purchase at a recorded spending cap. Unknown cap use
+or activation produces a conditional range. Points and miles stay units until
+you enter a cents-per-unit assumption. Incomplete records and conditional
+values are excluded from a definite ranking. Ties use rounded estimated cash
+amounts. Portal rates apply only to the specified issuer's booking service.
+Interest and foreign transaction costs are not subtracted from this purchase
+reward estimate.
 
-Use a separate demo file and the same path on every restart. On Windows:
+Compare > Yearly estimate uses the same monthly category spending for a fresh
+calendar-year scenario, direct bookings, the chosen annual-fee period and your
+entered credit, bonus and interest assumptions. It is not a transaction history
+or an APR-based interest calculator. Unknown fees or conditions make the result
+incomplete. Credits are not automatically treated as cash you will use.
 
-if not exist build\demo mkdir build\demo
-build\windows\CreditCardThing.exe --wallet-file build\demo\demoCards.txt
+Track usage records cap spending or benefit use manually. The entry details
+show the saved period, amount and condition. Wallet > Reminders supports due
+dates, snoozing, completion and deletion. Reminders appear while using the app;
+there is no background alarm. Tools backs up and restores saved wallets using
+SQLite's backup API. Choose a new backup name; existing files are not silently
+overwritten. A restore preserves the previous save as .beforeRestore.
 
-If that file already exists, inspect it or choose a new demo name. Open the
-wallet with 2. Add with 2, choose card 1, then add card 3 the same way. View
-with 1 and save with 4. Go Back with 6, then Exit with 3.
+Only names, selections, notes and manually entered settings are needed.
+Do not enter account numbers, security codes or bank passwords. Wallets are
+local files, not encrypted vaults. Keep personal files out of GitHub.
 
-Run the same command again. View both cards, remove card 1 with option 3,
-and save again. Reload with 5 and view the list. Only Cashback Sample should
-remain. Exit and restart again to show that the removal stayed saved.
+Build and checks on Linux
 
-Try a bad menu answer and a duplicate card. For a damaged-file example, use
-a different file containing these four lines:
+Run:
+  cc -std=c11 -Wall -Wextra -Wpedantic -Werror tools/buildProject.c -o buildProject
+  ./buildProject
 
-cardClarityWallet1
-2
-1
-1
+The C helper builds the portable catalog console, SQLite and three C check
+programs, then runs them. There are no shell or batch helper scripts. It requires a C11 compiler and the C library
+and math library. It does not build or run the original Windows-only files.
 
-That duplicate-ID file should be rejected without crashing. Do not save over
-the fixture during the demonstration. A full list, missing file, bad count,
-and failed save are also covered by the C cases.
+To use the built catalog console:
+  build/cardClarity
+To use another catalog or wallet:
+  build/cardClarity --catalog data/cardCatalog.db --wallet myWallet.db
 
-To show the window with the same demo save:
+Current continuation notes and results are in docs/edenWork.txt and the
+edenBuildLog.txt, edenMenuLog.txt, edenSanitizerLog.txt and edenWindowsBuildLog.txt
+files. This storage/catalog continuation is filed under Eden's assigned area.
+Earlier recorded commands and results are in docs/catalogBuildLog.txt,
+catalogTestLog.txt, catalogMenuLog.txt, catalogScaleLog.txt and
+catalogSanitizerLog.txt. docs/catalogReport.txt explains the results and
+remaining checks. The older gate2 logs describe their earlier version; they
+are not fresh runs of the latest Windows application.
 
-build\windows\CreditCardThing.exe --gui --wallet-file build\demo\demoCards.txt
+Where to read the code
 
-Check Add, Remove, Save cards, Reload saved, restarting, resizing, Tab/Space,
-and the unsaved close/reload prompts. The window uses the same storage code.
+main.c keeps the old gate menus and chooses the new app when appropriate.
+catalogApp.c joins the new console actions. catalogWindow.c is the new native
+Windows view; window.c remains the earlier sample window.
+catalog.c reads, validates and searches cards. catalogBuild.c imports records.
+catalogWallet.c handles entries, saved-wallet checks, trackers and reminders.
+catalogFiles.c handles backup, restore and catalog replacement.
+catalogText.c checks decimal amounts, dates and bounded text.
+rewardMath.c handles earning rules, caps, valuations, comparisons and yearly
+scenarios. Headers share declarations; they are not separate running programs.
+The C files under tests check these behaviors and record actual observations.
 
-Evidence and checks still needed
+The proposal assigns Oliver the menu, window and integration; Eden the wallet,
+input and storage; Joe the card records and benefit values; and Evan the checks
+and bug records. These are responsibility areas, not a claim that file length
+proves who personally wrote each line. No teammate review or teacher approval
+has been recorded for this expansion.
 
-docs/gate2BuildLog.txt contains actual commands, compiler versions, and results.
-docs/gate2TestLog.txt contains actual C runner observations and module results.
-docs/gate2DemoLog.txt contains the three-process save/remove/restart output.
-The recorded native builds passed 31 Gate 1 cases, 39 Gate 2 cases, 40 module
-checks, and the restart demo on GCC, Clang, and the checked build. Leak checking
-was disabled for that checked build. The Windows application and C check
-programs cross-compiled; Visual Studio and Windows runtime remain unverified.
-
-Record the demo computer's actual results after running it:
-Name and date: _________________________________________________________
-Computer and compiler: _________________________________________________
-Build result and saved log: ____________________________________________
-Gate 1 startup/samples/invalid input/exit: ______________________________
-Gate 2 add/view/remove: ________________________________________________
-Save over an existing file: ____________________________________________
-Restart and reload: ___________________________________________________
-Damaged file: _________________________________________________________
-Window buttons, text, resize, and keyboard: ____________________________
-Unsaved-close and reload prompts: ______________________________________
-Any bug, change, and actual retest: _____________________________________
-
-The proposal's four-student/six-investigator exception still needs staff
-confirmation. A passing test count does not supply that approval or a review.
-The later Gate 3 QA report and Gate 4 benefits/comparison work are still separate
-milestones. The current program does not yet complete the full purchase tool.
-
-Current assigned source sizes, including these comments
-
-Oliver: 887 lines across the assigned source and headers.
-  CreditCardThing/main.c: 318
-  CreditCardThing/window.c: 478
-  CreditCardThing/window.h: 14
-  CreditCardThing/logger.c: 56
-  CreditCardThing/logger.h: 21
-Eden: 479 lines across the assigned source and headers.
-  CreditCardThing/input.c: 113
-  CreditCardThing/input.h: 29
-  CreditCardThing/wallet.c: 105
-  CreditCardThing/wallet.h: 39
-  CreditCardThing/storage.c: 165
-  CreditCardThing/storage.h: 28
-Joe: 262 lines across the assigned source and headers.
-  CreditCardThing/cards.c: 181
-  CreditCardThing/cards.h: 81
-Evan: 1,437 lines across the assigned source and headers.
-  tests/testGate1.c: 299
-  tests/testGate2.c: 437
-  tests/testModules.c: 69
-  tests/testSupport.c: 520
-  tests/testSupport.h: 56
-  tests/demoGate2.c: 56
-
-These are file sizes, including comments and blank lines, not personal
-authorship or time measurements. The pre-annotation snapshot is in main.c.
+Before the gate, follow docs/demoChecklist.txt on the actual Windows computer.
+The teacher decides the gate rating. The catalog expansion does not replace
+Gate 3's QA report or Gate 4's source review and required purchase examples.
