@@ -1,0 +1,5 @@
+Accented alias across 10000 synthetic records: pass
+Two-letter prefix across 10000 synthetic records: pass
+100 exact-name searches: pass
+95th percentile CPU time: 2.140 ms; maximum: 4.126 ms.
+CPU time here is not wall-clock time on the presentation computer.

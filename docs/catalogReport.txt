@@ -1,0 +1,137 @@
+CardClarity catalog check notes
+October 29, 2026
+
+What changed
+
+The previous main branch was b9079592f2ddbfaf24f2fb18b6b09d2ae58f7a9b.
+Its Windows-specific card, storage and window work was kept. The earlier
+sample menus are still available. The new portable catalog modules are
+separate from that Windows-only code.
+
+The expansion adds a SQLite catalog and a separate SQLite wallet, search and
+filters, missing-card entries, source/status details, reward comparisons,
+yearly scenarios, manual tracking, reminders, notes, favorites, undo removal,
+backup/restore and checked manual catalog updates. SQLite is third-party
+public-domain C code. Splitting its generated source keeps individual upload
+sizes manageable; it is still compiled as one translation unit.
+
+Recorded results
+
+The local C suite has 75 passing checks. The expected behavior and actual
+pass/fail result appear in catalogTestLog.txt. Checks cover searching,
+suggestions, filter combinations, decimal input, dates, real-key additions,
+duplicates, cash and miles calculations, cap crossing, activation, quarter
+changes, yearly fees, save/load, revision conflicts, corrupted loads, backup,
+restore, hidden-null text, legacy import, catalog update failure, exports,
+capacity and undo.
+
+Ten separate-process console scenarios pass. They cover startup and Exit,
+invalid input, searching/adding/saving, restart, no matches, unlisted entries,
+Discard, comparison, ended input and a missing catalog. catalogMenuLog.txt records the expected
+observations and actual results. Restart cases open a second process rather
+than just showing an entry that is still in memory.
+
+A separate synthetic fixture contains 10000 records. It passes 100 exact-name
+queries, an accented-alias query and a two-letter prefix query. The timing
+log reports CPU time for this machine. It does not claim a measured response
+time on the classroom computer or researched coverage of 10000 bank cards.
+
+GCC 14.2 builds the portable application and checks as C11 with -Wall -Wextra
+-Wpedantic -Werror. The build script records its commands and results in
+catalogBuildLog.txt. SQLite uses its own dependency build options rather than
+being held to our source warning settings.
+
+Clang 19.1.7 also builds and runs the core suite with AddressSanitizer and
+UndefinedBehaviorSanitizer. Both the application modules and SQLite were
+instrumented. The recorded run passes all 75 checks. LeakSanitizer could not
+operate under this environment's tracing, so detect_leaks=0 was used.
+This is not a completed leak check or a proof that all possible inputs work.
+
+The full Windows application, including both windows and the original gate
+menus, cross-compiles with MinGW GCC 14-posix using C11 and warnings treated
+as errors. The Windows check programs also compile. No Windows executable,
+button, accessibility tool or Visual Studio debugger ran in this environment.
+The cross-build log is compilation evidence only.
+
+Problems found and handled
+
+A search containing only punctuation originally behaved like a cleared query.
+It now gives no matches, so percent and underscore cannot act like a wildcard
+request for all cards. The regression check passes.
+
+The current Windows logger used timespec_get, which this MinGW C library did
+not provide. GetTickCount64 now measures elapsed time in that Windows module.
+The original window and sample-card behavior were kept.
+
+A wallet could have a damaged next-entry counter that would collide with a
+saved entry key. Loading now validates the counter before replacing memory.
+A regression case checks that the open wallet stays unchanged.
+
+Restoring an old backup could reuse its old revision number. Another old open
+copy might then mistake that restored save for the earlier state. Restore
+now writes a new revision greater than both the backup and current save.
+The stale-copy regression case passes.
+
+Catalog change comparison originally depended only on displayed text. An
+alias change could be missed. It now checks the full card record too, and
+a validated release is installed even if the displayed terms are unchanged.
+
+Record validation now reads reward and benefit dates, rejects reversed rule
+dates and hidden-null text, checks references, and checks the FTS record list.
+The description function also checks for a failed fee query before reporting
+that it completed.
+
+The first test run had one incorrect fixture count: the two selected issuers
+have 45 products, not 48. The menu runner also initially assumed one test
+case's temporary folder was shared with the next case. Cases now prepare
+their own inputs, and two assertions were corrected to the actual intended
+message wording. Those were test setup problems, not passing program runs.
+All affected checks were rerun. The final logs contain the completed results.
+
+What the results do not prove
+
+Seventy-four real product names are included. Five records have supported
+earning rules checked; the rest are incomplete or partially modeled. Names
+from issuer lists are not fully researched financial contracts. Fees, offer
+eligibility, merchant categories and personal account terms need a source
+review before more records become recommendation-ready.
+
+The rule engine supports total cashback/points/miles rates, channels, dates,
+spending caps and manual conditions. It does not support every possible
+bank's tiered offer, reward-dollar cap, transferable-points program, multiple
+simultaneous chosen categories, account-opening-relative promotion or custom
+redemption rule. Such terms stay in notes or remain unsupported. Unknowns
+are not converted into zero or a definite winner.
+
+No automatic bank connection, online update service, background notification,
+telemetry, encrypted storage or exact interest calculator was added. Earlier
+research described these as separate work, not completed app features.
+
+Unsupported database versions are rejected. The explicit importer handles the
+old sample text wallet; this is not a general migration tool for arbitrary
+SQLite schemas. Catalog and wallet version numbers are separate.
+
+Search uses SQLite unicode61 tokenization with diacritic removal. Suggestions
+use a bounded edit-distance pass over up to 5000 candidates and are less
+capable with non-ASCII spellings. This is not full modern Unicode case folding.
+A very large catalog can therefore have a matching card outside the suggestion
+scan. Normal indexed search still covers the catalog.
+
+The window uses Windows system colors, Segoe UI, standard controls, keyboard
+navigation and system-DPI scaling. Screen-reader behavior, high contrast,
+keyboard-only completion, multiple monitors, large text, minimum-size layout,
+the comparison window and all dialog sizes still require a Windows review.
+The current implementation is system-DPI aware, not a per-monitor DPI solution.
+
+Required team checks
+
+Oliver should build and launch on the presentation computer and confirm both
+the new catalog and --gate1. Eden should repeat save/restart, invalid reload,
+backup/restore and legacy import with a throwaway wallet. Joe should review
+the issuer sources, variant identities, conditions and hand calculations.
+Evan should run the C checks there, record the Windows UI checks, maintain
+the QA checklist and bug/retest record, and obtain a real teammate review.
+
+These are remaining assignments. No one is recorded as having completed a
+review or run merely because that person's name is assigned to the area.
+The teacher still needs to judge the gates and any team-size exception.

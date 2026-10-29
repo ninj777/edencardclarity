@@ -24,3 +24,18 @@ build/
 # I keep a person's saved cards and unfinished save out of the submission.
 savedCards.txt
 savedCards.txt.tmp
+
+# Personal wallet databases and generated catalog output.
+walletCards.db*
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+*.csv
+*.beforeRestore
+*.previous
+*.restore
+*.update
+data/cardCatalog.db*

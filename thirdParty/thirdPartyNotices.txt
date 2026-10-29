@@ -1,0 +1,25 @@
+SQLite 3.54.1
+
+Source: https://github.com/sqlite/sqlite/tree/version-3.54.1
+License: public domain. SQLite's original blessing and source notices remain
+in sqlite3.c and sqlite3.h. SQLite is a separate third-party C dependency.
+
+The source was generated locally from the official tag using its C and Tcl
+build tools. The amalgamation was then split with its split-sqlite3c.tcl tool.
+That tool's chunk target was set to 4000 lines, its output filenames use
+sqlitePartNNN.c, and its Tcl output translation was changed from the invalid
+value 'text' to 'binary'. SQLite's C implementation was not edited. sqlite3.c
+includes these required parts as one translation unit. Do not compile the
+parts separately. The build tools are not included in this project.
+This is not a claim that the output matches the official download byte for byte.
+
+Original generated source SHA-256, before splitting:
+sqlite3.c 724438b6f33e748be738a3e196e60786e3e00f48bc7f52d64d7a3a53bd9c94ce
+sqlite3.h 59114192eef65d9428279ec4a4a433631f50d3ca20c202acdd49d2a6bb94fb39
+
+sourceChecksums.txt lists the hashes of the distributed split files.
+
+Build options: SQLITE_ENABLE_FTS5, SQLITE_THREADSAFE=0,
+SQLITE_OMIT_LOAD_EXTENSION. CardClarity uses SQLite on its one UI thread.
+No loadable extensions or database server are needed. SQL is query text
+passed to SQLite's C API; the application and test programs are written in C.

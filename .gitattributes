@@ -7,3 +7,4 @@
 # Oliver: I preserve the menu's actual spaces in the recorded output.
 docs/gate2DemoLog.txt whitespace=-blank-at-eol
 docs/gate2TestLog.txt whitespace=-blank-at-eol
+thirdParty/** linguist-vendored

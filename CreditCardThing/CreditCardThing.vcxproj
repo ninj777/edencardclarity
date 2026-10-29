@@ -19,6 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="catalog.c" />
+    <ClCompile Include="catalogBuild.c" />
+    <ClCompile Include="catalogText.c" />
+    <ClCompile Include="catalogWallet.c" />
+    <ClCompile Include="catalogFiles.c" />
+    <ClCompile Include="catalogApp.c" />
+    <ClCompile Include="catalogWindow.c" />
+    <ClCompile Include="rewardMath.c" />
+    <ClCompile Include="..\thirdParty\sqlite3.c">
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <PreprocessorDefinitions>SQLITE_THREADSAFE=0;SQLITE_OMIT_LOAD_EXTENSION;SQLITE_ENABLE_FTS5;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
     <ClCompile Include="cards.c" />
     <ClCompile Include="input.c" />
     <ClCompile Include="wallet.c" />
@@ -28,6 +40,12 @@
     <ClCompile Include="window.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="catalog.h" />
+    <ClInclude Include="catalogText.h" />
+    <ClInclude Include="catalogWallet.h" />
+    <ClInclude Include="catalogApp.h" />
+    <ClInclude Include="rewardMath.h" />
+    <ClInclude Include="..\thirdParty\sqlite3.h" />
     <ClInclude Include="cards.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="wallet.h" />
@@ -166,6 +184,14 @@
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>
     </Manifest>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
+    <ClCompile><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions></ClCompile>
+    <Link><AdditionalDependencies>comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies></Link>
+    <Manifest><AdditionalManifestFiles>$(ProjectDir)appManifest.xml;%(AdditionalManifestFiles)</AdditionalManifestFiles></Manifest>
+    <PostBuildEvent>
+      <Command>&quot;$(TargetPath)&quot; --build-catalog &quot;$(ProjectDir)..\data&quot; &quot;$(ProjectDir)..\data\cardCatalog.db&quot;</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

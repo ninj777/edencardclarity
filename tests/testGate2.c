@@ -310,7 +310,7 @@ int main(int argc, char* argv[]) {
 			saved("cardClarityWallet1\n1\n1\n");
 			break;
 		case 23: {
-			const char* arguments[] = { NULL };
+			const char* arguments[] = { "--legacy", NULL };
 			const char* first = "2\n2\n5\n4\n6\n3\n";
 			const char* second = "2\n1\n6\n3\n";
 			runProgram(&test, arguments, first, strlen(first), 0, false);
