@@ -44,6 +44,7 @@
     <ClInclude Include="realCards.h"><Filter>Header Files</Filter></ClInclude>
     <ClInclude Include="rewards.h"><Filter>Header Files</Filter></ClInclude>
     <ClInclude Include="rewardWindow.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="windowSizing.h"><Filter>Header Files</Filter></ClInclude>
     <ClInclude Include="window.h">
       <Filter>Header Files</Filter>
     </ClInclude>

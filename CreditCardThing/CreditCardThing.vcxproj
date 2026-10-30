@@ -35,6 +35,7 @@
     <ClInclude Include="realCards.h" />
     <ClInclude Include="rewards.h" />
     <ClInclude Include="rewardWindow.h" />
+    <ClInclude Include="windowSizing.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="wallet.h" />
     <ClInclude Include="storage.h" />

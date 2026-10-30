@@ -8,7 +8,7 @@ Command result: passed
 
 Command: build/testGate1 build/cardClarity
 Gate 1 C menu checks
-Date: 2026-10-30 21:13:21 UTC
+Date: 2026-10-30 21:25:14 UTC
 Program: /workspace/cardClarityGateFour/build/cardClarity
 Test platform: POSIX
 
@@ -306,7 +306,7 @@ Command result: passed
 
 Command: build/testGate2 build/cardClarity
 Gate 2 C wallet checks
-Date: 2026-10-30 21:13:21 UTC
+Date: 2026-10-30 21:25:15 UTC
 Program: /workspace/cardClarityGateFour/build/cardClarity
 Test platform: POSIX
 
@@ -934,7 +934,7 @@ Command result: passed
 
 Command: build/testGateFour build/cardClarity
 Gate 4 real-card checks
-Date: 2026-10-30 21:13:23 UTC
+Date: 2026-10-30 21:25:17 UTC
 Program: /workspace/cardClarityGateFour/build/cardClarity
 Test platform: POSIX
 

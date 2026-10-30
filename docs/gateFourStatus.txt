@@ -2,6 +2,12 @@ Gate 4 status - October 30, 2026
 
 Starting point
 
+Resize follow-up: window.c and rewardWindow.c now batch control moves and
+repaint complete affected backgrounds. The purchase form now resizes too.
+The portable suites still pass, and the Windows application and optional
+testWindowResize.exe compile. The desktop resize runner has not run here;
+see windowResizeFix.txt for details and the manual Windows check.
+
 The base is GitHub main, b9079592f2ddbfaf24f2fb18b6b09d2ae58f7a9b.
 Its full source tree was checked against the local starting tree before any
 Gate 4 changes. The research notes were committed before implementation.

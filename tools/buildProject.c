@@ -52,7 +52,8 @@ int main(int argc, char* argv[]) {
 		"cl /nologo /TC /std:c11 /W4 /D_CRT_SECURE_NO_WARNINGS /Fobuild\\ tests/testModules.c CreditCardThing/cards.c CreditCardThing/realCards.c CreditCardThing/logger.c /Febuild/testModules.exe",
 		"cl /nologo /TC /std:c11 /W4 /D_CRT_SECURE_NO_WARNINGS /Fobuild\\ tests/testGate1.c tests/testSupport.c /Febuild/testGate1.exe",
 		"cl /nologo /TC /std:c11 /W4 /D_CRT_SECURE_NO_WARNINGS /Fobuild\\ tests/testGate2.c tests/testSupport.c /Febuild/testGate2.exe",
-		"cl /nologo /TC /std:c11 /W4 /D_CRT_SECURE_NO_WARNINGS /Fobuild\\ tests/testGateFour.c tests/testSupport.c " CORE_SOURCES " /Febuild/testGateFour.exe", NULL
+		"cl /nologo /TC /std:c11 /W4 /D_CRT_SECURE_NO_WARNINGS /Fobuild\\ tests/testGateFour.c tests/testSupport.c " CORE_SOURCES " /Febuild/testGateFour.exe",
+		"cl /nologo /TC /std:c11 /W4 /D_CRT_SECURE_NO_WARNINGS /Fobuild\\ tests/testWindowResize.c /Febuild/testWindowResize.exe /link user32.lib", NULL
 	};
 #else
 	mkdir("build", 0700);
@@ -62,7 +63,8 @@ int main(int argc, char* argv[]) {
 		const char* cross[] = {
 			"x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror " APP_SOURCES " -o build/cardClarity.exe -luser32 -lgdi32",
 			"x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tools/buildProject.c -o build/buildProject.exe",
-			"x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGateFour.c tests/testSupport.c " CORE_SOURCES " -o build/testGateFour.exe", NULL
+			"x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGateFour.c tests/testSupport.c " CORE_SOURCES " -o build/testGateFour.exe",
+			"x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testWindowResize.c -o build/testWindowResize.exe -luser32", NULL
 		};
 		for (int i=0;cross[i];i++) if (run(cross[i], buildLog)) return 1;
 		puts("Windows compilation passed. Run the window and checks on the demo computer."); return 0;

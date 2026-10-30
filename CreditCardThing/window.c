@@ -31,6 +31,9 @@ The save path comes from main; the usual default is savedCards.txt.
 
 Gate 4 reuses these controls for real products, with scrollable source notes
 and a separate purchase form. The old --gui command still shows the samples.
+I give each control one final position when resizing. windowSizing.h moves
+them together before repainting, so Gate 4 never flashes the old layout first.
+The minimum size includes the title bar and frame, and minimizing skips layout.
 
 The window cross-compiles, but I still need a real Windows check for its
 appearance, buttons, resizing, keyboard use, and file replacement. On another
@@ -48,6 +51,7 @@ system, this mode explains that Windows is needed and returns 1.
 #include "logger.h"
 #include "realCards.h"
 #include "rewardWindow.h"
+#include "windowSizing.h"
 
 enum ControlId {
 	ID_CATALOG = 101,
@@ -264,39 +268,36 @@ static void onWindowResize(HWND hwnd) {
 	GetClientRect(hwnd, &area);
 	int width = area.right;
 	int height = area.bottom;
-	if (width == 0 || height == 0) {
+	if (width < 880 || height < 640) {
 		return;
 	}
 	int detailWidth = width - 400;
-	/* I keep the left list width fixed and let the detail panel use the extra space. */
-	MoveWindow(controls.title, 24, 24, width - 48, 32, TRUE);
-	MoveWindow(controls.subtitle, 24, 64, width - 48, 26, TRUE);
-	MoveWindow(controls.catalogHeading, 24, 112, 300, 26, TRUE);
-	MoveWindow(controls.catalogList, 24, 144, 300, 154, TRUE);
-	MoveWindow(controls.addButton, 24, 310, 300, 34, TRUE);
-	MoveWindow(controls.walletHeading, 24, 356, 300, 26, TRUE);
-	MoveWindow(controls.walletCount, 24, 384, 300, 22, TRUE);
-	MoveWindow(controls.walletList, 24, 410, 300, height - 564, TRUE);
-	MoveWindow(controls.removeButton, 24, height - 144, 300, 34, TRUE);
-	MoveWindow(controls.cardName, 376, 136, detailWidth, 34, TRUE);
-	MoveWindow(controls.rateLabel, 376, 180, detailWidth, 22, TRUE);
-	MoveWindow(controls.rate, 376, 208, detailWidth, 36, TRUE);
-	MoveWindow(controls.cardInfo, 376, 268, detailWidth, 72, TRUE);
-	MoveWindow(controls.bonusHeading, 376, 354, detailWidth, 24, TRUE);
-	MoveWindow(controls.bonuses, 376, 388, detailWidth, 66, TRUE);
-	MoveWindow(controls.bonusNote, 376, height - 174, detailWidth, 48, TRUE);
-	MoveWindow(controls.status, 24, height - 88, width - 380, 44, TRUE);
-	MoveWindow(controls.saveButton, width - 324, height - 88, 144, 36, TRUE);
-	MoveWindow(controls.reloadButton, width - 168, height - 88, 144, 36, TRUE);
-	MoveWindow(controls.disclaimer, 24, height - 32, width - 48, 22, TRUE);
-	if (gateFour) {
-		MoveWindow(controls.cardName, 376, 128, detailWidth, 48, TRUE);
-		MoveWindow(controls.cardInfo, 376, 252, detailWidth, 48, TRUE);
-		MoveWindow(controls.bonusHeading, 376, 308, detailWidth, 24, TRUE);
-		MoveWindow(controls.bonuses, 376, 340, detailWidth - 8, height - 512, TRUE);
-		MoveWindow(controls.compareButton, 376, height - 156, detailWidth - 8, 34, TRUE);
-	}
-	InvalidateRect(hwnd, NULL, FALSE);
+	/* Each control gets its final position once, including the Gate 4 differences. */
+	ControlPlacement positions[] = {
+		{controls.title, 24, 24, width - 48, 32},
+		{controls.subtitle, 24, 64, width - 48, 26},
+		{controls.catalogHeading, 24, 112, 300, 26},
+		{controls.catalogList, 24, 144, 300, 154},
+		{controls.addButton, 24, 310, 300, 34},
+		{controls.walletHeading, 24, 356, 300, 26},
+		{controls.walletCount, 24, 384, 300, 22},
+		{controls.walletList, 24, 410, 300, height - 564},
+		{controls.removeButton, 24, height - 144, 300, 34},
+		{controls.cardName, 376, gateFour ? 128 : 136, detailWidth, gateFour ? 48 : 34},
+		{controls.rateLabel, 376, 180, detailWidth, 22},
+		{controls.rate, 376, 208, detailWidth, 36},
+		{controls.cardInfo, 376, gateFour ? 252 : 268, detailWidth, gateFour ? 48 : 72},
+		{controls.bonusHeading, 376, gateFour ? 308 : 354, detailWidth, 24},
+		{controls.bonuses, 376, gateFour ? 340 : 388, gateFour ? detailWidth - 8 : detailWidth,
+			gateFour ? height - 512 : 66},
+		{controls.bonusNote, 376, height - 174, detailWidth, 48},
+		{controls.compareButton, 376, height - 156, detailWidth - 8, 34},
+		{controls.status, 24, height - 88, width - 380, 44},
+		{controls.saveButton, width - 324, height - 88, 144, 36},
+		{controls.reloadButton, width - 168, height - 88, 144, 36},
+		{controls.disclaimer, 24, height - 32, width - 48, 22}
+	};
+	placeControls(hwnd, positions, sizeof(positions) / sizeof(positions[0]));
 }
 
 static bool loadWindowWidgets(HWND hwnd) {
@@ -376,25 +377,31 @@ static LRESULT CALLBACK applicationWindowProc(HWND hwnd, UINT message, WPARAM wP
 	case WM_CREATE:
 		return loadWindowWidgets(hwnd) ? 0 : -1;
 	case WM_SIZE:
-		onWindowResize(hwnd);
+		if (wParam != SIZE_MINIMIZED) onWindowResize(hwnd);
 		return 0;
 	case WM_GETMINMAXINFO: {
-		MINMAXINFO* limits = (MINMAXINFO*)lParam;
-		limits->ptMinTrackSize.x = 880;
-		limits->ptMinTrackSize.y = 680;
+		minimumClientSize(hwnd, (MINMAXINFO*)lParam, 880, 640);
 		return 0;
 	}
+	case WM_EXITSIZEMOVE:
+		RedrawWindow(hwnd, NULL, NULL, RDW_INVALIDATE | RDW_ERASE | RDW_ALLCHILDREN | RDW_UPDATENOW);
+		return 0;
+	case WM_ERASEBKGND:
+		/* WM_PAINT fills the background, so erasing it twice only adds flashing. */
+		return 1;
 	case WM_COMMAND:
 		handleWindowAction(hwnd, LOWORD(wParam), HIWORD(wParam));
 		return 0;
 	case WM_CTLCOLORSTATIC: {
 		HDC dc = (HDC)wParam;
 		HWND label = (HWND)lParam;
-		SetBkMode(dc, TRANSPARENT);
+		bool onPanel = detailLabel(label);
+		SetBkMode(dc, OPAQUE);
+		SetBkColor(dc, onPanel ? RGB(255, 255, 255) : RGB(245, 244, 240));
 		bool muted = label == controls.subtitle || label == controls.rateLabel
 			|| label == controls.bonusNote || label == controls.walletCount || label == controls.disclaimer;
 		SetTextColor(dc, muted ? RGB(96, 96, 96) : RGB(40, 40, 40));
-		return (LRESULT)(detailLabel(label) ? panelBrush : backgroundBrush);
+		return (LRESULT)(onPanel ? panelBrush : backgroundBrush);
 	}
 	case WM_CTLCOLORLISTBOX:
 		SetTextColor((HDC)wParam, RGB(40, 40, 40));
@@ -475,6 +482,7 @@ static int startWindow(const char* filePath, bool realMode) {
 		return 1;
 	}
 	WNDCLASSW wc = { 0 };
+	wc.style = CS_HREDRAW | CS_VREDRAW;
 	wc.lpfnWndProc = applicationWindowProc;
 	wc.hInstance = GetModuleHandleW(NULL);
 	wc.lpszClassName = L"CardClarityWindow";

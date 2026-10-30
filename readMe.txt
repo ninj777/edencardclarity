@@ -100,6 +100,17 @@ With MinGW installed, the Linux helper can also compile the Windows program:
   ./buildProject --cross
 That writes docs/gateFourWindowsBuildLog.txt. It does not run Windows.
 
+Both wallet windows and the purchase form now move their controls together
+when resizing, then repaint the old and new areas. The purchase form can
+also be resized and maximized. The minimum size leaves space for its fields.
+On Windows, the C helper also builds an optional desktop resize check:
+  build\testWindowResize.exe build\cardClarity.exe
+This opens temporary test copies of both modes and the purchase form. It
+checks bounds, overlaps and responsiveness through repeated resizing,
+minimize/restore and maximize/restore. Watch for visual trails and flickering
+too; those require a person's observation. This desktop check was compiled
+here but has not been run here. See docs/windowResizeFix.txt.
+
 Current recorded results: 40 original module checks, 31 Gate 1 menu cases,
 39 Gate 2 cases and 34 Gate 4 cases pass on Linux. The MinGW C11 build passes
 with warnings treated as errors. Native Visual Studio execution and desktop
@@ -116,6 +127,7 @@ Where the code is
 main.c joins the console actions and chooses a gate mode.
 window.c is the original Windows wallet view, extended for real records.
 rewardWindow.c contains the small purchase form.
+windowSizing.h batches control moves and calculates the minimum window frame.
 cards.c/cards.h keep the original sample records and shared Card type.
 realCards.c/realCards.h hold the five sourced products and benefit notes.
 rewards.c/rewards.h calculate and format purchase comparisons.
