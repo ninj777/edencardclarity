@@ -9,7 +9,9 @@ IDs 1-5 still mean the practice cards; IDs 101-105 keep their original real
 product names. The new records continue through 120. The wallet holds five
 selected card types, while the catalog has twenty choices.
 
-The research file is twentyCardResearch.txt. Each product has issuer sources
+The research files are twentyCardResearch.txt and cardTermsFollowUp.txt.
+The follow-up fills more fee and benefit details and records source versions.
+Each product has issuer sources
 and a check date. This is not a verified ranking by number of cardholders.
 Popularity surveys, website clicks and recommendations measure different
 things, so the app calls these twenty common cards rather than claiming an
@@ -42,18 +44,23 @@ required bookings, activation, spending caps, paid renewals and redemption
 limits. Insurance needs qualifying events, payment and claims; it is not
 guaranteed cash. No advertised annual benefit total is treated as profit.
 
-Some pricing links were unavailable or dynamically blank. Missing APRs and
-fees say unconfirmed; a missing number is never changed into zero. The dated
-March 2026 Amex agreement is labeled as dated information, not a confirmed
-current application offer. These are researched summaries, not the complete
-contracts or every insurance exclusion. The account's current terms control.
+The follow-up found dated Amex agreements, Chase fee schedules, Citi pricing
+tables, Bank of America's sample agreement and Capital One disclosures.
+The June 2026 Amex agreements replace March as the latest read here. Indexed
+Citi offers and older tables sometimes disagree, so the app labels the
+versions separately. Some live fields and three full Chase pricing links
+remain unavailable. Missing numbers stay unconfirmed, never zero. Dated
+agreements are not confirmed current application offers. These summaries
+cover selected terms; the account's current contract and insurance policy
+control.
 This version does not update terms over the internet.
 
 Comparison limits
 
 The original five cashback cards keep their working purchase calculations.
-Blue Cash Preferred adds modeled streaming, gas and transit rewards. Its
-grocery result stays a capped range because the form does not collect that
+Blue Cash Preferred adds modeled streaming, gas and transit rewards.
+Eligible Lyft rides also receive transit's 3%. Its grocery result stays
+a capped range because the form does not collect that
 card's prior grocery use. Everyday's allowance is separate and is not reused.
 
 Freedom Flex, Double Cash, Discover, Customized Cash, Prime Visa and Costco
@@ -68,17 +75,20 @@ Checks actually run
 
 GCC C11 with -Wall -Wextra -Wpedantic -Werror builds the app and C checks.
 All 40 original module checks, 31 Gate 1 cases, 39 Gate 2 cases, 34 original
-Gate 4 cases and 30 expanded-catalog cases passed on Linux. The new suite
+Gate 4 cases and 31 expanded-catalog cases passed on Linux. The new suite
 opens the actual console for every product, reads its costs and earning
 notes, adds and saves it, starts another process, checks the reloaded ID,
 and removes it. Other cases check fee periods, reward units, missing searches,
 unsupported comparisons, separate Amex caps and a damaged later saved ID.
+The added rideshare case runs the actual menu and checks $3 on a $100 ride.
+These software checks verify output and behavior; they do not prove that a
+bank's future offer or an individual insurance claim will match the summary.
 The actual output is in gateFourBuildLog.txt and gateFourTestLog.txt.
 
 Clang 19 AddressSanitizer and UndefinedBehaviorSanitizer builds use C11,
 -Wall -Wextra -Wpedantic -Werror -g -O1 -fsanitize=address,undefined
 -fno-omit-frame-pointer. The instrumented app and both the original Gate 4
-and twenty-card runners passed their 34 and 30 cases without a reported
+and twenty-card runners passed their 34 and 31 cases without a reported
 sanitizer error. ASAN_OPTIONS=detect_leaks=0 disables leak detection;
 UBSAN_OPTIONS=halt_on_error=1 stops on a detected undefined operation.
 This is not a leak check. Actual run output: twentyCardSanitizerLog.txt.

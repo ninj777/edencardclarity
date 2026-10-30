@@ -80,7 +80,9 @@ What is researched
 
 Issuer sources were checked October 30, 2026, before coding the new feature.
 docs/twentyCardResearch.txt explains this expansion's sources and remaining
-gaps. docs/gateFourResearch.txt records the original five-card research.
+gaps. docs/cardTermsFollowUp.txt records the deeper agreement and fee-table
+checks, including which sources were read directly and which were available
+as issuer-indexed text. docs/gateFourResearch.txt records the first research.
 Each in-app record also shows its source and check date. Some full pricing
 disclosures were unavailable. Those details say unconfirmed; they are not zero.
 
@@ -105,6 +107,7 @@ The first five real cards still have the original cashback comparisons.
 Blue Cash Preferred also has eligible streaming, gas and transit estimates;
 its grocery result is a range because the form does not collect that card's
 own prior spending. Everyday's allowance must not be reused for Preferred.
+Eligible Lyft rides also count as Preferred transit and earn 3% in this model.
 The other new cashback cards need extra activation, payment, membership,
 merchant or cap checks. They show their rules and say that comparison needs
 review. Points and miles keep their units and are not assigned a guessed
@@ -149,7 +152,7 @@ too; those require a person's observation. This desktop check was compiled
 here but has not been run here. See docs/windowResizeFix.txt.
 
 Current recorded results: 40 original module checks, 31 Gate 1 menu cases,
-39 Gate 2 cases, 34 Gate 4 cases and 30 expanded-catalog cases pass on Linux.
+39 Gate 2 cases, 34 Gate 4 cases and 31 expanded-catalog cases pass on Linux.
 The MinGW C11 build passes
 with warnings treated as errors. Native Visual Studio execution and desktop
 appearance, keyboard use, scrolling, dialogs and Windows replacement still

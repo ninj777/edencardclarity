@@ -1,5 +1,16 @@
++ /workspace/tools/bin/clang --version
+Debian clang version 19.1.7 (3+b1)
+Target: x86_64-pc-linux-gnu
+Thread model: posix
+InstalledDir: /workspace/tools/local/usr/lib/llvm-19/bin
++ /workspace/tools/bin/clang -std=c11 -Wall -Wextra -Wpedantic -Werror -g -O1 -fsanitize=address,undefined -fno-omit-frame-pointer CreditCardThing/main.c CreditCardThing/cards.c CreditCardThing/realCards.c CreditCardThing/rewards.c CreditCardThing/rewardWindow.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/logger.c CreditCardThing/window.c -o build/cardClaritySanitized -lm
++ /workspace/tools/bin/clang -std=c11 -Wall -Wextra -Wpedantic -Werror -g -O1 -fsanitize=address,undefined -fno-omit-frame-pointer tests/testTwentyCards.c tests/testSupport.c CreditCardThing/cards.c CreditCardThing/realCards.c CreditCardThing/rewards.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/logger.c -o build/testTwentyCardsSanitized -lm
++ /workspace/tools/bin/clang -std=c11 -Wall -Wextra -Wpedantic -Werror -g -O1 -fsanitize=address,undefined -fno-omit-frame-pointer tests/testGateFour.c tests/testSupport.c CreditCardThing/cards.c CreditCardThing/realCards.c CreditCardThing/rewards.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/logger.c -o build/testGateFourSanitized -lm
++ ASAN_OPTIONS=detect_leaks=0
++ UBSAN_OPTIONS=halt_on_error=1
++ build/testTwentyCardsSanitized build/cardClaritySanitized
 Twenty-card catalog checks
-Date: 2026-10-30 21:48:47 UTC
+Date: 2026-10-30 23:15:16 UTC
 Program: /workspace/cardClarityGateFour/build/cardClaritySanitized
 Test platform: POSIX
 
@@ -643,12 +654,13 @@ Observed: mixed wallet shows supported estimates and explains incomplete compari
 Result: passed (7 checks matched).
 
 Case 24: Preferred streaming, gas and transit
-Expected: $100 earns $6 on eligible streaming, $3 on gas/transit, and $1 at a superstore.
+Expected: $100 earns $6 on eligible streaming, $3 on gas/transit/Lyft rides, and $1 at a superstore.
 Observed: independent expected cents match: yes
 Observed: independent expected cents match: yes
 Observed: independent expected cents match: yes
 Observed: independent expected cents match: yes
-Result: passed (4 checks matched).
+Observed: independent expected cents match: yes
+Result: passed (5 checks matched).
 
 Case 25: Separate Amex caps
 Expected: Everyday's unused or exhausted allowance never supplies Preferred's grocery usage.
@@ -658,10 +670,10 @@ Observed: $10,000 has maximum $400: $6,000 at 6%, $4,000 at 1%: yes
 Observed: zero purchase stays zero: yes
 Result: passed (4 checks matched).
 
-Case 26: Missing fees and offer periods
-Expected: Unconfirmed pricing is explicit; an introductory waiver does not hide next year's fee.
+Case 26: Dated fees and offer periods
+Expected: Different pricing versions stay labeled; an introductory waiver does not hide next year's fee.
 Observed: Preferred first year is zero, ongoing fee is $95: yes
-Observed: unknown Citi pricing stays unknown: yes
+Observed: older table and indexed offer remain distinct: yes
 Observed: Prime membership cost is visible: yes
 Observed: Costco membership, certificate expiry and shared gas allowance are visible: yes
 Result: passed (4 checks matched).
@@ -698,9 +710,20 @@ Observed: standard error is empty: yes
 Observed: real console preserves points and comparison limitations: yes
 Result: passed (3 checks matched).
 
-Summary: 30 passed, 0 failed, 0 skipped.
+Case 31: Preferred rideshare through the menu
+Expected: $100 of eligible Lyft rides earns $3, without using Everyday's cap.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console uses the issuer's transit rate for an eligible Lyft ride: yes
+Result: passed (3 checks matched).
+
+Summary: 31 passed, 0 failed, 0 skipped.
++ ASAN_OPTIONS=detect_leaks=0
++ UBSAN_OPTIONS=halt_on_error=1
++ build/testGateFourSanitized build/cardClaritySanitized
 Gate 4 real-card checks
-Date: 2026-10-30 21:49:13 UTC
+Date: 2026-10-30 23:15:17 UTC
 Program: /workspace/cardClarityGateFour/build/cardClaritySanitized
 Test platform: POSIX
 

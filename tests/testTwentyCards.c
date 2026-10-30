@@ -94,10 +94,10 @@ int main(int argc, char* argv[]) {
 		&& !strstr(details, "Best estimated cashback"), "mixed wallet shows supported estimates and explains incomplete comparison");
 	finishCase(&test);
 
-	startCase(&test, 24, "Preferred streaming, gas and transit", "$100 earns $6 on eligible streaming, $3 on gas/transit, and $1 at a superstore.");
-	const enum PurchaseCategory categories[] = {PURCHASE_STREAMING, PURCHASE_GAS, PURCHASE_TRANSIT, PURCHASE_SUPERSTORE};
-	const int expected[] = {600,300,300,100};
-	for (int i = 0; i < 4; i++) {
+	startCase(&test, 24, "Preferred streaming, gas and transit", "$100 earns $6 on eligible streaming, $3 on gas/transit/Lyft rides, and $1 at a superstore.");
+	const enum PurchaseCategory categories[] = {PURCHASE_STREAMING, PURCHASE_GAS, PURCHASE_TRANSIT, PURCHASE_LYFT, PURCHASE_SUPERSTORE};
+	const int expected[] = {600,300,300,300,100};
+	for (int i = 0; i < 5; i++) {
 		purchase.category = categories[i];
 		expect(&test, estimateCashback(111, &purchase, &reward) && !reward.conditional
 			&& reward.minimumCents == expected[i] && reward.maximumCents == expected[i], "independent expected cents match");
@@ -119,12 +119,13 @@ int main(int argc, char* argv[]) {
 		&& reward.minimumCents == 0, "zero purchase stays zero");
 	finishCase(&test);
 
-	startCase(&test, 26, "Missing fees and offer periods", "Unconfirmed pricing is explicit; an introductory waiver does not hide next year's fee.");
+	startCase(&test, 26, "Dated fees and offer periods", "Different pricing versions stay labeled; an introductory waiver does not hide next year's fee.");
 	expect(&test, getRealCardById(111)->firstYearFee == 0 && getRealCardById(111)->card.annualFee == 95,
 		"Preferred first year is zero, ongoing fee is $95");
 	formatRealCard(114, details, sizeof(details));
-	expect(&test, strstr(details, "Current foreign fee, APR") && strstr(details, "could not be verified")
-		&& strstr(details, "Do not treat them as zero"), "unknown Citi pricing stays unknown");
+	expect(&test, strstr(details, "Issuer table v32") && strstr(details, "17.49%-27.49%")
+		&& strstr(details, "18.49%-28.74%") && strstr(details, "Versions differ")
+		&& strstr(details, "Unknown fees are not zero"), "older table and indexed offer remain distinct");
 	formatRealCard(118, details, sizeof(details));
 	expect(&test, strstr(details, "$139/year") && strstr(details, "membership is separate"), "Prime membership cost is visible");
 	formatRealCard(119, details, sizeof(details));
@@ -161,6 +162,13 @@ int main(int argc, char* argv[]) {
 	runMenu("3\n2\n100\n1\n2026-11-02\n4\n");
 	expect(&test, strstr(test.output, "Wells Fargo Autograph: needs review") && strstr(test.output, "No overall winner")
 		&& !strstr(test.output, "practice card") && !strstr(test.output, "Add a real card"), "real console preserves points and comparison limitations");
+	finishCase(&test);
+
+	startCase(&test, 31, "Preferred rideshare through the menu", "$100 of eligible Lyft rides earns $3, without using Everyday's cap.");
+	writeText(test.save, "cardClarityWallet1\n1\n111\n");
+	runMenu("3\n13\n100\n1\n2026-11-02\n4\n");
+	expect(&test, strstr(test.output, "Eligible Lyft ride") && strstr(test.output, "Blue Cash Preferred: $3.00")
+		&& strstr(test.output, "(3.00% total)"), "actual console uses the issuer's transit rate for an eligible Lyft ride");
 	finishCase(&test);
 	return finishTests(&test);
 }

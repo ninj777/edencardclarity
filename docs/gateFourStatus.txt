@@ -47,7 +47,7 @@ Original card module: all 40 checks passed.
 Gate 1 menu: 31 cases passed, none failed or skipped on Linux.
 Gate 2 wallet: 39 cases passed, none failed or skipped on Linux.
 Gate 4: 34 cases passed, none failed or skipped on Linux.
-Expanded catalog: 30 cases passed, none failed or skipped on Linux.
+Expanded catalog: 31 cases passed, none failed or skipped on Linux.
 The six required purchases are Gate 4 cases 1-6, each checked against all
 five real products. Ties, cap crossing/exhaustion, separate category limits,
 unknown cap use, expiration, rounding, invalid input, saved real IDs and a
@@ -97,6 +97,13 @@ Some current pricing disclosures could not be opened. Their missing values
 remain explicitly unconfirmed. The research supports the selected earning
 rules; it is not a complete account agreement or a promise about future terms.
 Recheck issuer terms before using these estimates for a real decision.
+
+The later fee-table pass is recorded in cardTermsFollowUp.txt. It adds dated
+agreements, indexed offer disclosures and actual protection limits. It also
+records disagreements and blocked current pricing links. That pass found a
+Preferred rideshare rate missing from the separate Lyft category. The rate
+is now 3%, and the new menu case checks the result. Those source distinctions
+remain in the displayed notes instead of a blanket claim of full verification.
 
 The source, catalog, six purchase results, ties and limit cases are prepared
 for the Gate 4 review. The teacher decides the rating. No teammate signature,

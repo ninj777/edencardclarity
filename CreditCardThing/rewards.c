@@ -37,7 +37,8 @@ static int totalRate(int cardId, const Purchase* purchase) {
 		|| category == PURCHASE_ONLINE_RETAIL)) rate = 300;
 	if (cardId == 111) {
 		if (category == PURCHASE_GROCERIES || category == PURCHASE_STREAMING) rate = 600;
-		if (category == PURCHASE_GAS || category == PURCHASE_TRANSIT) rate = 300;
+		/* The issuer includes rideshare in transit, even though our form lists Lyft separately. */
+		if (category == PURCHASE_GAS || category == PURCHASE_TRANSIT || category == PURCHASE_LYFT) rate = 300;
 	}
 	if (cardId == 101 || cardId == 102) {
 		if (purchase->channel == CHANNEL_CAPITAL_ONE_TRAVEL && category != PURCHASE_FLIGHT) rate = 500;
