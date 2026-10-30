@@ -125,7 +125,7 @@ int main(int argc, char* argv[]) {
 	for (int id = 101; id <= 105; id++) {
 		const RealCard* card = getRealCardById(id);
 		expect(&test, card && formatRealCard(id, text, sizeof(text)) && strstr(text, card->source)
-			&& strstr(text, "2026-10-30") && card->restrictions[0] && card->pricingNotes[0], "source, date and conditions display");
+			&& strstr(text, "2026-10-30") && card->benefitNotes[0] && card->pricingNotes[0], "source, date and conditions display");
 	}
 	formatRealCard(103, text, sizeof(text)); expect(&test, strstr(text, "2029-12-31") && strstr(text, "renewal"), "activation deadline and paid renewal are visible");
 	formatRealCard(104, text, sizeof(text)); expect(&test, strstr(text, "enrollment required") != NULL, "enrollment is visible"); finishCase(&test);

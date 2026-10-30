@@ -60,11 +60,12 @@ enum ControlId {
 	ID_REMOVE,
 	ID_SAVE,
 	ID_RELOAD,
-	ID_COMPARE
+	ID_COMPARE,
+	ID_SEARCH
 };
 
 typedef struct {
-	HWND title, subtitle, catalogHeading, catalogList, addButton;
+	HWND title, subtitle, catalogHeading, catalogSearch, catalogList, addButton;
 	HWND walletHeading, walletCount, walletList, removeButton;
 	HWND cardName, rateLabel, rate, cardInfo, bonusHeading, bonuses, bonusNote;
 	HWND status, saveButton, reloadButton, disclaimer, compareButton;
@@ -128,22 +129,73 @@ static void showCardDetails(int cardId) {
 	wchar_t text[128];
 	swprintf_s(text, 128, L"%hs", card->issuer);
 	SetWindowTextW(controls.cardName, text);
-	swprintf_s(text, 128, L"%.2f%%", card->rate);
+	const RealCard* real = getRealCardById(cardId);
+	SetWindowTextW(controls.rateLabel, real ? L"Base earning before category bonuses" : L"Base reward rate (example)");
+	if (real) swprintf_s(text, 128, L"%.2f %hs", card->rate, realCardRewardUnit(real));
+	else swprintf_s(text, 128, L"%.2f%%", card->rate);
 	SetWindowTextW(controls.rate, text);
 	SetWindowTextW(controls.cardInfo, getBaseInfo(*card));
 	SetWindowTextW(controls.bonuses, getMultiplierInfo(*card));
+	if (real && !gateFour) {
+		/* An older window can open a real save, but its small panel cannot fit the terms. */
+		swprintf_s(text, 128, L"Ongoing annual fee: $%d\nReal card from a Gate 4 save.", card->annualFee);
+		SetWindowTextW(controls.cardInfo, text);
+		SetWindowTextW(controls.bonuses, L"Open with --gate4 --gui to read the full costs, conditions and sources.");
+	}
 	if (gateFour) {
-		char details[3000];
-		wchar_t wide[3000];
-		if (formatRealCard(cardId, details, sizeof(details))) {
-			MultiByteToWideChar(CP_UTF8, 0, details, -1, wide, 3000);
+		char details[REAL_CARD_TEXT_CAPACITY];
+		wchar_t wide[REAL_CARD_TEXT_CAPACITY];
+		if (real && formatRealCard(cardId, details, sizeof(details))
+			&& MultiByteToWideChar(CP_UTF8, 0, details, -1, wide, REAL_CARD_TEXT_CAPACITY)) {
 			SetWindowTextW(controls.bonuses, wide);
-			SetWindowTextW(controls.cardInfo, L"Annual fee: $0\nIssuer sources checked October 30, 2026");
+			if (real->firstYearFee != card->annualFee)
+				swprintf_s(text, 128, L"Annual fee: $%d first year, then $%d\nRead the costs and conditions below.", real->firstYearFee, card->annualFee);
+			else swprintf_s(text, 128, L"Annual fee: $%d\nRead the costs and conditions below.", card->annualFee);
+			SetWindowTextW(controls.cardInfo, text);
 		} else {
+			SetWindowTextW(controls.cardInfo, L"Practice card from an earlier save");
 			SetWindowTextW(controls.bonuses, L"Practice card from an earlier save. Sample values are excluded from real-card comparisons.");
 		}
 	}
 	updateButtons();
+}
+
+static bool fillCatalogList(void) {
+	/* Searching only hides rows. The stored ID still controls adding and saving. */
+	int keepId = selectedCardId(controls.catalogList);
+	wchar_t query[121];
+	char search[481];
+	GetWindowTextW(controls.catalogSearch, query, 121);
+	if (!WideCharToMultiByte(CP_UTF8, 0, query, -1, search, sizeof(search), NULL, NULL)) return false;
+	SendMessageW(controls.catalogList, WM_SETREDRAW, FALSE, 0);
+	SendMessageW(controls.catalogList, LB_RESETCONTENT, 0, 0);
+	int selected = 0;
+	for (int index = 0; index < (gateFour ? REAL_CARD_COUNT : SAMPLE_CARD_COUNT); index++) {
+		int id = gateFour ? FIRST_REAL_CARD_ID + index : index + 1;
+		if (gateFour && !realCardMatches(id, search)) continue;
+		wchar_t name[128];
+		swprintf_s(name, 128, L"%hs", getCardById(id)->issuer);
+		LRESULT row = SendMessageW(controls.catalogList, LB_ADDSTRING, 0, (LPARAM)name);
+		if (row == LB_ERR || row == LB_ERRSPACE) {
+			SendMessageW(controls.catalogList, WM_SETREDRAW, TRUE, 0);
+			return false;
+		}
+		SendMessageW(controls.catalogList, LB_SETITEMDATA, (WPARAM)row, id);
+		if (id == keepId) selected = (int)row;
+	}
+	SendMessageW(controls.catalogList, LB_SETCURSEL, (WPARAM)selected, 0);
+	SendMessageW(controls.catalogList, WM_SETREDRAW, TRUE, 0);
+	InvalidateRect(controls.catalogList, NULL, TRUE);
+	int id = selectedCardId(controls.catalogList);
+	if (id) showCardDetails(id);
+	else {
+		SetWindowTextW(controls.cardName, L"No matching card in this catalog");
+		SetWindowTextW(controls.rate, L"");
+		SetWindowTextW(controls.cardInfo, L"Try fewer words or clear the search.");
+		SetWindowTextW(controls.bonuses, L"This catalog has 20 products. Your exact card may be missing. A similar name can have different fees and benefits, so don't substitute another product.");
+		updateButtons();
+	}
+	return true;
 }
 
 static bool fillWalletList(int keepSelectedId) {
@@ -210,7 +262,9 @@ static void reloadFromWindow(HWND hwnd) {
 }
 
 static void handleWindowAction(HWND hwnd, int id, int notification) {
-	if (id == ID_CATALOG && notification == LBN_SELCHANGE) {
+	if (id == ID_SEARCH && notification == EN_CHANGE && gateFour && controlsReady) {
+		if (!fillCatalogList()) setStatus(L"Couldn't update the search. Your wallet hasn't changed.");
+	} else if (id == ID_CATALOG && notification == LBN_SELCHANGE) {
 		showCardDetails(selectedCardId(controls.catalogList));
 	} else if (id == ID_WALLET && notification == LBN_SELCHANGE) {
 		int cardId = selectedCardId(controls.walletList);
@@ -277,7 +331,8 @@ static void onWindowResize(HWND hwnd) {
 		{controls.title, 24, 24, width - 48, 32},
 		{controls.subtitle, 24, 64, width - 48, 26},
 		{controls.catalogHeading, 24, 112, 300, 26},
-		{controls.catalogList, 24, 144, 300, 154},
+		{controls.catalogSearch, 24, 144, 300, 26},
+		{controls.catalogList, 24, gateFour ? 178 : 144, 300, gateFour ? 120 : 154},
 		{controls.addButton, 24, 310, 300, 34},
 		{controls.walletHeading, 24, 356, 300, 26},
 		{controls.walletCount, 24, 384, 300, 22},
@@ -305,15 +360,18 @@ static bool loadWindowWidgets(HWND hwnd) {
 	DWORD labelStyle = SS_LEFT | SS_NOPREFIX;
 	controls.title = makeControl(hwnd, L"STATIC", L"CardClarity", labelStyle, 0, titleFont);
 	controls.subtitle = makeControl(hwnd, L"STATIC", L"Select a card to see its rates, then add it to your wallet.", labelStyle, 0, bodyFont);
-	controls.catalogHeading = makeControl(hwnd, L"STATIC", gateFour ? L"Real cashback cards" : L"Sample cards", labelStyle, 0, headingFont);
-	controls.catalogList = makeControl(hwnd, L"LISTBOX", L"", listStyle, ID_CATALOG, bodyFont);
+	controls.catalogHeading = makeControl(hwnd, L"STATIC", gateFour ? L"Real cards (search by name)" : L"Sample cards", labelStyle, 0, headingFont);
+	controls.catalogSearch = makeControl(hwnd, L"EDIT", L"", WS_BORDER | WS_TABSTOP | ES_AUTOHSCROLL, ID_SEARCH, bodyFont);
+	SendMessageW(controls.catalogSearch, EM_SETLIMITTEXT, 120, 0);
+	controls.catalogList = makeControl(hwnd, L"LISTBOX", L"", listStyle | WS_HSCROLL, ID_CATALOG, bodyFont);
+	SendMessageW(controls.catalogList, LB_SETHORIZONTALEXTENT, 620, 0);
 	controls.addButton = makeControl(hwnd, L"BUTTON", L"Add to my wallet", WS_TABSTOP | BS_PUSHBUTTON, ID_ADD, bodyFont);
 	controls.walletHeading = makeControl(hwnd, L"STATIC", L"My wallet", labelStyle, 0, headingFont);
 	controls.walletCount = makeControl(hwnd, L"STATIC", L"", labelStyle, 0, bodyFont);
 	controls.walletList = makeControl(hwnd, L"LISTBOX", L"", listStyle, ID_WALLET, bodyFont);
 	controls.removeButton = makeControl(hwnd, L"BUTTON", L"Remove selected card", WS_TABSTOP | BS_PUSHBUTTON, ID_REMOVE, bodyFont);
 	controls.cardName = makeControl(hwnd, L"STATIC", L"", labelStyle, 0, headingFont);
-	controls.rateLabel = makeControl(hwnd, L"STATIC", gateFour ? L"Ordinary cashback rate" : L"Base reward rate (example)", labelStyle, 0, bodyFont);
+	controls.rateLabel = makeControl(hwnd, L"STATIC", gateFour ? L"Base earning before category bonuses" : L"Base reward rate (example)", labelStyle, 0, bodyFont);
 	controls.rate = makeControl(hwnd, L"STATIC", L"", labelStyle, 0, rateFont);
 	controls.cardInfo = makeControl(hwnd, L"STATIC", L"", labelStyle, 0, bodyFont);
 	controls.bonusHeading = makeControl(hwnd, L"STATIC", gateFour ? L"Benefits, conditions and sources" : L"Category bonuses", labelStyle, 0, headingFont);
@@ -328,9 +386,12 @@ static bool loadWindowWidgets(HWND hwnd) {
 	if (gateFour) {
 		ShowWindow(controls.bonusNote, SW_HIDE);
 		SetWindowTextW(controls.disclaimer, L"Dated public terms; check your account. Estimates exclude interest, fees and welcome bonuses.");
-	} else ShowWindow(controls.compareButton, SW_HIDE);
+	} else {
+		ShowWindow(controls.compareButton, SW_HIDE);
+		ShowWindow(controls.catalogSearch, SW_HIDE);
+	}
 	HWND handles[] = {
-		controls.title, controls.subtitle, controls.catalogHeading, controls.catalogList,
+		controls.title, controls.subtitle, controls.catalogHeading, controls.catalogSearch, controls.catalogList,
 		controls.addButton, controls.walletHeading, controls.walletCount, controls.walletList,
 		controls.removeButton, controls.cardName, controls.rateLabel, controls.rate,
 		controls.cardInfo, controls.bonusHeading, controls.bonuses, controls.bonusNote,
@@ -341,19 +402,7 @@ static bool loadWindowWidgets(HWND hwnd) {
 			return false;
 		}
 	}
-	for (int index = 0; index < SAMPLE_CARD_COUNT; index++) {
-		int cardId = gateFour ? FIRST_REAL_CARD_ID + index : index + 1;
-		/* I attach the real ID to each row instead of using a wallet position. */
-		const Card* card = getCardById(cardId);
-		wchar_t rowText[128];
-		swprintf_s(rowText, 128, L"%hs - %.2f%% base", card->issuer, card->rate);
-		LRESULT row = SendMessageW(controls.catalogList, LB_ADDSTRING, 0, (LPARAM)rowText);
-		if (row == LB_ERR || row == LB_ERRSPACE) {
-			return false;
-		}
-		SendMessageW(controls.catalogList, LB_SETITEMDATA, (WPARAM)row, cardId);
-	}
-	SendMessageW(controls.catalogList, LB_SETCURSEL, 0, 0);
+	if (!fillCatalogList()) return false;
 	controlsReady = true;
 	if (!fillWalletList(0)) {
 		return false;

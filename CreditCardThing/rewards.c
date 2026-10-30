@@ -35,6 +35,10 @@ static int totalRate(int cardId, const Purchase* purchase) {
 	}
 	if (cardId == 104 && (category == PURCHASE_GROCERIES || category == PURCHASE_GAS
 		|| category == PURCHASE_ONLINE_RETAIL)) rate = 300;
+	if (cardId == 111) {
+		if (category == PURCHASE_GROCERIES || category == PURCHASE_STREAMING) rate = 600;
+		if (category == PURCHASE_GAS || category == PURCHASE_TRANSIT) rate = 300;
+	}
 	if (cardId == 101 || cardId == 102) {
 		if (purchase->channel == CHANNEL_CAPITAL_ONE_TRAVEL && category != PURCHASE_FLIGHT) rate = 500;
 		if (purchase->channel == CHANNEL_CAPITAL_ONE_ENTERTAINMENT) rate = cardId == 102 ? 800 : 500;
@@ -44,13 +48,16 @@ static int totalRate(int cardId, const Purchase* purchase) {
 
 bool estimateCashback(int cardId, const Purchase* purchase, RewardEstimate* result) {
 	const RealCard* card = getRealCardById(cardId);
-	if (!card || !result || !validPurchase(purchase)) return false;
+	if (!card || card->comparison != CASH_SUPPORTED || !result || !validPurchase(purchase)) return false;
 	RewardEstimate checked = { 0 };
 	checked.rateBp = totalRate(cardId, purchase);
 	checked.baseRateBp = card->baseRateBp;
 	checked.bonusSpendCents = purchase->amountCents;
-	bool capped = cardId == 104 && checked.rateBp == 300;
-	if (capped && purchase->priorCategoryCents == -1 && purchase->amountCents > 0) {
+	bool capped = (cardId == 104 && checked.rateBp == 300)
+		|| (cardId == 111 && purchase->category == PURCHASE_GROCERIES);
+	/* The form asks for Everyday spending. Preferred has its own separate cap. */
+	int64_t priorSpending = cardId == 111 ? -1 : purchase->priorCategoryCents;
+	if (capped && priorSpending == -1 && purchase->amountCents > 0) {
 		/* I do not silently assume this year's spending allowance is unused. */
 		checked.conditional = true;
 		checked.minimumCents = (purchase->amountCents * card->baseRateBp + 5000) / 10000;
@@ -58,9 +65,9 @@ bool estimateCashback(int cardId, const Purchase* purchase, RewardEstimate* resu
 		checked.maximumCents = (bestBonus * checked.rateBp
 			+ (purchase->amountCents - bestBonus) * card->baseRateBp + 5000) / 10000;
 	} else {
-		if (capped && purchase->priorCategoryCents >= 0) {
-			int64_t remaining = purchase->priorCategoryCents < 600000
-				? 600000 - purchase->priorCategoryCents : 0;
+		if (capped && priorSpending >= 0) {
+			int64_t remaining = priorSpending < 600000
+				? 600000 - priorSpending : 0;
 			if (checked.bonusSpendCents > remaining) checked.bonusSpendCents = remaining;
 			checked.baseSpendCents = purchase->amountCents - checked.bonusSpendCents;
 		}
@@ -89,18 +96,24 @@ bool formatComparison(const Wallet* wallet, const Purchase* purchase, char* text
 	size_t used = 0;
 	int64_t best = -1;
 	bool hasConditional = false;
+	bool needsReview = false;
 	int realCount = 0;
 	if (!append(text, capacity, &used, "%s, $%" PRId64 ".%02" PRId64 "\r\n%s | %04d-%02d-%02d\r\n\r\n",
 		purchaseCategoryName(purchase->category), purchase->amountCents / 100, purchase->amountCents % 100,
 		purchaseChannelName(purchase->channel), purchase->date / 10000, purchase->date / 100 % 100, purchase->date % 100)) return false;
 	for (int i = 0; i < wallet->count; i++) {
 		int id = wallet->cardIds[i];
+		const RealCard* card = getRealCardById(id);
+		if (card) realCount++;
 		RewardEstimate reward;
 		if (!estimateCashback(id, purchase, &reward)) {
-			if (!append(text, capacity, &used, "%s: practice card, excluded.\r\n", getCardById(id)->issuer)) return false;
+			if (card) {
+				needsReview = true;
+				if (!append(text, capacity, &used, "%s: needs review. %s\r\n",
+					card->card.issuer, comparisonNote(card))) return false;
+			} else if (!append(text, capacity, &used, "%s: practice card, excluded.\r\n", getCardById(id)->issuer)) return false;
 			continue;
 		}
-		realCount++;
 		if (!append(text, capacity, &used, "%s: $%" PRId64 ".%02" PRId64,
 			getCardById(id)->issuer, reward.minimumCents / 100, reward.minimumCents % 100)) return false;
 		if (reward.conditional) {
@@ -120,8 +133,10 @@ bool formatComparison(const Wallet* wallet, const Purchase* purchase, char* text
 	}
 	if (realCount == 0) {
 		if (!append(text, capacity, &used, "\r\nAdd a real card to your wallet to compare.\r\n")) return false;
+	} else if (needsReview) {
+		if (!append(text, capacity, &used, "\r\nNo overall winner: some saved cards need conditions or a redemption choice reviewed. Their benefits are available in the catalog; they have not been valued as cash.\r\n")) return false;
 	} else if (hasConditional) {
-		if (!append(text, capacity, &used, "\r\nNo definite winner while a card has unknown cap use. Enter that spending to compare again.\r\n")) return false;
+		if (!append(text, capacity, &used, "\r\nNo definite winner while a card has unknown cap use. Everyday spending can be entered above; Preferred grocery use is not collected by this form.\r\n")) return false;
 	} else {
 		if (!append(text, capacity, &used, "\r\nBest estimated cashback (all ties shown):\r\n")) return false;
 		for (int i = 0; i < wallet->count; i++) {

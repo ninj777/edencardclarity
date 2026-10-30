@@ -8,7 +8,7 @@ Command result: passed
 
 Command: build/testGate1 build/cardClarity
 Gate 1 C menu checks
-Date: 2026-10-30 21:25:14 UTC
+Date: 2026-10-30 21:46:08 UTC
 Program: /workspace/cardClarityGateFour/build/cardClarity
 Test platform: POSIX
 
@@ -306,7 +306,7 @@ Command result: passed
 
 Command: build/testGate2 build/cardClarity
 Gate 2 C wallet checks
-Date: 2026-10-30 21:25:15 UTC
+Date: 2026-10-30 21:46:09 UTC
 Program: /workspace/cardClarityGateFour/build/cardClarity
 Test platform: POSIX
 
@@ -934,7 +934,7 @@ Command result: passed
 
 Command: build/testGateFour build/cardClarity
 Gate 4 real-card checks
-Date: 2026-10-30 21:25:17 UTC
+Date: 2026-10-30 21:46:11 UTC
 Program: /workspace/cardClarityGateFour/build/cardClarity
 Test platform: POSIX
 
@@ -1327,4 +1327,708 @@ Observed: removed card is absent after restart: yes
 Result: passed (6 checks matched).
 
 Summary: 34 passed, 0 failed, 0 skipped.
+Command result: passed
+
+Command: build/testTwentyCards build/cardClarity
+Twenty-card catalog checks
+Date: 2026-10-30 21:46:11 UTC
+Program: /workspace/cardClarityGateFour/build/cardClarity
+Test platform: POSIX
+
+Case 1: Capital One Quicksilver Rewards
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (32 checks matched).
+
+Case 2: Capital One Savor Rewards
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (31 checks matched).
+
+Case 3: Chase Freedom Unlimited
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (30 checks matched).
+
+Case 4: American Express Blue Cash Everyday
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (29 checks matched).
+
+Case 5: Wells Fargo Active Cash
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (28 checks matched).
+
+Case 6: Chase Freedom Flex
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (27 checks matched).
+
+Case 7: Chase Sapphire Preferred
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (26 checks matched).
+
+Case 8: Chase Sapphire Reserve
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (25 checks matched).
+
+Case 9: American Express Gold
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (24 checks matched).
+
+Case 10: American Express Platinum
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (23 checks matched).
+
+Case 11: American Express Blue Cash Preferred
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (22 checks matched).
+
+Case 12: Capital One Venture Rewards
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (21 checks matched).
+
+Case 13: Capital One Venture X Rewards
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (20 checks matched).
+
+Case 14: Citi Double Cash
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (19 checks matched).
+
+Case 15: Citi Strata Premier
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (18 checks matched).
+
+Case 16: Discover it Cash Back
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (17 checks matched).
+
+Case 17: Bank of America Customized Cash Rewards
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (16 checks matched).
+
+Case 18: Amazon Prime Visa
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (15 checks matched).
+
+Case 19: Costco Anywhere Visa by Citi
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (14 checks matched).
+
+Case 20: Wells Fargo Autograph
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (13 checks matched).
+
+Case 21: Case-insensitive search
+Expected: Names match regardless of letter case; missing names do not choose a substitute.
+Observed: partial name matching works: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: clearing search restores twenty; invalid requests fail: yes
+Result: passed (22 checks matched).
+
+Case 22: Points and miles
+Expected: Eight points/miles products keep their units and cannot produce guessed cash estimates.
+Observed: no cashback percentage or guessed cash value for this product: yes
+Observed: no cashback percentage or guessed cash value for this product: yes
+Observed: no cashback percentage or guessed cash value for this product: yes
+Observed: no cashback percentage or guessed cash value for this product: yes
+Observed: no cashback percentage or guessed cash value for this product: yes
+Observed: no cashback percentage or guessed cash value for this product: yes
+Observed: no cashback percentage or guessed cash value for this product: yes
+Observed: no cashback percentage or guessed cash value for this product: yes
+Result: passed (8 checks matched).
+
+Case 23: Complex cashback conditions
+Expected: Rotating, payment, membership and selected-category cards are explicitly held for review.
+Observed: missing conditions cannot become an exact estimate: yes
+Observed: missing conditions cannot become an exact estimate: yes
+Observed: missing conditions cannot become an exact estimate: yes
+Observed: missing conditions cannot become an exact estimate: yes
+Observed: missing conditions cannot become an exact estimate: yes
+Observed: missing conditions cannot become an exact estimate: yes
+Observed: mixed wallet shows supported estimates and explains incomplete comparison: yes
+Result: passed (7 checks matched).
+
+Case 24: Preferred streaming, gas and transit
+Expected: $100 earns $6 on eligible streaming, $3 on gas/transit, and $1 at a superstore.
+Observed: independent expected cents match: yes
+Observed: independent expected cents match: yes
+Observed: independent expected cents match: yes
+Observed: independent expected cents match: yes
+Result: passed (4 checks matched).
+
+Case 25: Separate Amex caps
+Expected: Everyday's unused or exhausted allowance never supplies Preferred's grocery usage.
+Observed: Preferred remains a $1-$6 range: yes
+Observed: Preferred remains a $1-$6 range: yes
+Observed: $10,000 has maximum $400: $6,000 at 6%, $4,000 at 1%: yes
+Observed: zero purchase stays zero: yes
+Result: passed (4 checks matched).
+
+Case 26: Missing fees and offer periods
+Expected: Unconfirmed pricing is explicit; an introductory waiver does not hide next year's fee.
+Observed: Preferred first year is zero, ongoing fee is $95: yes
+Observed: unknown Citi pricing stays unknown: yes
+Observed: Prime membership cost is visible: yes
+Observed: Costco membership, certificate expiry and shared gas allowance are visible: yes
+Result: passed (4 checks matched).
+
+Case 27: New last ID and damaged later ID
+Expected: ID 120 loads, but 121 later in a file leaves the open wallet unchanged.
+Observed: late unknown ID cannot partially replace the wallet: yes
+Observed: catalog boundaries and original gap stay invalid: yes
+Result: passed (2 checks matched).
+
+Case 28: Five-card wallet stays bounded
+Expected: Twenty catalog choices still allow five selected cards, with duplicate and full checks.
+Observed: new product added: yes
+Observed: new product added: yes
+Observed: new product added: yes
+Observed: new product added: yes
+Observed: duplicate attempt is rejected before the wallet is full: yes
+Observed: full and duplicate attempts preserve a valid wallet: yes
+Result: passed (6 checks matched).
+
+Case 29: Read a missing ID and recover
+Expected: A gap ID is rejected and the next catalog visit still displays a real product.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: bad ID recovery reaches Autograph's benefit notes: yes
+Result: passed (3 checks matched).
+
+Case 30: No guessed winner through the real menu
+Expected: A saved points card is explained as needing review, not mislabeled as a practice card.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: real console preserves points and comparison limitations: yes
+Result: passed (3 checks matched).
+
+Summary: 30 passed, 0 failed, 0 skipped.
 Command result: passed

@@ -14,3 +14,6 @@ Command result: passed
 
 Command: cc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGateFour.c tests/testSupport.c CreditCardThing/cards.c CreditCardThing/realCards.c CreditCardThing/rewards.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/logger.c -o build/testGateFour -lm
 Command result: passed
+
+Command: cc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testTwentyCards.c tests/testSupport.c CreditCardThing/cards.c CreditCardThing/realCards.c CreditCardThing/rewards.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/logger.c -o build/testTwentyCards -lm
+Command result: passed

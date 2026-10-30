@@ -186,7 +186,6 @@ All twenty records have been investigated and have dated primary sources.
 Supported facts and remaining gaps are recorded before implementation.
 The app must call these researched summaries, not complete account contracts
 or an official popularity ranking. A future source change needs another check.
-+
 Additional benefit cross-check before implementation
 
 Venture X's issuer explanation confirms 10,000 miles beginning at the first

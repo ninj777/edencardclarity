@@ -113,6 +113,24 @@ static int checkMode(const wchar_t* program, BOOL gateFour) {
 			puts("Failed: resize changed the wallet list."); errors++;
 		}
 		if (gateFour) {
+			/* Searching must keep real IDs and leave the saved wallet alone. */
+			HWND search = GetDlgItem(mainWindow, 108);
+			SetWindowTextW(search, L"aUtOgRaPh");
+			if (SendDlgItemMessageW(mainWindow, 101, LB_GETCOUNT, 0, 0) != 1
+				|| SendDlgItemMessageW(mainWindow, 101, LB_GETITEMDATA, 0, 0) != 120) {
+				puts("Failed: filtered name did not preserve ID 120."); errors++;
+			}
+			errors += exerciseWindow(mainWindow, 880);
+			SetWindowTextW(search, L"a card missing from this catalog");
+			if (SendDlgItemMessageW(mainWindow, 101, LB_GETCOUNT, 0, 0) != 0
+				|| IsWindowEnabled(GetDlgItem(mainWindow, 103))) {
+				puts("Failed: missing product was offered as an addable card."); errors++;
+			}
+			SetWindowTextW(search, L"");
+			if (SendDlgItemMessageW(mainWindow, 101, LB_GETCOUNT, 0, 0) != 20
+				|| SendDlgItemMessageW(mainWindow, 102, LB_GETCOUNT, 0, 0) != 1) {
+				puts("Failed: clearing search changed catalog or wallet contents."); errors++;
+			}
 			PostMessageW(mainWindow, WM_COMMAND, 107, 0);
 			comparison = waitForWindow(process.dwProcessId, L"CardClarityPurchase");
 			if (!comparison) { puts("Failed: purchase window did not open."); errors++; }

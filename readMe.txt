@@ -4,8 +4,8 @@ Start here
 
 This version starts from GitHub main's Gate 2 code at b907959. It keeps the
 original C files, sample cards, wallet format and Windows window. Gate 4 adds
-five researched cashback cards and purchase comparisons. The larger catalog
-experiment is not included.
+twenty researched U.S. card summaries and purchase comparisons. This uses
+the existing C records; it does not need a database server or bank login.
 
 Open TestSolution.slnx in Visual Studio. Choose x64 and build the solution.
 The project uses the v145 toolset; retarget it if your installed version uses
@@ -33,13 +33,17 @@ Gate 4 normally uses realSavedCards.txt. The old commands still work:
   build\cardClarity.exe --wallet-file anotherSampleSave.txt
 
 Those earlier modes normally use savedCards.txt. Sample IDs 1-5 keep their
-original meaning. Real IDs 101-105 are separate. Do not replace an old sample
+original meaning. Real IDs 101-120 are separate. Do not replace an old sample
 name with a bank name or reuse its ID. Both save formats store up to five
 selected card types; they never need a payment number or bank password.
 
 How to demonstrate Gate 4
 
-Follow docs/gateFourDemo.txt. Add all five real cards, save, close and reopen.
+Follow docs/gateFourDemo.txt. Add the original five real cards for its six
+calculation examples, save, close and reopen. For the expanded catalog,
+follow docs/twentyCardStatus.txt. Search by part of a card name in the window.
+Clear the search to see all twenty. A missing match does not mean your card
+doesn't exist; it may not be included here. Don't substitute a similar product.
 Select a saved card to read its benefits and conditions. Open Compare a
 purchase, choose a category, amount, booking service and purchase date.
 For Blue Cash Everyday grocery/gas/online-retail purchases, enter the spending
@@ -58,14 +62,31 @@ What is researched
 103: Chase Freedom Unlimited
 104: American Express Blue Cash Everyday
 105: Wells Fargo Active Cash
+106: Chase Freedom Flex
+107: Chase Sapphire Preferred
+108: Chase Sapphire Reserve
+109: American Express Gold
+110: American Express Platinum
+111: American Express Blue Cash Preferred
+112: Capital One Venture Rewards
+113: Capital One Venture X Rewards
+114: Citi Double Cash
+115: Citi Strata Premier
+116: Discover it Cash Back
+117: Bank of America Customized Cash Rewards
+118: Amazon Prime Visa
+119: Costco Anywhere Visa by Citi
+120: Wells Fargo Autograph
 
 Issuer sources were checked October 30, 2026, before coding the new feature.
-docs/gateFourResearch.txt explains the sources, conditions and decisions.
+docs/twentyCardResearch.txt explains this expansion's sources and remaining
+gaps. docs/gateFourResearch.txt records the original five-card research.
 Each in-app record also shows its source and check date. Some full pricing
 disclosures were unavailable. Those details say unconfirmed; they are not zero.
 
-This is a small checked U.S. catalog, not every available card or an account
-agreement. Estimates assume eligible domestic purchases in USD, accurate
+This is a selection of common cards, not a verified popularity ranking or
+every available card. It is not a complete account agreement. Estimates
+assume eligible domestic purchases in USD, accurate
 merchant categories and the exact named booking service. Ordinary snapshot
 rates are applied to the entered date; this is not a historical-offer lookup.
 The dated Lyft promotion is checked against its modeled expiration.
@@ -80,6 +101,22 @@ does not enroll anyone or automatically add credits, insurance, introductory
 bonuses, interest or transaction fees to a purchase comparison. This version
 does not link bank accounts or update terms online.
 
+The first five real cards still have the original cashback comparisons.
+Blue Cash Preferred also has eligible streaming, gas and transit estimates;
+its grocery result is a range because the form does not collect that card's
+own prior spending. Everyday's allowance must not be reused for Preferred.
+The other new cashback cards need extra activation, payment, membership,
+merchant or cap checks. They show their rules and say that comparison needs
+review. Points and miles keep their units and are not assigned a guessed
+cash value. If any saved card needs review, there is no overall wallet winner.
+All twenty can be read, added, removed, saved and reloaded. The wallet still
+holds up to five selected card types at once.
+
+APR means the yearly borrowing rate; a variable rate can change. An intro
+period ends. A credit is a refund or allowance only after its requirements
+are met. An annual fee of $0 does not mean there are no other charges.
+The app shows known costs before benefits and marks unavailable pricing.
+
 Build and tests
 
 On Windows, open an x64 Native Tools Command Prompt in this folder:
@@ -90,7 +127,7 @@ On Linux:
   cc -std=c11 -Wall -Wextra -Wpedantic -Werror tools/buildProject.c -o buildProject
   ./buildProject
 
-The C helper builds the application and four C check programs, then runs
+The C helper builds the application and five C check programs, then runs
 them. It stops if a command fails. It writes real build output to
 docs/gateFourBuildLog.txt and expected/actual results to
 docs/gateFourTestLog.txt. Copy those files first if you want to keep an older
@@ -112,7 +149,8 @@ too; those require a person's observation. This desktop check was compiled
 here but has not been run here. See docs/windowResizeFix.txt.
 
 Current recorded results: 40 original module checks, 31 Gate 1 menu cases,
-39 Gate 2 cases and 34 Gate 4 cases pass on Linux. The MinGW C11 build passes
+39 Gate 2 cases, 34 Gate 4 cases and 30 expanded-catalog cases pass on Linux.
+The MinGW C11 build passes
 with warnings treated as errors. Native Visual Studio execution and desktop
 appearance, keyboard use, scrolling, dialogs and Windows replacement still
 need checks on the demo computer. See docs/gateFourStatus.txt for the limits
@@ -129,13 +167,16 @@ window.c is the original Windows wallet view, extended for real records.
 rewardWindow.c contains the small purchase form.
 windowSizing.h batches control moves and calculates the minimum window frame.
 cards.c/cards.h keep the original sample records and shared Card type.
-realCards.c/realCards.h hold the five sourced products and benefit notes.
+realCards.c/realCards.h hold the twenty sourced products and benefit notes.
 rewards.c/rewards.h calculate and format purchase comparisons.
 input.c checks whole numbers, money and dates.
 wallet.c handles selected IDs, duplicates, count and removal.
 storage.c validates a complete temporary wallet before replacing the open one.
 logger.c keeps the original optional startup logger.
 tests/testGateFour.c records the six purchase examples and extra checks.
+tests/testTwentyCards.c checks each catalog product through the actual menu,
+its saved ID, fee notes, reward units, missing-card searches and comparison
+limits. The optional Windows runner also checks the live search controls.
 
 The proposal assigns Joe card data and expected values, Oliver menu/build and
 comparison integration, Eden input and storage checks, and Evan test evidence

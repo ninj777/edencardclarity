@@ -53,6 +53,7 @@ int main(int argc, char* argv[]) {
 		"cl /nologo /TC /std:c11 /W4 /D_CRT_SECURE_NO_WARNINGS /Fobuild\\ tests/testGate1.c tests/testSupport.c /Febuild/testGate1.exe",
 		"cl /nologo /TC /std:c11 /W4 /D_CRT_SECURE_NO_WARNINGS /Fobuild\\ tests/testGate2.c tests/testSupport.c /Febuild/testGate2.exe",
 		"cl /nologo /TC /std:c11 /W4 /D_CRT_SECURE_NO_WARNINGS /Fobuild\\ tests/testGateFour.c tests/testSupport.c " CORE_SOURCES " /Febuild/testGateFour.exe",
+		"cl /nologo /TC /std:c11 /W4 /D_CRT_SECURE_NO_WARNINGS /Fobuild\\ tests/testTwentyCards.c tests/testSupport.c " CORE_SOURCES " /Febuild/testTwentyCards.exe",
 		"cl /nologo /TC /std:c11 /W4 /D_CRT_SECURE_NO_WARNINGS /Fobuild\\ tests/testWindowResize.c /Febuild/testWindowResize.exe /link user32.lib", NULL
 	};
 #else
@@ -64,6 +65,7 @@ int main(int argc, char* argv[]) {
 			"x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror " APP_SOURCES " -o build/cardClarity.exe -luser32 -lgdi32",
 			"x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tools/buildProject.c -o build/buildProject.exe",
 			"x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGateFour.c tests/testSupport.c " CORE_SOURCES " -o build/testGateFour.exe",
+			"x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testTwentyCards.c tests/testSupport.c " CORE_SOURCES " -o build/testTwentyCards.exe",
 			"x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testWindowResize.c -o build/testWindowResize.exe -luser32", NULL
 		};
 		for (int i=0;cross[i];i++) if (run(cross[i], buildLog)) return 1;
@@ -74,7 +76,8 @@ int main(int argc, char* argv[]) {
 		"cc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testModules.c CreditCardThing/cards.c CreditCardThing/realCards.c CreditCardThing/logger.c -o build/testModules -lm",
 		"cc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGate1.c tests/testSupport.c -o build/testGate1",
 		"cc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGate2.c tests/testSupport.c -o build/testGate2",
-		"cc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGateFour.c tests/testSupport.c " CORE_SOURCES " -o build/testGateFour -lm", NULL
+		"cc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGateFour.c tests/testSupport.c " CORE_SOURCES " -o build/testGateFour -lm",
+		"cc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testTwentyCards.c tests/testSupport.c " CORE_SOURCES " -o build/testTwentyCards -lm", NULL
 	};
 #endif
 	for (int i=0;commands[i];i++) if (run(commands[i], buildLog)) return 1;
@@ -82,10 +85,12 @@ int main(int argc, char* argv[]) {
 	if (startLog(testLog, "Actual module, earlier-gate and Gate 4 checks. This is not a Windows desktop review.")) return 1;
 #ifdef _WIN32
 	const char* checks[] = { "build\\testModules.exe", "build\\testGate1.exe build\\cardClarity.exe",
-		"build\\testGate2.exe build\\cardClarity.exe", "build\\testGateFour.exe build\\cardClarity.exe", NULL };
+		"build\\testGate2.exe build\\cardClarity.exe", "build\\testGateFour.exe build\\cardClarity.exe",
+		"build\\testTwentyCards.exe build\\cardClarity.exe", NULL };
 #else
 	const char* checks[] = { "build/testModules", "build/testGate1 build/cardClarity",
-		"build/testGate2 build/cardClarity", "build/testGateFour build/cardClarity", NULL };
+		"build/testGate2 build/cardClarity", "build/testGateFour build/cardClarity",
+		"build/testTwentyCards build/cardClarity", NULL };
 #endif
 	for (int i=0;checks[i];i++) if (run(checks[i], testLog)) return 1;
 	puts("Build and C checks passed. Read the actual results in docs/gateFourTestLog.txt.");

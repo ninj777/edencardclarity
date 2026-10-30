@@ -99,13 +99,13 @@ void printWallet(const Wallet* wallet) {
 	}
 	bool hasRealCard = false;
 	for (int i = 0; i < wallet->count; i++) if (getRealCardById(wallet->cardIds[i])) hasRealCard = true;
-	puts(hasRealCard ? "Sample IDs 1-5 are practice cards. Real IDs 101-105 have dated issuer sources."
+	puts(hasRealCard ? "Sample IDs 1-5 are practice cards. Real IDs 101-120 have dated issuer sources."
 		: "These cards and rates are made up for practice, not real bank offers.");
 	for (int i = 0; i < wallet->count; i++) {
 		int cardId = wallet->cardIds[i];
 		const Card* card = getCardById(cardId);
 		if (getRealCardById(cardId)) {
-			char details[3000];
+			char details[REAL_CARD_TEXT_CAPACITY];
 			if (formatRealCard(cardId, details, sizeof(details))) printf("Card %d: %s\n", cardId, details);
 		} else {
 			printf("Card %d: %s | Example base rate: %.2f%%\n", cardId, card->issuer, card->rate);

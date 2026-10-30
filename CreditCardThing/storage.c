@@ -15,7 +15,7 @@ For an empty wallet, I write the header and 0, then no IDs. Names and rates
 come from Joe's catalog instead of another copy in the file.
 
 I allow zero through five unique IDs. Gate 4 also accepts the researched
-IDs 101-105; the unused numbers between 5 and 101 remain invalid.
+IDs 101-120; the unused numbers between 5 and 101 remain invalid.
 Number lines can have surrounding
 whitespace, either line-ending style works, and the last ID doesn't need a
 newline. The header must match exactly, with no byte-order mark. Unknown or

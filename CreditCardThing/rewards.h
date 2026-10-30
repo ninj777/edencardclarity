@@ -14,7 +14,7 @@ typedef struct {
 	enum PurchaseCategory category;
 	enum PurchaseChannel channel;
 	int date; /* YYYYMMDD, validated before use. */
-	int64_t priorCategoryCents; /* -1 means unknown; used only for the Amex cap. */
+	int64_t priorCategoryCents; /* Blue Cash Everyday only; -1 means unknown. */
 } Purchase;
 
 typedef struct {

@@ -173,7 +173,7 @@ static int runWalletMenu(Wallet* wallet, const char* filePath, bool* changed, bo
 				puts("Your wallet is full. Remove a card before adding another.");
 				continue;
 			}
-			if (gateFour) printRealCards(); else printSampleCards();
+			if (gateFour) printRealCardList(); else printSampleCards();
 			int cardId = askNumber("Enter a card number, or 0 to cancel: ", 0,
 				gateFour ? LAST_REAL_CARD_ID : SAMPLE_CARD_COUNT);
 			if (cardId < 0) {
@@ -266,7 +266,17 @@ static int runConsoleMenu(bool gate1Mode, const char* filePath, bool gateFour) {
 			return finishInput(choice, changed);
 		}
 		if (choice == 1) {
-			if (gateFour) printRealCards(); else printSampleCards();
+			if (gateFour) {
+				/* I open one complete summary at a time so twenty records stay readable. */
+				printRealCardList();
+				int id = askNumber("Card number for details, or 0 to go back: ", 0, LAST_REAL_CARD_ID);
+				if (id < 0) return finishInput(id, changed);
+				if (id != 0) {
+					char details[REAL_CARD_TEXT_CAPACITY];
+					if (formatRealCard(id, details, sizeof(details))) puts(details);
+					else puts("That isn't a real card in this catalog. Choose a listed number.");
+				}
+			} else printSampleCards();
 		} else if (choice == 2 && gate1Mode) {
 			puts("\nWhat we're planning");
 			puts("Card wallet: add, view, and remove card types.");

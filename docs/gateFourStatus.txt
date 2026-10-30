@@ -1,5 +1,14 @@
 Gate 4 status - October 30, 2026
 
+Twenty-card follow-up
+
+The catalog now has twenty sourced summaries, IDs 101-120. Each can be read,
+added, removed, saved and reloaded. There is name search in the window and
+one-card-at-a-time detail reading in the console. The original wallet still
+holds five selected products. See twentyCardStatus.txt for this expansion's
+scope, current checks and remaining source gaps. The original five-card
+purchase examples below are still the Gate 4 demonstration.
+
 Starting point
 
 Resize follow-up: window.c and rewardWindow.c now batch control moves and
@@ -15,7 +24,7 @@ The old catalog-expansion branch was not used as this version's base.
 
 What changed
 
-Five real cashback products now have fixed IDs 101-105, earning rules,
+The first five real cashback products have fixed IDs 101-105, earning rules,
 restrictions, fee notes, source links and a check date. The original sample
 IDs, records and reward function are preserved for the earlier gates.
 
@@ -38,6 +47,7 @@ Original card module: all 40 checks passed.
 Gate 1 menu: 31 cases passed, none failed or skipped on Linux.
 Gate 2 wallet: 39 cases passed, none failed or skipped on Linux.
 Gate 4: 34 cases passed, none failed or skipped on Linux.
+Expanded catalog: 30 cases passed, none failed or skipped on Linux.
 The six required purchases are Gate 4 cases 1-6, each checked against all
 five real products. Ties, cap crossing/exhaustion, separate category limits,
 unknown cap use, expiration, rounding, invalid input, saved real IDs and a
@@ -72,7 +82,7 @@ The final complete suites and sanitizer run use that version.
 
 What still needs people and the demo computer
 
-Build and run in the actual Visual Studio installation. Check the five cards,
+Build and run in the actual Visual Studio installation. Check all twenty cards,
 source scrolling, all six purchases, tie and cap outputs, keyboard navigation,
 purchase-form closing, resizing, save replacement and restart on Windows.
 Compilation alone cannot verify the window's appearance or behavior.
