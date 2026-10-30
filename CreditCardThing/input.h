@@ -12,6 +12,7 @@ capacity must include room for its ending null. The steps are in input.c.
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <stdint.h>
 
 enum InputResult {
 	INPUT_OK,
@@ -25,5 +26,10 @@ enum InputResult readLine(FILE* stream, char* line, size_t capacity);
 /* I set number only after the complete answer passes. */
 bool parseNumber(const char* line, int minimum, int maximum, int* number);
 enum InputResult readNumber(FILE* stream, int minimum, int maximum, int* number);
+
+/* Gate 4: I read decimal money directly as cents, without strtod rounding. */
+bool parseMoney(const char* line, int64_t* cents);
+bool isDateNumberValid(int date);
+bool parseDate(const char* line, int* date);
 
 #endif

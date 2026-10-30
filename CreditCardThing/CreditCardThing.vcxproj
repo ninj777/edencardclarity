@@ -20,6 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cards.c" />
+    <ClCompile Include="realCards.c" />
+    <ClCompile Include="rewards.c" />
+    <ClCompile Include="rewardWindow.c" />
     <ClCompile Include="input.c" />
     <ClCompile Include="wallet.c" />
     <ClCompile Include="storage.c" />
@@ -29,6 +32,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cards.h" />
+    <ClInclude Include="realCards.h" />
+    <ClInclude Include="rewards.h" />
+    <ClInclude Include="rewardWindow.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="wallet.h" />
     <ClInclude Include="storage.h" />
@@ -88,7 +94,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <LocalDebuggerCommandArguments>--gui</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>--gate4 --gui</LocalDebuggerCommandArguments>
     <LocalDebuggerWorkingDirectory>$(ProjectDir)..\</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

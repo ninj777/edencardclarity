@@ -29,12 +29,16 @@ Before reloading over unsaved edits, I ask whether to continue. Closing gives
 save, discard, and cancel choices. A failed save leaves the window open.
 The save path comes from main; the usual default is savedCards.txt.
 
+Gate 4 reuses these controls for real products, with scrollable source notes
+and a separate purchase form. The old --gui command still shows the samples.
+
 The window cross-compiles, but I still need a real Windows check for its
 appearance, buttons, resizing, keyboard use, and file replacement. On another
 system, this mode explains that Windows is needed and returns 1.
 */
 #include <stdio.h>
 #include "window.h"
+#ifdef _WIN32
 #include <windows.h>
 #include <stdbool.h>
 #include <wchar.h>
@@ -42,6 +46,8 @@ system, this mode explains that Windows is needed and returns 1.
 #include "wallet.h"
 #include "storage.h"
 #include "logger.h"
+#include "realCards.h"
+#include "rewardWindow.h"
 
 enum ControlId {
 	ID_CATALOG = 101,
@@ -49,20 +55,22 @@ enum ControlId {
 	ID_ADD,
 	ID_REMOVE,
 	ID_SAVE,
-	ID_RELOAD
+	ID_RELOAD,
+	ID_COMPARE
 };
 
 typedef struct {
 	HWND title, subtitle, catalogHeading, catalogList, addButton;
 	HWND walletHeading, walletCount, walletList, removeButton;
 	HWND cardName, rateLabel, rate, cardInfo, bonusHeading, bonuses, bonusNote;
-	HWND status, saveButton, reloadButton, disclaimer;
+	HWND status, saveButton, reloadButton, disclaimer, compareButton;
 } WindowControls;
 
 static WindowControls controls;
 static Wallet windowWallet;
 static bool changed;
 static bool controlsReady;
+static bool gateFour;
 static const char* savePath;
 static HFONT bodyFont, titleFont, headingFont, rateFont;
 static HBRUSH backgroundBrush, panelBrush;
@@ -89,7 +97,7 @@ static int selectedCardId(HWND list) {
 		return 0;
 	}
 	LRESULT cardId = SendMessageW(list, LB_GETITEMDATA, (WPARAM)row, 0);
-	if (cardId < 1 || cardId > SAMPLE_CARD_COUNT) {
+	if (cardId < 1 || cardId > LAST_REAL_CARD_ID || !getCardById((int)cardId)) {
 		return 0;
 	}
 	return (int)cardId;
@@ -120,6 +128,17 @@ static void showCardDetails(int cardId) {
 	SetWindowTextW(controls.rate, text);
 	SetWindowTextW(controls.cardInfo, getBaseInfo(*card));
 	SetWindowTextW(controls.bonuses, getMultiplierInfo(*card));
+	if (gateFour) {
+		char details[3000];
+		wchar_t wide[3000];
+		if (formatRealCard(cardId, details, sizeof(details))) {
+			MultiByteToWideChar(CP_UTF8, 0, details, -1, wide, 3000);
+			SetWindowTextW(controls.bonuses, wide);
+			SetWindowTextW(controls.cardInfo, L"Annual fee: $0\nIssuer sources checked October 30, 2026");
+		} else {
+			SetWindowTextW(controls.bonuses, L"Practice card from an earlier save. Sample values are excluded from real-card comparisons.");
+		}
+	}
 	updateButtons();
 }
 
@@ -193,7 +212,15 @@ static void handleWindowAction(HWND hwnd, int id, int notification) {
 		int cardId = selectedCardId(controls.walletList);
 		if (cardId) {
 			/* I keep Add and the details panel pointed at the same card. */
-			SendMessageW(controls.catalogList, LB_SETCURSEL, (WPARAM)(cardId - 1), 0);
+			/* A saved ID is not its row number once real and sample lists differ. */
+			SendMessageW(controls.catalogList, LB_SETCURSEL, (WPARAM)-1, 0);
+			LRESULT rows = SendMessageW(controls.catalogList, LB_GETCOUNT, 0, 0);
+			for (LRESULT row = 0; row < rows; row++) {
+				if (SendMessageW(controls.catalogList, LB_GETITEMDATA, (WPARAM)row, 0) == cardId) {
+					SendMessageW(controls.catalogList, LB_SETCURSEL, (WPARAM)row, 0);
+					break;
+				}
+			}
 			showCardDetails(cardId);
 		}
 		updateButtons();
@@ -211,7 +238,7 @@ static void handleWindowAction(HWND hwnd, int id, int notification) {
 		} else if (result == WALLET_FULL) {
 			setStatus(L"Your wallet is full. Remove a card to make room.");
 		} else {
-			setStatus(L"Choose a sample card first.");
+			setStatus(L"Choose a card first.");
 		}
 	} else if (id == ID_REMOVE && notification == BN_CLICKED) {
 		if (removeWalletCard(&windowWallet, selectedCardId(controls.walletList))) {
@@ -224,6 +251,8 @@ static void handleWindowAction(HWND hwnd, int id, int notification) {
 		saveFromWindow();
 	} else if (id == ID_RELOAD && notification == BN_CLICKED) {
 		reloadFromWindow(hwnd);
+	} else if (id == ID_COMPARE && notification == BN_CLICKED && gateFour) {
+		openRewardWindow(hwnd, &windowWallet);
 	}
 }
 
@@ -260,6 +289,13 @@ static void onWindowResize(HWND hwnd) {
 	MoveWindow(controls.saveButton, width - 324, height - 88, 144, 36, TRUE);
 	MoveWindow(controls.reloadButton, width - 168, height - 88, 144, 36, TRUE);
 	MoveWindow(controls.disclaimer, 24, height - 32, width - 48, 22, TRUE);
+	if (gateFour) {
+		MoveWindow(controls.cardName, 376, 128, detailWidth, 48, TRUE);
+		MoveWindow(controls.cardInfo, 376, 252, detailWidth, 48, TRUE);
+		MoveWindow(controls.bonusHeading, 376, 308, detailWidth, 24, TRUE);
+		MoveWindow(controls.bonuses, 376, 340, detailWidth - 8, height - 512, TRUE);
+		MoveWindow(controls.compareButton, 376, height - 156, detailWidth - 8, 34, TRUE);
+	}
 	InvalidateRect(hwnd, NULL, FALSE);
 }
 
@@ -268,7 +304,7 @@ static bool loadWindowWidgets(HWND hwnd) {
 	DWORD labelStyle = SS_LEFT | SS_NOPREFIX;
 	controls.title = makeControl(hwnd, L"STATIC", L"CardClarity", labelStyle, 0, titleFont);
 	controls.subtitle = makeControl(hwnd, L"STATIC", L"Select a card to see its rates, then add it to your wallet.", labelStyle, 0, bodyFont);
-	controls.catalogHeading = makeControl(hwnd, L"STATIC", L"Sample cards", labelStyle, 0, headingFont);
+	controls.catalogHeading = makeControl(hwnd, L"STATIC", gateFour ? L"Real cashback cards" : L"Sample cards", labelStyle, 0, headingFont);
 	controls.catalogList = makeControl(hwnd, L"LISTBOX", L"", listStyle, ID_CATALOG, bodyFont);
 	controls.addButton = makeControl(hwnd, L"BUTTON", L"Add to my wallet", WS_TABSTOP | BS_PUSHBUTTON, ID_ADD, bodyFont);
 	controls.walletHeading = makeControl(hwnd, L"STATIC", L"My wallet", labelStyle, 0, headingFont);
@@ -276,29 +312,36 @@ static bool loadWindowWidgets(HWND hwnd) {
 	controls.walletList = makeControl(hwnd, L"LISTBOX", L"", listStyle, ID_WALLET, bodyFont);
 	controls.removeButton = makeControl(hwnd, L"BUTTON", L"Remove selected card", WS_TABSTOP | BS_PUSHBUTTON, ID_REMOVE, bodyFont);
 	controls.cardName = makeControl(hwnd, L"STATIC", L"", labelStyle, 0, headingFont);
-	controls.rateLabel = makeControl(hwnd, L"STATIC", L"Base reward rate (example)", labelStyle, 0, bodyFont);
+	controls.rateLabel = makeControl(hwnd, L"STATIC", gateFour ? L"Ordinary cashback rate" : L"Base reward rate (example)", labelStyle, 0, bodyFont);
 	controls.rate = makeControl(hwnd, L"STATIC", L"", labelStyle, 0, rateFont);
 	controls.cardInfo = makeControl(hwnd, L"STATIC", L"", labelStyle, 0, bodyFont);
-	controls.bonusHeading = makeControl(hwnd, L"STATIC", L"Category bonuses", labelStyle, 0, headingFont);
-	controls.bonuses = makeControl(hwnd, L"STATIC", L"", labelStyle, 0, bodyFont);
+	controls.bonusHeading = makeControl(hwnd, L"STATIC", gateFour ? L"Benefits, conditions and sources" : L"Category bonuses", labelStyle, 0, headingFont);
+	controls.bonuses = makeControl(hwnd, gateFour ? L"EDIT" : L"STATIC", L"",
+		gateFour ? WS_BORDER | WS_VSCROLL | WS_TABSTOP | ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY : labelStyle, 0, bodyFont);
 	controls.bonusNote = makeControl(hwnd, L"STATIC", L"A +5% bonus increases the base reward by 5%.\nIt does not mean five times the reward.", labelStyle, 0, bodyFont);
 	controls.status = makeControl(hwnd, L"STATIC", L"Ready. Add a card to start your wallet.", labelStyle, 0, bodyFont);
 	controls.saveButton = makeControl(hwnd, L"BUTTON", L"Save cards", WS_TABSTOP | BS_PUSHBUTTON, ID_SAVE, bodyFont);
 	controls.reloadButton = makeControl(hwnd, L"BUTTON", L"Reload saved", WS_TABSTOP | BS_PUSHBUTTON, ID_RELOAD, bodyFont);
 	controls.disclaimer = makeControl(hwnd, L"STATIC", L"Made-up cards and rates for practice. These are not real bank offers.", labelStyle, 0, bodyFont);
+	controls.compareButton = makeControl(hwnd, L"BUTTON", L"Compare a purchase with my cards", WS_TABSTOP | BS_PUSHBUTTON, ID_COMPARE, bodyFont);
+	if (gateFour) {
+		ShowWindow(controls.bonusNote, SW_HIDE);
+		SetWindowTextW(controls.disclaimer, L"Dated public terms; check your account. Estimates exclude interest, fees and welcome bonuses.");
+	} else ShowWindow(controls.compareButton, SW_HIDE);
 	HWND handles[] = {
 		controls.title, controls.subtitle, controls.catalogHeading, controls.catalogList,
 		controls.addButton, controls.walletHeading, controls.walletCount, controls.walletList,
 		controls.removeButton, controls.cardName, controls.rateLabel, controls.rate,
 		controls.cardInfo, controls.bonusHeading, controls.bonuses, controls.bonusNote,
-		controls.status, controls.saveButton, controls.reloadButton, controls.disclaimer
+		controls.status, controls.saveButton, controls.reloadButton, controls.disclaimer, controls.compareButton
 	};
 	for (size_t i = 0; i < sizeof(handles) / sizeof(handles[0]); i++) {
 		if (!handles[i]) {
 			return false;
 		}
 	}
-	for (int cardId = 1; cardId <= SAMPLE_CARD_COUNT; cardId++) {
+	for (int index = 0; index < SAMPLE_CARD_COUNT; index++) {
+		int cardId = gateFour ? FIRST_REAL_CARD_ID + index : index + 1;
 		/* I attach the real ID to each row instead of using a wallet position. */
 		const Card* card = getCardById(cardId);
 		wchar_t rowText[128];
@@ -314,7 +357,7 @@ static bool loadWindowWidgets(HWND hwnd) {
 	if (!fillWalletList(0)) {
 		return false;
 	}
-	showCardDetails(1);
+	showCardDetails(gateFour ? FIRST_REAL_CARD_ID : 1);
 	onWindowResize(hwnd);
 	reloadFromWindow(hwnd);
 	return true;
@@ -408,7 +451,8 @@ static void releaseWindowResources(void) {
 	}
 }
 
-int runWindow(const char* filePath) {
+static int startWindow(const char* filePath, bool realMode) {
+	gateFour = realMode;
 	initLogger();
 
 	initWallet(&windowWallet);
@@ -434,7 +478,7 @@ int runWindow(const char* filePath) {
 	wc.lpfnWndProc = applicationWindowProc;
 	wc.hInstance = GetModuleHandleW(NULL);
 	wc.lpszClassName = L"CardClarityWindow";
-	wc.hCursor = LoadCursorW(NULL, IDC_ARROW);
+	wc.hCursor = LoadCursorW(NULL, MAKEINTRESOURCEW(32512));
 	if (!RegisterClassW(&wc)) {
 		releaseWindowResources();
 		return 1;
@@ -468,3 +512,14 @@ int runWindow(const char* filePath) {
 	releaseWindowResources();
 	return exitCode;
 }
+
+int runWindow(const char* filePath) { return startWindow(filePath, false); }
+int runGateFourWindow(const char* filePath) { return startWindow(filePath, true); }
+#else
+int runWindow(const char* filePath) {
+	(void)filePath;
+	fputs("The window preview needs Windows. Use the console menu on this system.\n", stderr);
+	return 1;
+}
+int runGateFourWindow(const char* filePath) { return runWindow(filePath); }
+#endif

@@ -10,5 +10,6 @@ The wallet file format is the same as the console's.
 
 /* I use the same wallet and save format as the console. */
 int runWindow(const char* filePath);
+int runGateFourWindow(const char* filePath);
 
 #endif

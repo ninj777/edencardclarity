@@ -38,14 +38,17 @@ readNumber joins those steps using a 128-character buffer. The enum in
 input.h names valid input, invalid input, end of input, and read failure.
 I use these names so callers don't have to guess what a returned number means.
 
-These checks are for menu choices and card IDs. A later purchase calculator
-still needs its own amount rules and whole-cent rounding. This is not yet
-a money parser.
+The original checks below handle menu choices and card IDs. Gate 4 adds
+parseMoney and parseDate afterward. I read decimal digits into whole cents
+so 12.34 becomes 1234 without a floating-point conversion. I reject a third
+decimal place rather than quietly changing someone's amount. Dates are
+checked against the actual month length, including leap-year rules.
 */
 #include <ctype.h>
 #include <errno.h>
 #include <stdlib.h>
 #include "input.h"
+#include <string.h>
 
 enum InputResult readLine(FILE* stream, char* line, size_t capacity) {
 	if (capacity < 2) {
@@ -110,4 +113,50 @@ enum InputResult readNumber(FILE* stream, int minimum, int maximum, int* number)
 		return INPUT_INVALID;
 	}
 	return INPUT_OK;
+}
+
+/* Gate 4, Eden's input area. I assign the output only after the whole line passes. */
+bool parseMoney(const char* line, int64_t* cents) {
+	if (!line || !cents) return false;
+	while (isspace((unsigned char)*line)) line++;
+	if (!isdigit((unsigned char)*line)) return false;
+	int64_t dollars = 0;
+	while (isdigit((unsigned char)*line)) {
+		int digit = *line++ - '0';
+		if (dollars > (1000000 - digit) / 10) return false;
+		dollars = dollars * 10 + digit;
+	}
+	int fraction = 0;
+	if (*line == '.') {
+		line++;
+		if (!isdigit((unsigned char)*line)) return false;
+		fraction = (*line++ - '0') * 10;
+		if (isdigit((unsigned char)*line)) fraction += *line++ - '0';
+	}
+	while (isspace((unsigned char)*line)) line++;
+	if (*line || dollars > 1000000 || (dollars == 1000000 && fraction != 0)) return false;
+	*cents = dollars * 100 + fraction;
+	return true;
+}
+
+bool isDateNumberValid(int date) {
+	int year = date / 10000, month = date / 100 % 100, day = date % 100;
+	static const int monthDays[] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+	if (year < 1900 || year > 9999 || month < 1 || month > 12 || day < 1) return false;
+	int limit = monthDays[month - 1];
+	if (month == 2 && year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) limit++;
+	return day <= limit;
+}
+
+bool parseDate(const char* line, int* date) {
+	if (!line || !date || strlen(line) != 10 || line[4] != '-' || line[7] != '-') return false;
+	int value = 0;
+	for (int i = 0; i < 10; i++) {
+		if (i == 4 || i == 7) continue;
+		if (!isdigit((unsigned char)line[i])) return false;
+		value = value * 10 + line[i] - '0';
+	}
+	if (!isDateNumberValid(value)) return false;
+	*date = value;
+	return true;
 }

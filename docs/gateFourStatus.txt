@@ -1,0 +1,87 @@
+Gate 4 status - October 30, 2026
+
+Starting point
+
+The base is GitHub main, b9079592f2ddbfaf24f2fb18b6b09d2ae58f7a9b.
+Its full source tree was checked against the local starting tree before any
+Gate 4 changes. The research notes were committed before implementation.
+The old catalog-expansion branch was not used as this version's base.
+
+What changed
+
+Five real cashback products now have fixed IDs 101-105, earning rules,
+restrictions, fee notes, source links and a check date. The original sample
+IDs, records and reward function are preserved for the earlier gates.
+
+The console has a --gate4 mode. The same Windows wallet view has a Gate 4
+mode and a purchase form. Both views use the same comparison function.
+The existing add/remove/save/reload code handles the new IDs too. The default
+real-card save is separate so an old practice wallet does not change meaning.
+
+New money input reads exact whole cents. Date input checks month lengths and
+leap years. Calculations use total category rates, split capped spending,
+show conditional ranges when cap use is unknown, and list all rounded ties.
+Booking services stay separate. A dated Lyft rule expires at its boundary.
+Benefit notes describe enrollment, paid renewal and deadlines; they are not
+silently added to cashback as money.
+
+Actual checks
+
+GCC C11 with -Wall -Wextra -Wpedantic -Werror: passed.
+Original card module: all 40 checks passed.
+Gate 1 menu: 31 cases passed, none failed or skipped on Linux.
+Gate 2 wallet: 39 cases passed, none failed or skipped on Linux.
+Gate 4: 34 cases passed, none failed or skipped on Linux.
+The six required purchases are Gate 4 cases 1-6, each checked against all
+five real products. Ties, cap crossing/exhaustion, separate category limits,
+unknown cap use, expiration, rounding, invalid input, saved real IDs and a
+damaged later record are covered too. Cases 30-34 run the actual console.
+
+Clang 19 AddressSanitizer and UndefinedBehaviorSanitizer: the instrumented
+application and Gate 4 runner passed all 34 cases without a reported sanitizer
+error. The command disables leak detection, so this is not a leak test.
+
+MinGW C11 with warnings treated as errors: the complete Windows application,
+C build helper and Gate 4 runner compiled successfully. They were not run on
+Windows here. The actual commands and observations are in these files:
+  gateFourBuildLog.txt
+  gateFourTestLog.txt
+  gateFourWindowsBuildLog.txt
+  gateFourSanitizerLog.txt
+
+Problems found and checked again
+
+The first MinGW build could not use the old timer's timespec_get. The Windows
+timer now uses GetTickCount64; the other build keeps the C11 timespec timer.
+An explicitly wide cursor resource also avoids depending on a compiler's
+default Unicode macro. The rebuilt Windows program passed compilation.
+
+Two original Linux tests expected the previous unsupported-window wording.
+The message now matches that expectation; both complete old suites passed
+again. This was a wording mismatch, not evidence that Windows ran.
+
+During review, comparison input was also changed to preserve the difference
+between ordinary end of input and a real read error, as the older menu does.
+The final complete suites and sanitizer run use that version.
+
+What still needs people and the demo computer
+
+Build and run in the actual Visual Studio installation. Check the five cards,
+source scrolling, all six purchases, tie and cap outputs, keyboard navigation,
+purchase-form closing, resizing, save replacement and restart on Windows.
+Compilation alone cannot verify the window's appearance or behavior.
+
+Joe should check the demonstrated values and sources; Eden should check the
+saved IDs and error behavior; Oliver should check the build and connections;
+Evan should check readability and record the actual desktop observations.
+Those are the proposal's assignment areas, not completed personal reviews.
+Use the blank record in gateFourDemo.txt after doing those checks.
+
+Some current pricing disclosures could not be opened. Their missing values
+remain explicitly unconfirmed. The research supports the selected earning
+rules; it is not a complete account agreement or a promise about future terms.
+Recheck issuer terms before using these estimates for a real decision.
+
+The source, catalog, six purchase results, ties and limit cases are prepared
+for the Gate 4 review. The teacher decides the rating. No teammate signature,
+teacher approval or Windows runtime pass has been invented.

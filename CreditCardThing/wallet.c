@@ -8,9 +8,9 @@ so the wallet cannot keep a separate set of values that gradually disagrees.
 
 I start the count and slots at zero and only search the used entries.
 Adding checks the ID, space, and duplicates before writing at cardIds[count].
-The count then increases. There are five unique types in the catalog, so five
-slots are enough. The earlier twenty-card plan would not make sense without
-more unique records.
+The count then increases. Gate 2 had five unique samples. Gate 4 adds five
+real products and keeps this wallet's five-slot limit. I can mix valid IDs,
+but real-card comparisons explicitly exclude any selected practice cards.
 
 For removal, I find the ID, move later entries left, and clear the unused last
 slot. Removing 3 from [1, 3, 5] leaves [1, 5]; ID 5 still means the same card.
@@ -27,6 +27,7 @@ an empty message. Viewing the list does not rewrite its save.
 */
 #include <stdio.h>
 #include "wallet.h"
+#include "realCards.h"
 
 void initWallet(Wallet* wallet) {
 	wallet->count = 0;
@@ -77,7 +78,7 @@ bool removeWalletCard(Wallet* wallet, int cardId) {
 }
 
 bool isWalletValid(const Wallet* wallet) {
-	if (wallet->count < 0 || wallet->count > MAX_WALLET_CARDS) {
+	if (!wallet || wallet->count < 0 || wallet->count > MAX_WALLET_CARDS) {
 		return false;
 	}
 	Wallet checked = { 0 };
@@ -96,10 +97,18 @@ void printWallet(const Wallet* wallet) {
 		puts("Your wallet is empty. Choose Add a card to get started.");
 		return;
 	}
-	puts("These cards and rates are made up for practice, not real bank offers.");
+	bool hasRealCard = false;
+	for (int i = 0; i < wallet->count; i++) if (getRealCardById(wallet->cardIds[i])) hasRealCard = true;
+	puts(hasRealCard ? "Sample IDs 1-5 are practice cards. Real IDs 101-105 have dated issuer sources."
+		: "These cards and rates are made up for practice, not real bank offers.");
 	for (int i = 0; i < wallet->count; i++) {
 		int cardId = wallet->cardIds[i];
 		const Card* card = getCardById(cardId);
-		printf("Card %d: %s | Example base rate: %.2f%%\n", cardId, card->issuer, card->rate);
+		if (getRealCardById(cardId)) {
+			char details[3000];
+			if (formatRealCard(cardId, details, sizeof(details))) printf("Card %d: %s\n", cardId, details);
+		} else {
+			printf("Card %d: %s | Example base rate: %.2f%%\n", cardId, card->issuer, card->rate);
+		}
 	}
 }

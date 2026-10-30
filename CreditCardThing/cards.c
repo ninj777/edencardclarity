@@ -21,21 +21,23 @@ A bonus of 5 means 1.05 times the base reward, not five times. An amount of
 10 at 1.25% with a 2% bonus gives 0.1275 reward units. This does not value
 points as dollars or subtract annual fees.
 
-For Gate 4, I still need benefit sources and dates, six checked purchases,
-ties, limits, activation rules, and expiration notes. Until then, these
-values stay labeled as samples.
+Gate 4's sourced real products are in realCards.c, with comparisons in
+rewards.c. These five original records stay labeled as samples and keep
+their original formula for the earlier gates.
 */
 #include <stdio.h>
 #include <wchar.h>
 
 #include "logger.h"
 #include "cards.h"
+#include "realCards.h"
 
 const wchar_t* networkNames[] = {
 	L"Visa",
 	L"Mastercard",
 	L"American Express",
-	L"Discover"
+	L"Discover",
+	L"Not confirmed"
 };
 
 const wchar_t* rewardTitles[] = {
@@ -61,11 +63,11 @@ Card registerCard(char* issuer, enum Network network, int annualFee, enum Reward
 	return card;
 }
 
-LPCWSTR getBaseInfo(Card card) {
+const wchar_t* getBaseInfo(Card card) {
 	/* I keep this buffer valid after returning; the window copies the text. */
 	static wchar_t buf[256];
 	
-	swprintf_s(
+	swprintf(
 		buf,
 		256,
 		L"Network: %ls\nReward type: %ls\nExample annual fee: $%d",
@@ -77,10 +79,10 @@ LPCWSTR getBaseInfo(Card card) {
 	return buf;
 }
 
-LPCWSTR getMultiplierInfo(Card card) {
+const wchar_t* getMultiplierInfo(Card card) {
 	static wchar_t buf[256];
 
-	swprintf_s(
+	swprintf(
 		buf,
 		256,
 		L"Airlines: +%.2f%%\nStores: +%.2f%%\nServices: +%.2f%%",
@@ -121,7 +123,11 @@ Card* getCardById(int cardId) {
 	case 5:
 		return &cardE;
 	default:
-		return NULL;
+		/* I keep the old sample IDs and give researched products separate IDs. */
+		{
+			RealCard* real = getRealCardById(cardId);
+			return real ? &real->card : NULL;
+		}
 	}
 }
 

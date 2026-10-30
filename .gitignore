@@ -24,3 +24,8 @@ build/
 # I keep a person's saved cards and unfinished save out of the submission.
 savedCards.txt
 savedCards.txt.tmp
+realSavedCards.txt
+realSavedCards.txt.tmp
+*.md
+*.mdx
+*.markdown
