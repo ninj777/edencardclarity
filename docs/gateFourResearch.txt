@@ -1,0 +1,142 @@
+Gate 4 card research
+Checked October 30, 2026, before starting the Gate 4 implementation.
+Base: GitHub main, b9079592f2ddbfaf24f2fb18b6b09d2ae58f7a9b.
+The local starting tree matches its tree 1c56686440c2d163e0bb26f627d26e925b7a859d.
+
+What this research covers
+
+We need a benefits catalog, saved-card comparisons, six purchases, ties,
+limits and benefit-date notes. Five U.S. personal cashback cards are enough
+to demonstrate these rules clearly. This is a checked selection, not a list
+of every card or a complete copy of each bank's agreement. The larger catalog
+branch is separate and is not the starting point for this work.
+
+The proposal assigns Joe the catalog and expected values, Oliver comparison
+functions, Eden stored-record validation and errors, and Evan readable results.
+These are responsibility areas, not a record of personal authorship or review.
+
+Capital One Quicksilver Rewards
+https://www.capitalone.com/credit-cards/quicksilver/
+The individual product page confirms 1.5% on eligible purchases, $0 annual
+fee and no foreign transaction fee. Qualifying hotels, rental cars and
+vacation rentals through Capital One Travel earn 5%; Capital One Entertainment
+purchases also earn 5%. Flights do not inherit that travel bonus. The ordinary
+rate is unlimited. Rewards do not expire while the account remains open.
+The posted introductory purchase/transfer APR is 0% for 15 months, followed
+by 18.74%-28.74% variable. Exact transfer and other pricing details were not
+available in the rendered disclosure; they will say to check account terms.
+The calculator will not add welcome bonuses or assume free borrowing.
+
+Capital One Savor Rewards
+https://www.capitalone.com/credit-cards/savor/
+This specific product has $0 annual fee, no foreign transaction fee, 3% on
+eligible grocery, dining, entertainment and popular streaming purchases,
+and 1% otherwise. Qualifying Capital One Travel hotels/cars/vacation rentals
+earn 5%; its Entertainment service earns 8%. Grocery excludes superstores
+such as Walmart and Target. Merchant codes and payment processing matter.
+The advertised purchase/transfer intro APR lasts 12 months, then the published
+variable range is 18.74%-28.74%. Full transfer pricing still needs disclosure.
+Do not mix this product with another Savor version or an older annual-fee offer.
+
+Chase Freedom Unlimited
+https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited
+https://asset.chase.com/content/dam/card/rulesregulations/en/RPA0509_Web.pdf
+The product page and rewards agreement support $0 annual fee, 1.5% base,
+3% total dining/drugstores and 5% total on eligible Chase Travel purchases.
+Only the amount charged to the card earns rewards, not a part paid with points.
+FROSCH bookings are excluded from the Chase Travel bonus. Cash redemption is
+one cent per point; other redemption choices can differ. The calculator uses
+the stated cash-redemption equivalent, not a speculative travel valuation.
+The page currently describes 2% total for qualifying Lyft app purchases through
+September 30, 2027. Excluded products do not qualify. After that date we use
+the ordinary 1.5% unless later research supports a replacement offer.
+DashPass needs activation by December 31, 2029, gives six complimentary months,
+and then renews at the current paid rate unless cancelled. Other eligibility
+rules apply. These notes are displayed; no subscription value is counted as cash.
+The linked current pricing disclosure was blocked. Foreign and transfer fees
+will remain unconfirmed; an older or third-party figure will not fill the gap.
+
+American Express Blue Cash Everyday
+https://www.americanexpress.com/us/credit-cards/card/blue-cash-everyday/
+https://global.americanexpress.com/card-benefits/detail/blue-cash-everyday-321/blue-cash-everyday/
+https://www.americanexpress.com/content/dam/amex/en-us/company/legal/cardmember-agreements/public-site-2024-q4-pdf-cmas/cps-lending/blue-cash-everyday-12-31-2024.pdf
+The current product page confirms no annual fee, 3% at U.S. supermarkets,
+U.S. gas stations and eligible U.S. online retailers, then 1% after $6,000
+per year in each category. Each category has its own allowance. The issuer's
+indexed benefit terms and older agreement identify calendar-year periods.
+Superstores and warehouse clubs do not count as supermarkets. Superstore,
+supermarket and warehouse-club gasoline is excluded from the gas bonus.
+Online services, travel and dining do not become online retail just because
+they were bought online. Use only confirmed eligible purchases in those lanes.
+The current page describes an enrolled Disney streaming credit of up to $7
+per month on qualifying subscriptions, with auto-renewal. It is not $84 paid
+at once or automatic cashback. No credit is added to a purchase estimate.
+The benefit dashboard returned 403 when opened directly. Indexed issuer terms
+were available. The accessible agreement is explicitly dated December 31,
+2024, so its 2.7% foreign fee and APR formula are historical references,
+not a verified current personalized offer. Current pricing remains unconfirmed.
+
+Wells Fargo Active Cash
+https://creditcards.wellsfargo.com/active-cash-credit-card/
+https://www.wellsfargo.com/credit-cards/active-cash/terms/?FPID=012686I6F40000&cx_nm=CXNAME_CSMPD&product_code=CC&sub_channel=WEB&subproduct_code=AC&vendor_code=WF
+Both the product page and linked current terms were read. They support $0
+annual fee and unlimited 2% on eligible purchases. The pricing table lists a
+3% foreign transaction fee. Transfers do not earn rewards. The intro transfer
+fee within 120 days is the greater of $5 or 3%; afterward up to 5%, minimum $5.
+The purchase/qualifying-transfer intro APR lasts 12 months; ongoing variable
+choices shown are 18.74%, 24.74% or 28.74%. Offers differ by channel and account.
+Cell phone protection needs eligible bill payment and has coverage conditions;
+it is not a guaranteed cash credit. The estimates exclude insurance values.
+
+Decisions for the calculator
+
+Use cents for amounts and hundredths of a percent for rates: 300 means 3%.
+For an uncapped purchase, reward cents before rounding = amount cents * rate
+divided by 10000. Round the final estimate to the nearest cent, half upward.
+This is our displayed estimate; a bank can post and round rewards differently.
+For a cap, calculate the remaining bonus allowance first, split the purchase,
+add both portions, and round once. $30 with $10 left at 3% and $20 at 1%
+gives $0.50. Never give the whole purchase 3% or discard its base reward.
+
+Unknown prior category spending must not mean zero. Ask for spending before
+this purchase in the purchase's calendar year, or leave it unknown and show
+the possible range. A range cannot establish a definite winner. Keep all ties
+at the rounded displayed amount; do not silently choose the first card.
+
+Use separate booking choices for direct purchases, Capital One Travel,
+Chase Travel and Capital One Entertainment. A generic portal choice would
+incorrectly give another bank's bonus. Reject impossible category/channel
+combinations. Ask for the purchase date, validate real calendar dates, and
+check the Lyft expiration boundary. A source check date is not an offer's
+start date and is not proof that today's account terms still match.
+
+The comparisons cover eligible domestic U.S. purchases in USD. Superstores
+get their own base-rate category. They do not become supermarkets. Negative,
+overlarge, nonnumeric and fractional-cent amounts are rejected. Fees, interest,
+cash advances, transfers, cash equivalents and refunds are outside this
+purchase estimator. The display must explain that rewards are not net profit.
+
+Keep original IDs 1-5 as practice cards. New real IDs are 101-105 and stay
+fixed across saves. The wallet still holds five selections. Save/load can use
+the existing validated format because it stores IDs, not financial terms.
+The new default save should be separate from the old sample wallet.
+
+Six planned purchase examples
+
+1. Eligible supermarket $100: Savor $3 and Blue Cash Everyday $3, if its
+   grocery allowance is unused. Those two tie.
+2. Dining $50: Savor and Freedom Unlimited each $1.50. Both win.
+3. Eligible U.S. gas $60: Blue Cash Everyday $1.80 with unused gas allowance.
+4. Drugstore $40: Freedom Unlimited $1.20.
+5. Other purchase $80: Active Cash $1.60.
+6. Hotel $200 through Capital One Travel: Quicksilver and Savor each $10.
+Also check the same hotel through Chase Travel, the cap-crossing $0.50,
+an exhausted cap, unknown cap use, date boundaries, and invalid input.
+
+Research conclusion
+
+The earning rules and conditions needed for this Gate 4 scope are supported
+by the issuer sources above. Some full pricing disclosures remain unavailable
+and are named as unconfirmed rather than guessed. This research was finished
+before adding the Gate 4 code. It does not certify every benefit or later
+account change, and software tests cannot prove a bank's future terms.

@@ -1,0 +1,404 @@
++ /workspace/tools/bin/clang --version
+Debian clang version 19.1.7 (3+b1)
+Target: x86_64-pc-linux-gnu
+Thread model: posix
+InstalledDir: /workspace/tools/local/usr/lib/llvm-19/bin
++ /workspace/tools/bin/clang -std=c11 -Wall -Wextra -Wpedantic -Werror -fsanitize=address,undefined -fno-omit-frame-pointer -g CreditCardThing/cards.c CreditCardThing/input.c CreditCardThing/logger.c CreditCardThing/main.c CreditCardThing/realCards.c CreditCardThing/rewardWindow.c CreditCardThing/rewards.c CreditCardThing/storage.c CreditCardThing/wallet.c CreditCardThing/window.c -o build/sanitizer/cardClarity -lm
++ /workspace/tools/bin/clang -std=c11 -Wall -Wextra -Wpedantic -Werror -fsanitize=address,undefined -fno-omit-frame-pointer -g tests/testGateFour.c tests/testSupport.c CreditCardThing/cards.c CreditCardThing/realCards.c CreditCardThing/rewards.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/logger.c -o build/sanitizer/testGateFour -lm
++ ASAN_OPTIONS=detect_leaks=0
++ UBSAN_OPTIONS=halt_on_error=1
++ build/sanitizer/testGateFour build/sanitizer/cardClarity
+Gate 4 real-card checks
+Date: 2026-10-30 21:13:23 UTC
+Program: /workspace/cardClarityGateFour/build/sanitizer/cardClarity
+Test platform: POSIX
+
+Case 1: Eligible U.S. supermarket
+Expected: All five real cards match independently calculated cents.
+Purchase: $100.00 | Direct / ordinary purchase | prior category spending $0 | 2026-11-02
+Card 101: expected 150 cents; actual 150 to 150 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 102: expected 300 cents; actual 300 to 300 cents
+Actual total rate: 3.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 103: expected 150 cents; actual 150 to 150 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 104: expected 300 cents; actual 300 to 300 cents
+Actual total rate: 3.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 105: expected 200 cents; actual 200 to 200 cents
+Actual total rate: 2.00%; base rate: 2.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (5 checks matched).
+
+Case 2: Dining
+Expected: All five real cards match independently calculated cents.
+Purchase: $50.00 | Direct / ordinary purchase | prior category spending $0 | 2026-11-02
+Card 101: expected 75 cents; actual 75 to 75 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 102: expected 150 cents; actual 150 to 150 cents
+Actual total rate: 3.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 103: expected 150 cents; actual 150 to 150 cents
+Actual total rate: 3.00%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 104: expected 50 cents; actual 50 to 50 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 105: expected 100 cents; actual 100 to 100 cents
+Actual total rate: 2.00%; base rate: 2.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (5 checks matched).
+
+Case 3: Eligible U.S. gas station
+Expected: All five real cards match independently calculated cents.
+Purchase: $60.00 | Direct / ordinary purchase | prior category spending $0 | 2026-11-02
+Card 101: expected 90 cents; actual 90 to 90 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 102: expected 60 cents; actual 60 to 60 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 103: expected 90 cents; actual 90 to 90 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 104: expected 180 cents; actual 180 to 180 cents
+Actual total rate: 3.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 105: expected 120 cents; actual 120 to 120 cents
+Actual total rate: 2.00%; base rate: 2.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (5 checks matched).
+
+Case 4: Drugstore
+Expected: All five real cards match independently calculated cents.
+Purchase: $40.00 | Direct / ordinary purchase | prior category spending $0 | 2026-11-02
+Card 101: expected 60 cents; actual 60 to 60 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 102: expected 40 cents; actual 40 to 40 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 103: expected 120 cents; actual 120 to 120 cents
+Actual total rate: 3.00%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 104: expected 40 cents; actual 40 to 40 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 105: expected 80 cents; actual 80 to 80 cents
+Actual total rate: 2.00%; base rate: 2.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (5 checks matched).
+
+Case 5: Other eligible purchase
+Expected: All five real cards match independently calculated cents.
+Purchase: $80.00 | Direct / ordinary purchase | prior category spending $0 | 2026-11-02
+Card 101: expected 120 cents; actual 120 to 120 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 102: expected 80 cents; actual 80 to 80 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 103: expected 120 cents; actual 120 to 120 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 104: expected 80 cents; actual 80 to 80 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 105: expected 160 cents; actual 160 to 160 cents
+Actual total rate: 2.00%; base rate: 2.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (5 checks matched).
+
+Case 6: Hotel
+Expected: All five real cards match independently calculated cents.
+Purchase: $200.00 | Capital One Travel | prior category spending $0 | 2026-11-02
+Card 101: expected 1000 cents; actual 1000 to 1000 cents
+Actual total rate: 5.00%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 102: expected 1000 cents; actual 1000 to 1000 cents
+Actual total rate: 5.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 103: expected 300 cents; actual 300 to 300 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 104: expected 200 cents; actual 200 to 200 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 105: expected 400 cents; actual 400 to 400 cents
+Actual total rate: 2.00%; base rate: 2.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (5 checks matched).
+
+Case 7: Issuer booking services stay separate
+Expected: A $200 Chase Travel hotel gives Chase $10, Quicksilver $3 and Savor $2.
+Card 103: expected 1000 cents; actual 1000 to 1000 cents
+Actual total rate: 5.00%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 101: expected 300 cents; actual 300 to 300 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 102: expected 200 cents; actual 200 to 200 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 103: expected 300 cents; actual 300 to 300 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (4 checks matched).
+
+Case 8: Entertainment service
+Expected: $100 through Capital One Entertainment gives Quicksilver $5 and Savor $8.
+Card 101: expected 500 cents; actual 500 to 500 cents
+Actual total rate: 5.00%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 102: expected 800 cents; actual 800 to 800 cents
+Actual total rate: 8.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (2 checks matched).
+
+Case 9: Cross the grocery cap
+Expected: $10 at 3% plus $20 at 1% = $0.50, with $5,990 already spent.
+Card 104: expected 50 cents; actual 50 to 50 cents
+Actual total rate: 3.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Observed: purchase split is $10 plus $20: yes
+Result: passed (2 checks matched).
+
+Case 10: Exhausted cap and separate category
+Expected: $30 groceries after $6,000 gives $0.30; unused gas gives $0.90.
+Card 104: expected 30 cents; actual 30 to 30 cents
+Actual total rate: 3.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 104: expected 90 cents; actual 90 to 90 cents
+Actual total rate: 3.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (2 checks matched).
+
+Case 11: Unknown cap use
+Expected: $30 has a $0.30-$0.90 range and no definite winner.
+Observed: actual range is 30-90 cents: yes
+Observed: unknown spending prevents a definite ranking: yes
+Result: passed (2 checks matched).
+
+Case 12: Unknown usage on a purchase larger than the cap
+Expected: $10,000 gives a maximum $220, not $300.
+Observed: range uses at most $6,000 at the bonus rate: yes
+Result: passed (1 checks matched).
+
+Case 13: Promotion expiry boundary
+Expected: Lyft $100 earns $2 on 2027-09-30 and $1.50 on 2027-10-01.
+Card 103: expected 200 cents; actual 200 to 200 cents
+Actual total rate: 2.00%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 103: expected 150 cents; actual 150 to 150 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (2 checks matched).
+
+Case 14: Flights do not get the Capital One hotel bonus
+Expected: $100 portal flight gives Quicksilver $1.50 and Savor $1.
+Card 101: expected 150 cents; actual 150 to 150 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 102: expected 100 cents; actual 100 to 100 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (2 checks matched).
+
+Case 15: Show both dining winners
+Expected: Savor and Freedom Unlimited both appear after the winners heading.
+Observed: both $1.50 winners are displayed: yes
+Observed: a lower result is not listed as a winner: yes
+Result: passed (2 checks matched).
+
+Case 16: Save and reload real IDs
+Expected: The existing format preserves all five real IDs in order.
+Observed: real-card wallet saved: yes
+Observed: actual reloaded IDs match the original wallet: yes
+Result: passed (2 checks matched).
+
+Case 17: Late damaged record
+Expected: A valid first real ID followed by unknown ID 6 leaves the current wallet alone.
+Observed: partial load did not replace the current wallet: yes
+Result: passed (1 checks matched).
+
+Case 18: Duplicate real IDs
+Expected: A duplicate 101 fails loading without changing the wallet.
+Observed: duplicate rejected and wallet preserved: yes
+Result: passed (1 checks matched).
+
+Case 19: Old sample save
+Expected: IDs 1 and 3 still identify Travel Sample and Cashback Sample.
+Observed: sample identities were not changed into bank products: yes
+Observed: samples cannot become real-card recommendations: yes
+Result: passed (2 checks matched).
+
+Case 20: Source and benefit notes
+Expected: Every real card has a link, date, restrictions and pricing notes.
+Observed: source, date and conditions display: yes
+Observed: source, date and conditions display: yes
+Observed: source, date and conditions display: yes
+Observed: source, date and conditions display: yes
+Observed: source, date and conditions display: yes
+Observed: activation deadline and paid renewal are visible: yes
+Observed: enrollment is visible: yes
+Result: passed (7 checks matched).
+
+Case 21: Money input
+Expected: Whole cents parse exactly; bad text, fractions, signs and excessive amounts are rejected.
+Observed: accepted amount has exact expected cents: yes
+Observed: accepted amount has exact expected cents: yes
+Observed: accepted amount has exact expected cents: yes
+Observed: accepted amount has exact expected cents: yes
+Observed: accepted amount has exact expected cents: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Result: passed (20 checks matched).
+
+Case 22: Calendar dates
+Expected: Leap years work; impossible, incomplete and malformed dates fail.
+Observed: leap day accepted: yes
+Observed: bad date leaves output unchanged: yes
+Observed: bad date leaves output unchanged: yes
+Observed: bad date leaves output unchanged: yes
+Observed: bad date leaves output unchanged: yes
+Observed: bad date leaves output unchanged: yes
+Observed: bad date leaves output unchanged: yes
+Observed: bad date leaves output unchanged: yes
+Observed: bad date leaves output unchanged: yes
+Result: passed (9 checks matched).
+
+Case 23: Invalid calculation inputs
+Expected: Negative, excessive, invalid-category, invalid-channel and invalid-date requests fail.
+Observed: negative amount rejected: yes
+Observed: overlarge amount rejected: yes
+Observed: unknown category rejected: yes
+Observed: impossible channel rejected: yes
+Observed: impossible date rejected: yes
+Observed: unknown marker must be exactly -1: yes
+Result: passed (6 checks matched).
+
+Case 24: Zero purchase
+Expected: All real cards return zero, including a capped category with unknown usage.
+Card 101: expected 0 cents; actual 0 to 0 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 102: expected 0 cents; actual 0 to 0 cents
+Actual total rate: 3.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 103: expected 0 cents; actual 0 to 0 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 104: expected 0 cents; actual 0 to 0 cents
+Actual total rate: 3.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 105: expected 0 cents; actual 0 to 0 cents
+Actual total rate: 2.00%; base rate: 2.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (5 checks matched).
+
+Case 25: Round only after adding split portions
+Expected: $0.50 at 3% plus $0.50 at 1% rounds to $0.02.
+Card 104: expected 2 cents; actual 2 to 2 cents
+Actual total rate: 3.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 104: expected 1 cents; actual 1 to 1 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (2 checks matched).
+
+Case 26: Largest supported purchase
+Expected: $1,000,000 at 2% gives $20,000 without overflow.
+Card 105: expected 2000000 cents; actual 2000000 to 2000000 cents
+Actual total rate: 2.00%; base rate: 2.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (1 checks matched).
+
+Case 27: Small display buffer
+Expected: Formatting reports failure instead of claiming a truncated result is complete.
+Observed: comparison reports insufficient space: yes
+Observed: card notes report insufficient space: yes
+Result: passed (2 checks matched).
+
+Case 28: Invalid wallet
+Expected: A negative count cannot be used for comparison or saving.
+Observed: invalid wallet rejected: yes
+Observed: invalid wallet cannot be saved: yes
+Result: passed (2 checks matched).
+
+Case 29: Superstore exclusion
+Expected: $100 at a superstore uses Savor and Amex base rates, both $1.
+Card 102: expected 100 cents; actual 100 to 100 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 104: expected 100 cents; actual 100 to 100 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (2 checks matched).
+
+Case 30: Console: save, restart and compare
+Expected: A fresh process loads five real IDs and reports both $1.50 dining winners.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved file contains the expected real IDs: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: restarted comparison shows correct rewards: yes
+Result: passed (6 checks matched).
+
+Case 31: Console: bad amount recovery
+Expected: Invalid text, negative and fractional-cent amounts are rejected before a correct comparison.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: three bad amounts were rejected: yes
+Observed: date recovery and correct comparison: yes
+Result: passed (4 checks matched).
+
+Case 32: Console: cap crossing
+Expected: Entered prior grocery spending gives the expected $0.50 split.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: cap split appears in the real menu: yes
+Result: passed (3 checks matched).
+
+Case 33: Console: unknown spending
+Expected: Blank prior spending shows a range and no definite winner.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: menu keeps unknown use visible: yes
+Result: passed (3 checks matched).
+
+Case 34: Real removal survives restart
+Expected: Removing real ID 103 and saving keeps the other four IDs after restart.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved removal is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removed card is absent after restart: yes
+Result: passed (6 checks matched).
+
+Summary: 34 passed, 0 failed, 0 skipped.

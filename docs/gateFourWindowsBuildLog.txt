@@ -1,0 +1,16 @@
+Gate 4 MinGW C11 cross-build. Windows runtime remains unverified.
+
+Command: x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror CreditCardThing/main.c CreditCardThing/cards.c CreditCardThing/realCards.c CreditCardThing/rewards.c CreditCardThing/rewardWindow.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/logger.c CreditCardThing/window.c -o build/cardClarity.exe -luser32 -lgdi32
+Command result: passed
+
+Command: x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tools/buildProject.c -o build/buildProject.exe
+Command result: passed
+
+Command: x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGateFour.c tests/testSupport.c CreditCardThing/cards.c CreditCardThing/realCards.c CreditCardThing/rewards.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/logger.c -o build/testGateFour.exe
+Command result: passed
+
+Command: x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testTwentyCards.c tests/testSupport.c CreditCardThing/cards.c CreditCardThing/realCards.c CreditCardThing/rewards.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/logger.c -o build/testTwentyCards.exe
+Command result: passed
+
+Command: x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testWindowResize.c -o build/testWindowResize.exe -luser32
+Command result: passed

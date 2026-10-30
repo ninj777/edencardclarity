@@ -38,6 +38,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="realCards.c"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="rewards.c"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="rewardWindow.c"><Filter>Source Files</Filter></ClCompile>
+    <ClInclude Include="realCards.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="rewards.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="rewardWindow.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="windowSizing.h"><Filter>Header Files</Filter></ClInclude>
     <ClInclude Include="window.h">
       <Filter>Header Files</Filter>
     </ClInclude>

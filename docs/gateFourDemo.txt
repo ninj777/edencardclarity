@@ -1,0 +1,103 @@
+Gate 4 demonstration
+Scheduled in the proposal: Monday, November 2, 2026. Lead: Joe Kwon.
+
+Prepare the computer
+
+1. Extract the whole project and build TestSolution.slnx in Visual Studio.
+2. Run with --gate4 --gui. The project already has these debugger arguments.
+3. Use a throwaway save for practice if needed:
+     build\cardClarity.exe --gate4 --gui --wallet-file gateDemoCards.txt
+4. Add the five real products. Save, close and reopen with the same arguments.
+5. Select each saved card. Scroll through its benefits, restrictions, pricing
+   notes, source link and October 30 check date. These are public snapshots.
+6. Open Compare a purchase. The examples below use November 2, 2026.
+   Amounts entered in the form are dollars, not cents.
+
+The six required purchases
+
+1. Eligible U.S. supermarket, $100, direct. Prior Amex grocery spending $0.
+   Savor: 3%, $100 * 0.03 = $3.
+   Blue Cash Everyday: 3%, $100 * 0.03 = $3.
+   Expected: both tie for the best estimated cashback.
+   Actual portable check: both $3.00. See Gate 4 case 1.
+
+2. Dining, $50, direct.
+   Savor and Freedom Unlimited: 3%, $50 * 0.03 = $1.50 each.
+   Expected: both tie for the best estimate.
+   Actual portable check: both $1.50. Cases 2 and 15.
+
+3. Eligible U.S. gas station, $60, direct. Prior Amex gas spending $0.
+   Blue Cash Everyday: 3%, $60 * 0.03 = $1.80.
+   Expected: Blue Cash Everyday wins.
+   Actual portable check: $1.80. Case 3.
+
+4. Drugstore, $40, direct.
+   Freedom Unlimited: 3%, $40 * 0.03 = $1.20.
+   Expected: Freedom Unlimited wins.
+   Actual portable check: $1.20. Case 4.
+
+5. Other eligible purchase, $80, direct.
+   Active Cash: 2%, $80 * 0.02 = $1.60.
+   Expected: Active Cash wins.
+   Actual portable check: $1.60. Case 5.
+
+6. Hotel, $200, Capital One Travel.
+   Quicksilver and Savor: 5%, $200 * 0.05 = $10 each.
+   Expected: those two tie. Chase does not earn its own portal bonus here.
+   Actual portable check: both $10.00; Chase $3.00. Case 6.
+
+Extra checks for the higher rating
+
+Tie: the dining example must name both Savor and Freedom Unlimited.
+Limit: eligible Amex supermarket $30 with $5,990 already spent that calendar
+year. $10 * 3% + $20 * 1% = $0.50. The display must explain both portions.
+Exhausted limit: use prior spending $6,000; that $30 earns $0.30 on Amex.
+Unknown limit: leave prior spending blank; Amex shows $0.30-$0.90 and the
+program does not claim a definite winner.
+Different portal: hotel $200 through Chase Travel gives Chase $10, while
+Quicksilver gives $3 and Savor gives $2.
+Date: qualifying Lyft $100 on 2027-09-30 gives Chase $2; on 2027-10-01 the
+modeled promotion has ended and the snapshot base estimate is $1.50.
+Invalid input: try a negative amount, letters, 1.001 and 2026-02-29, then a
+valid answer. No invalid value should become a calculation.
+
+What to explain
+
+The wallet stores stable IDs. The catalog holds names, rates and source notes.
+A Purchase struct groups the amount in cents, category, booking service,
+date and prior cap spending. RewardEstimate groups the result and whether
+it depends on unknown information. Enums name the choices. Functions do the
+work; an enum is a type, not a method.
+
+The calculator gets the total eligible rate, splits at a cap if needed,
+rounds the complete reward once, and compares the selected real cards.
+The console and window call that same code. The old sample calculation is
+separate and does not determine a real card's advertised reward.
+
+Benefit notes must stay visible: Amex streaming credit needs enrollment;
+Chase's DashPass has an activation deadline and paid renewal. These are not
+automatically counted as cash. Source dates do not guarantee later terms.
+Unknown pricing is labeled unconfirmed. An annual fee of $0 does not mean
+there are no other costs. Estimates exclude interest and transaction fees.
+
+Bring the evidence
+
+The running build, the source folder, docs/gateFourResearch.txt,
+docs/gateFourBuildLog.txt, docs/gateFourTestLog.txt and this example sheet.
+The Windows cross-build log proves compilation only. Run the actual Windows
+checks before claiming the window works on the presentation computer.
+
+Windows check record - complete only after actually checking
+
+Computer and compiler:
+Build result:
+Five cards added and reopened from the save:
+All six examples and tie/cap results:
+Sources readable by scrolling:
+Tab, Enter, Escape, resizing and close prompts:
+Save and reload on Windows:
+Problems found and actual retest results:
+Reviewer and date:
+
+This sheet and the software checks support the proposal's Gate 4 criteria.
+They do not replace the teacher's rating or a real teammate's review.

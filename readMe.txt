@@ -1,193 +1,191 @@
-CardClarity, Gates 1 and 2
+CardClarity - Gate 4
 
-All application code, C checks, and the restart demonstration are C11.
-No HTML or CSS is used. That is within the proposal's 5% maximum.
-The five card names and rates are invented practice data, not bank offers.
-The save contains card IDs, not payment details.
+Start here
 
-The explanations are in the code
+This version starts from GitHub main's Gate 2 code at b907959. It keeps the
+original C files, sample cards, wallet format and Windows window. Gate 4 adds
+twenty researched U.S. card summaries and purchase comparisons. This uses
+the existing C records; it does not need a database server or bank login.
 
-Oliver's assigned menu, feature checklist, gate requirements, and build notes:
-CreditCardThing/main.c, window.c, window.h, logger.c, and logger.h.
+Open TestSolution.slnx in Visual Studio. Choose x64 and build the solution.
+The project uses the v145 toolset; retarget it if your installed version uses
+another toolset. Install the Desktop development with C++ workload to get
+Microsoft's C compiler and Windows SDK. Our source still compiles as C11.
+Press the local debugger button. Its arguments are now --gate4 --gui.
 
-Eden's assigned input, wallet, and saved-file explanations:
-CreditCardThing/input.c, input.h, wallet.c, wallet.h, storage.c, and storage.h.
-The example file format and loading/saving rules are at the top of storage.c.
+If the files sidebar is missing, choose View > Solution Explorer.
 
-Joe's assigned card records, types, stable IDs, and practice formula:
-CreditCardThing/cards.c and cards.h. The exact sample values are in initTestCards.
+The download's build/cardClarity.exe is a Windows cross-build. Compilation
+passed here, but its window has not been run here. Check the actual Windows
+computer before the presentation. Visual Studio itself remains unverified.
 
-Evan's assigned expected/actual cases and test support:
-tests/testGate1.c, testGate2.c, testModules.c, testSupport.c, testSupport.h,
-and demoGate2.c. The real teammate-review record is at the top of testGate1.c.
+Commands
 
-Open and run in Visual Studio
+  build\cardClarity.exe --gate4 --gui
+  build\cardClarity.exe --gate4
+  build\cardClarity.exe --gate4 --wallet-file myDemoCards.txt
+  build\cardClarity.exe --gate4 --gui --wallet-file myDemoCards.txt
 
-Extract the whole folder. Open TestSolution.slnx, choose Debug and x64, then
-press Ctrl+Shift+B to build. Press Ctrl+F5 to open the window. If the solution
-will not open, open CreditCardThing/CreditCardThing.vcxproj instead.
+Gate 4 normally uses realSavedCards.txt. The old commands still work:
+  build\cardClarity.exe --gate1
+  build\cardClarity.exe
+  build\cardClarity.exe --gui
+  build\cardClarity.exe --wallet-file anotherSampleSave.txt
 
-Visual Studio needs a Windows SDK and its native desktop compiler workload.
-Microsoft calls that installer item Desktop development with C++; this project
-still compiles every application file as C. The project uses toolset v145.
-If it is missing, select an installed toolset in the project's General settings.
-Visual Studio 2022 normally uses v143. Rebuild after changing the toolset.
+Those earlier modes normally use savedCards.txt. Sample IDs 1-5 keep their
+original meaning. Real IDs 101-120 are separate. Do not replace an old sample
+name with a bank name or reuse its ID. Both save formats store up to five
+selected card types; they never need a payment number or bank password.
 
-In the window, select a sample on the left to see its example details. Add to
-my wallet puts it in the lower list. Select a wallet card before removing it.
-Save cards keeps the list; Reload saved restores the last save. The window
-asks before discarding unsaved changes. Tab moves between controls.
+How to demonstrate Gate 4
 
-The default save is savedCards.txt in the project root when launched from
-Visual Studio. That is the folder containing this readMe.txt.
+Follow docs/gateFourDemo.txt. Add the original five real cards for its six
+calculation examples, save, close and reopen. For the expanded catalog,
+follow docs/twentyCardStatus.txt. Search by part of a card name in the window.
+Clear the search to see all twenty. A missing match does not mean your card
+doesn't exist; it may not be included here. Don't substitute a similar product.
+Select a saved card to read its benefits and conditions. Open Compare a
+purchase, choose a category, amount, booking service and purchase date.
+For Blue Cash Everyday grocery/gas/online-retail purchases, enter the spending
+already used in that same category and calendar year before this purchase.
+Leave it blank if unknown. The app does not track purchases automatically.
 
-Running the executable without arguments opens the console menu.
---gate1 selects the earlier three-option starter.
---wallet-file path selects another save for the console.
---gui opens the window with the default save.
---gui --wallet-file path selects another save for the window.
+The six required examples and extra tie/cap/date checks are in the demo sheet.
+The calculator compares only the real cards in the wallet. Practice cards are
+clearly excluded. It shows all rounded ties and refuses to call a conditional
+range a definite winner. Its figures are cashback estimates, not net profit.
 
-Windows build and C checks
+What is researched
 
-Open Developer Command Prompt for Visual Studio in the project root.
-Run the following commands one at a time. Check each build and exit status.
+101: Capital One Quicksilver Rewards
+102: Capital One Savor Rewards
+103: Chase Freedom Unlimited
+104: American Express Blue Cash Everyday
+105: Wells Fargo Active Cash
+106: Chase Freedom Flex
+107: Chase Sapphire Preferred
+108: Chase Sapphire Reserve
+109: American Express Gold
+110: American Express Platinum
+111: American Express Blue Cash Preferred
+112: Capital One Venture Rewards
+113: Capital One Venture X Rewards
+114: Citi Double Cash
+115: Citi Strata Premier
+116: Discover it Cash Back
+117: Bank of America Customized Cash Rewards
+118: Amazon Prime Visa
+119: Costco Anywhere Visa by Citi
+120: Wells Fargo Autograph
 
-if not exist build mkdir build
-msbuild CreditCardThing\CreditCardThing.vcxproj /t:Rebuild /p:Configuration=Debug /p:Platform=x64 /p:OutDir=..\build\windows\ /fl /flp:logfile=docs\windowsBuildLog.txt
-cl /nologo /std:c11 /TC /W4 /D_CRT_SECURE_NO_WARNINGS tests\testGate1.c tests\testSupport.c /Febuild\testGate1.exe /Fobuild\
-cl /nologo /std:c11 /TC /W4 /D_CRT_SECURE_NO_WARNINGS tests\testGate2.c tests\testSupport.c /Febuild\testGate2.exe /Fobuild\
-cl /nologo /std:c11 /TC /W4 /D_CRT_SECURE_NO_WARNINGS tests\demoGate2.c tests\testSupport.c /Febuild\demoGate2.exe /Fobuild\
-cl /nologo /std:c11 /TC /W4 /D_CRT_SECURE_NO_WARNINGS tests\testModules.c CreditCardThing\cards.c CreditCardThing\logger.c /Febuild\testModules.exe /Fobuild\
-build\testGate1.exe build\windows\CreditCardThing.exe > docs\windowsGate1Log.txt 2>&1
-build\testGate2.exe build\windows\CreditCardThing.exe > docs\windowsGate2Log.txt 2>&1
-build\testModules.exe > docs\windowsModuleLog.txt 2>&1
-build\demoGate2.exe build\windows\CreditCardThing.exe > docs\windowsDemoLog.txt 2>&1
-build\windows\CreditCardThing.exe --gui
+Issuer sources were checked October 30, 2026, before coding the new feature.
+docs/twentyCardResearch.txt explains this expansion's sources and remaining
+gaps. docs/cardTermsFollowUp.txt records the deeper agreement and fee-table
+checks, including which sources were read directly and which were available
+as issuer-indexed text. docs/gateFourResearch.txt records the first research.
+Each in-app record also shows its source and check date. Some full pricing
+disclosures were unavailable. Those details say unconfirmed; they are not zero.
 
-The tests use temporary folders rather than the normal saved wallet. On Windows,
-expect 29 passes and two skips for Gate 1, and 37 passes and two skips for Gate 2.
-Those are expected totals, not a completed Windows run. The skipped cases need
-Linux or check the unsupported-window message on another system.
+This is a selection of common cards, not a verified popularity ranking or
+every available card. It is not a complete account agreement. Estimates
+assume eligible domestic purchases in USD, accurate
+merchant categories and the exact named booking service. Ordinary snapshot
+rates are applied to the entered date; this is not a historical-offer lookup.
+The dated Lyft promotion is checked against its modeled expiration.
 
-Linux build and C checks
+Category rates are total rates. A stated 3% is not added to a second base
+rate. Capped purchases split between bonus and base rates. Money stays in
+whole cents; the displayed estimate rounds once to the nearest cent, with a
+half cent rounded upward. A bank's actual posting can differ.
 
-Run these from the project root. Use clang instead of gcc for another compiler.
+The program displays benefit activation, renewal and expiration notes. It
+does not enroll anyone or automatically add credits, insurance, introductory
+bonuses, interest or transaction fees to a purchase comparison. This version
+does not link bank accounts or update terms online.
 
-mkdir -p build
-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror CreditCardThing/main.c CreditCardThing/cards.c CreditCardThing/logger.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/window.c -o build/cardClarity
-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGate1.c tests/testSupport.c -o build/testGate1
-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGate2.c tests/testSupport.c -o build/testGate2
-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testModules.c CreditCardThing/cards.c CreditCardThing/logger.c -lm -o build/testModules
-gcc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/demoGate2.c tests/testSupport.c -o build/demoGate2
-./build/cardClarity
-./build/testGate1 ./build/cardClarity
-./build/testGate2 ./build/cardClarity
-./build/testModules
-./build/demoGate2 ./build/cardClarity
+The first five real cards still have the original cashback comparisons.
+Blue Cash Preferred also has eligible streaming, gas and transit estimates;
+its grocery result is a range because the form does not collect that card's
+own prior spending. Everyday's allowance must not be reused for Preferred.
+Eligible Lyft rides also count as Preferred transit and earn 3% in this model.
+The other new cashback cards need extra activation, payment, membership,
+merchant or cap checks. They show their rules and say that comparison needs
+review. Points and miles keep their units and are not assigned a guessed
+cash value. If any saved card needs review, there is no overall wallet winner.
+All twenty can be read, added, removed, saved and reloaded. The wallet still
+holds up to five selected card types at once.
 
-Each test runner prints its date, expected results, actual observations, and
-passed/failed/skipped counts. A failed check returns a nonzero exit status.
-The process support stops a program that takes longer than five seconds.
-Redirect the output to a file to keep another run. Keep the compiler output too.
+APR means the yearly borrowing rate; a variable rate can change. An intro
+period ends. A credit is a refund or allowance only after its requirements
+are met. An annual fee of $0 does not mean there are no other charges.
+The app shows known costs before benefits and marks unavailable pricing.
 
-What to show for Gate 1
+Build and tests
 
-Run build\windows\CreditCardThing.exe --gate1 on Windows, or
-./build/cardClarity --gate1 on Linux. Show the three numbered choices.
-Enter 1 to display all five samples. Enter hello to show a rejected answer,
-then 1 to show that valid input still works. Enter 2 to show the feature plan.
-Enter 3 to show normal exit. Keep the build output and expected/actual results.
-The feature checklist and assigned modules are at the top of main.c.
-A real teammate needs to complete the review record in tests/testGate1.c
-for a possible Gate 1 rating of 4. The teacher determines the actual rating.
+On Windows, open an x64 Native Tools Command Prompt in this folder:
+  cl /nologo /TC /std:c11 /W4 /D_CRT_SECURE_NO_WARNINGS tools\buildProject.c /FebuildProject.exe
+  buildProject.exe
 
-What to show for Gate 2
+On Linux:
+  cc -std=c11 -Wall -Wextra -Wpedantic -Werror tools/buildProject.c -o buildProject
+  ./buildProject
 
-Use a separate demo file and the same path on every restart. On Windows:
+The C helper builds the application and five C check programs, then runs
+them. It stops if a command fails. It writes real build output to
+docs/gateFourBuildLog.txt and expected/actual results to
+docs/gateFourTestLog.txt. Copy those files first if you want to keep an older
+run before testing again.
 
-if not exist build\demo mkdir build\demo
-build\windows\CreditCardThing.exe --wallet-file build\demo\demoCards.txt
+With MinGW installed, the Linux helper can also compile the Windows program:
+  ./buildProject --cross
+That writes docs/gateFourWindowsBuildLog.txt. It does not run Windows.
 
-If that file already exists, inspect it or choose a new demo name. Open the
-wallet with 2. Add with 2, choose card 1, then add card 3 the same way. View
-with 1 and save with 4. Go Back with 6, then Exit with 3.
+Both wallet windows and the purchase form now move their controls together
+when resizing, then repaint the old and new areas. The purchase form can
+also be resized and maximized. The minimum size leaves space for its fields.
+On Windows, the C helper also builds an optional desktop resize check:
+  build\testWindowResize.exe build\cardClarity.exe
+This opens temporary test copies of both modes and the purchase form. It
+checks bounds, overlaps and responsiveness through repeated resizing,
+minimize/restore and maximize/restore. Watch for visual trails and flickering
+too; those require a person's observation. This desktop check was compiled
+here but has not been run here. See docs/windowResizeFix.txt.
 
-Run the same command again. View both cards, remove card 1 with option 3,
-and save again. Reload with 5 and view the list. Only Cashback Sample should
-remain. Exit and restart again to show that the removal stayed saved.
+Current recorded results: 40 original module checks, 31 Gate 1 menu cases,
+39 Gate 2 cases, 34 Gate 4 cases and 31 expanded-catalog cases pass on Linux.
+The MinGW C11 build passes
+with warnings treated as errors. Native Visual Studio execution and desktop
+appearance, keyboard use, scrolling, dialogs and Windows replacement still
+need checks on the demo computer. See docs/gateFourStatus.txt for the limits
+of the recorded results and the sanitizer check.
 
-Try a bad menu answer and a duplicate card. For a damaged-file example, use
-a different file containing these four lines:
+The old docs/gate2 logs describe an earlier version. They are kept as earlier
+evidence, not claimed as current runs. No teammate review or teacher approval
+has been filled in automatically. The teacher decides the gate rating.
 
-cardClarityWallet1
-2
-1
-1
+Where the code is
 
-That duplicate-ID file should be rejected without crashing. Do not save over
-the fixture during the demonstration. A full list, missing file, bad count,
-and failed save are also covered by the C cases.
+main.c joins the console actions and chooses a gate mode.
+window.c is the original Windows wallet view, extended for real records.
+rewardWindow.c contains the small purchase form.
+windowSizing.h batches control moves and calculates the minimum window frame.
+cards.c/cards.h keep the original sample records and shared Card type.
+realCards.c/realCards.h hold the twenty sourced products and benefit notes.
+rewards.c/rewards.h calculate and format purchase comparisons.
+input.c checks whole numbers, money and dates.
+wallet.c handles selected IDs, duplicates, count and removal.
+storage.c validates a complete temporary wallet before replacing the open one.
+logger.c keeps the original optional startup logger.
+tests/testGateFour.c records the six purchase examples and extra checks.
+tests/testTwentyCards.c checks each catalog product through the actual menu,
+its saved ID, fee notes, reward units, missing-card searches and comparison
+limits. The optional Windows runner also checks the live search controls.
 
-To show the window with the same demo save:
+The proposal assigns Joe card data and expected values, Oliver menu/build and
+comparison integration, Eden input and storage checks, and Evan test evidence
+and readable results. Comments identify those areas. File sizes do not prove
+who personally wrote a line or performed a review.
 
-build\windows\CreditCardThing.exe --gui --wallet-file build\demo\demoCards.txt
-
-Check Add, Remove, Save cards, Reload saved, restarting, resizing, Tab/Space,
-and the unsaved close/reload prompts. The window uses the same storage code.
-
-Evidence and checks still needed
-
-docs/gate2BuildLog.txt contains actual commands, compiler versions, and results.
-docs/gate2TestLog.txt contains actual C runner observations and module results.
-docs/gate2DemoLog.txt contains the three-process save/remove/restart output.
-The recorded native builds passed 31 Gate 1 cases, 39 Gate 2 cases, 40 module
-checks, and the restart demo on GCC, Clang, and the checked build. Leak checking
-was disabled for that checked build. The Windows application and C check
-programs cross-compiled; Visual Studio and Windows runtime remain unverified.
-
-Record the demo computer's actual results after running it:
-Name and date: _________________________________________________________
-Computer and compiler: _________________________________________________
-Build result and saved log: ____________________________________________
-Gate 1 startup/samples/invalid input/exit: ______________________________
-Gate 2 add/view/remove: ________________________________________________
-Save over an existing file: ____________________________________________
-Restart and reload: ___________________________________________________
-Damaged file: _________________________________________________________
-Window buttons, text, resize, and keyboard: ____________________________
-Unsaved-close and reload prompts: ______________________________________
-Any bug, change, and actual retest: _____________________________________
-
-The proposal's four-student/six-investigator exception still needs staff
-confirmation. A passing test count does not supply that approval or a review.
-The later Gate 3 QA report and Gate 4 benefits/comparison work are still separate
-milestones. The current program does not yet complete the full purchase tool.
-
-Current assigned source sizes, including these comments
-
-Oliver: 887 lines across the assigned source and headers.
-  CreditCardThing/main.c: 318
-  CreditCardThing/window.c: 478
-  CreditCardThing/window.h: 14
-  CreditCardThing/logger.c: 56
-  CreditCardThing/logger.h: 21
-Eden: 479 lines across the assigned source and headers.
-  CreditCardThing/input.c: 113
-  CreditCardThing/input.h: 29
-  CreditCardThing/wallet.c: 105
-  CreditCardThing/wallet.h: 39
-  CreditCardThing/storage.c: 165
-  CreditCardThing/storage.h: 28
-Joe: 262 lines across the assigned source and headers.
-  CreditCardThing/cards.c: 181
-  CreditCardThing/cards.h: 81
-Evan: 1,437 lines across the assigned source and headers.
-  tests/testGate1.c: 299
-  tests/testGate2.c: 437
-  tests/testModules.c: 69
-  tests/testSupport.c: 520
-  tests/testSupport.h: 56
-  tests/demoGate2.c: 56
-
-These are file sizes, including comments and blank lines, not personal
-authorship or time measurements. The pre-annotation snapshot is in main.c.
+All application, test and build-helper source is C. Visual Studio's XML files
+are project settings. Documentation is plain text; there are no Markdown,
+Python, C++, JavaScript, HTML/CSS or shell/batch helper files.

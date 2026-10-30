@@ -12,7 +12,9 @@ startup messages as evidence that a gate passed.
 #include <stdio.h>
 #include <stdbool.h>
 #include <time.h>
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 #include "logger.h"
 
@@ -20,9 +22,13 @@ static double startTime;
 static bool loggerReady = false;
 
 static double getTimeMilliseconds(void) {
+#ifdef _WIN32
+	return (double)GetTickCount64();
+#else
 	struct timespec now = { 0 };
 	timespec_get(&now, TIME_UTC);
 	return (double)now.tv_sec * 1000.0 + now.tv_nsec / 1000000.0;
+#endif
 }
 
 void logMessage(char* message, enum LogLevel level) {

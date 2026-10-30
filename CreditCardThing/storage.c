@@ -14,7 +14,9 @@ The first line identifies the format. The count says how many ID lines follow.
 For an empty wallet, I write the header and 0, then no IDs. Names and rates
 come from Joe's catalog instead of another copy in the file.
 
-I allow zero through five unique IDs. Number lines can have surrounding
+I allow zero through five unique IDs. Gate 4 also accepts the researched
+IDs 101-120; the unused numbers between 5 and 101 remain invalid.
+Number lines can have surrounding
 whitespace, either line-ending style works, and the last ID doesn't need a
 newline. The header must match exactly, with no byte-order mark. Unknown or
 duplicate IDs, missing records, and anything after the declared count fail.
@@ -59,7 +61,10 @@ checked on a real Windows computer.
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
+#ifdef _WIN32
 #include <windows.h>
+#endif
+#include "realCards.h"
 #include "input.h"
 #include "storage.h"
 
@@ -83,7 +88,8 @@ static enum StorageResult readSavedWallet(FILE* file, Wallet* loaded) {
 	}
 	for (int i = 0; i < count; i++) {
 		int cardId;
-		result = readNumber(file, 1, SAMPLE_CARD_COUNT, &cardId);
+		/* Gaps between sample and real IDs still fail addWalletCard's lookup. */
+		result = readNumber(file, 1, LAST_REAL_CARD_ID, &cardId);
 		if (result != INPUT_OK) {
 			if (result == INPUT_ERROR) {
 				return STORAGE_READ_ERROR;
@@ -149,8 +155,12 @@ enum StorageResult saveWallet(const char* filePath, const Wallet* wallet) {
 		return STORAGE_WRITE_ERROR;
 	}
 	/* I use this Windows function to replace an older save after writing succeeds. */
+#ifdef _WIN32
 	bool replaced = MoveFileExA(temporaryPath, filePath,
 		MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH) != 0;
+#else
+	bool replaced = rename(temporaryPath, filePath) == 0;
+#endif
 	if (!replaced) {
 		remove(temporaryPath);
 		return STORAGE_WRITE_ERROR;

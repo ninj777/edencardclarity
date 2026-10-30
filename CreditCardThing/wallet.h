@@ -2,7 +2,7 @@
 Eden Yun Yu - wallet declarations
 
 I store catalog IDs in cardIds and the used length in count. The five-slot
-limit matches the catalog. WalletResult gives the caller a reason when an
+limit keeps this starter wallet small. WalletResult gives the caller a reason when an
 addition fails: unknown ID, full list, or duplicate. Modifying functions take
 Wallet*; read-only functions take const Wallet*. The steps are in wallet.c.
 */
@@ -12,7 +12,7 @@ Wallet*; read-only functions take const Wallet*. The steps are in wallet.c.
 #include <stdbool.h>
 #include "cards.h"
 
-/* I allow every card in the five-card catalog once. */
+/* I keep the original five-slot capacity; each selected ID must be unique. */
 #define MAX_WALLET_CARDS SAMPLE_CARD_COUNT
 
 typedef struct {

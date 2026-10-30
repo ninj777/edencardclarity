@@ -1,0 +1,201 @@
+Twenty-card research review
+Checked October 30, 2026, before adding these records.
+
+Follow-up: cardTermsFollowUp.txt records a deeper pass through fee tables,
+agreements and benefit guides. It replaces the first-pass availability notes
+below where a later source was found, and records the remaining access limits.
+
+Selection
+
+This is a practical selection of twenty common U.S. personal reward cards,
+not an audited ranking of the twenty largest products by account count.
+WalletHub's popularity answer and CardRatings' 2026 survey/editorial list
+were checked for context. Website interest, satisfaction and recommendation
+rankings measure different things. Neither proves a product-level top twenty.
+No popularity positions or cardholder totals have been invented.
+https://wallethub.com/answers/cc/most-used-credit-cards-2140830862/
+https://www.cardratings.com/cardratings-experts-announce-top-credit-cards.html
+
+Method
+
+For each card, check the individual issuer page, then reward conditions,
+pricing disclosures and available benefit guides. Issuer marketing claims
+alone do not establish automatic savings. Read monthly/quarterly allowances,
+required purchases, enrollment, paid renewals, spending caps, redemption
+restrictions and insurance exclusions. Keep dated agreements separate from
+current application offers. Financial figures below are public snapshots;
+a person's account agreement or a later offer can differ.
+
+The existing five products were rechecked. Original sample IDs 1-5 stay
+unchanged; real IDs 101-105 keep their names. New IDs continue through 120.
+Citi Custom Cash was considered, but its issuer page returned Not Available.
+It is not presented as an available new-account offer. Autograph is included
+instead. This selection is not an endorsement or application recommendation.
+
+Scope and missing information
+
+Research covers the twenty products listed below, with per-card limitations
+shown in the app. Complete personalized agreements and every policy/claim
+exception were not available. Several pricing links were blocked, expired or
+rendered blank. Missing fees remain explicitly unconfirmed, never zero.
+This is not a claim that all twenty account contracts are completely verified.
+Cash advances, transfers, installments and late payments may have costs even
+on cards with no annual fee. Publicly accessible sources were checked; no
+application or bank login was submitted.
+
+Specific checks that changed common assumptions
+
+Sapphire Preferred's June 2026 update changed earning categories, hotel credit
+and transfer rules. Reserve and Amex Platinum have higher current annual fees.
+Blue Cash Preferred's current Disney allowance differs from older summaries.
+Venture X lounge access has guest/additional-member costs and a spending rule.
+Costco card rewards use an annual certificate and paid membership; Prime
+Visa's higher earning needs a separate eligible membership. Double Cash's
+second purchase reward requires payment. Discover's current calendar did not
+load its eligible merchants, so no quarterly category list was invented.
+
+In-app presentation
+
+Show costs before benefits. Label all rates as cashback, points or miles.
+Show introductory periods separately from ongoing charges. Show allowance
+periods and purchase requirements instead of adding headline annual values.
+Never convert a point/mile into cash without a supported redemption choice.
+Do not rank a complex card as a definite cashback winner when required
+membership, activation, payment, cap, merchant or valuation inputs are missing.
+The existing five-card comparisons still serve the six Gate 4 examples.
+
+Individual source checks
+
+101. Capital One Quicksilver Rewards
+Product/earnings checked; full pricing and account-specific insurance guide incomplete. This is Quicksilver Rewards, not QuicksilverOne or a student/secured variant.
+https://www.capitalone.com/credit-cards/quicksilver/
+
+102. Capital One Savor Rewards
+Current no-annual-fee Savor Rewards version. Full pricing and card-specific protection limits remain incomplete; do not use old annual-fee Savor terms.
+https://www.capitalone.com/credit-cards/savor/
+
+103. Chase Freedom Unlimited
+Protection claims require the applicable guide and covered payment. Full pricing remains incomplete. No subscription, welcome bonus or insurance value is added to purchase cashback.
+https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited
+https://asset.chase.com/content/dam/card/rulesregulations/en/RPA0509_Web.pdf
+
+104. American Express Blue Cash Everyday
+Purchase/rental protections have exclusions; rental coverage is secondary and excludes liability. Current offer APR and any amendments to the March agreement remain unverified.
+https://www.americanexpress.com/us/credit-cards/card/blue-cash-everyday/
+https://www.americanexpress.com/content/dam/amex/en-us/company/legal/cardmember-agreements/public-site-2026-q1-pdf-cmas/cps-lending/blue-cash-everyday-03-31-2026.pdf
+
+105. Wells Fargo Active Cash
+Product, pricing and guide reviewed. Published terms are channel-specific; account amendments and claim deadlines still control. Insurance is not cash back.
+https://creditcards.wellsfargo.com/active-cash-credit-card/
+https://www.wellsfargo.com/credit-cards/active-cash/terms/?FPID=012686I6F40000&cx_nm=CXNAME_CSMPD&product_code=CC&sub_channel=WEB&subproduct_code=AC&vendor_code=WF
+https://www.wellsfargo.com/credit-cards/active-cash/guide-to-benefits/
+
+106. Chase Freedom Flex
+Catalog and conditions are shown; calculator review required for activation, shared-cap usage and stacking. No definite cashback ranking is generated for this card.
+https://creditcards.chase.com/cash-back-credit-cards/freedom/flex
+https://asset.chase.com/content/services/structured-document/document.en.pdf/card/benefits-center/product-benefits-guide-pdf/BGC11542.pdf
+
+107. Chase Sapphire Preferred
+June 2026 updates checked: old $50 hotel-credit and ongoing 10% anniversary-bonus claims are outdated. Hyatt transfer ratio is 4:3 under current rules. Use current guide for covered events, exclusions and claim deadlines.
+https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred
+https://media.chase.com/news/Meet-the-New-Chase-Sapphire-Preferred
+https://static.chasecdn.com/content/services/structured-document/document.en.pdf/card/benefits-center/product-benefits-guide-pdf/BGC11599.pdf
+
+108. Chase Sapphire Reserve
+Guide reviewed: trip delay over six hours/overnight, up to $500/covered traveler; rental cover has vehicle, payment and liability exclusions. Spending-gated extras are not automatic. Full account-specific pricing and every partner credit condition remain outside this summary.
+https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve
+https://www.chase.com/sapphire-cards/personal/reserve
+https://static.chasecdn.com/content/services/structured-document/document.en.pdf/card/benefits-center/product-benefits-guide-pdf/508_BGC11559_SAPPHIRE_RESERVE-1.pdf
+
+109. American Express Gold
+Rental insurance is secondary and excludes liability; country/vehicle exclusions apply. Trip-delay cover requires eligible fully paid round-trip and covered delay over 12 hours, up to $300/trip, two claims/12 months. Full offer pricing not verified.
+https://www.americanexpress.com/us/credit-cards/card/gold-card/
+https://www.americanexpress.com/en-us/credit-cards/credit-intel/gold-card-annual-fee/
+
+110. American Express Platinum
+Hotel Collection needs two nights; FHR credit also needs two nights from 2027-01-01. Delta lounge access is limited to ten eligible visits, not unlimited; Priority Pass enrollment and guest charges apply. These maximum allowances are not guaranteed savings or automatic fee offsets. Current pricing and complete protection terms remain unverified.
+https://www.americanexpress.com/us/credit-cards/card/platinum/
+https://www.americanexpress.com/en-us/credit-cards/credit-intel/amex-gold-vs-platinum/
+
+111. American Express Blue Cash Preferred
+App models eligible grocery cap, streaming, gas and transit. Prior spending must be this card's own grocery spending, not Blue Cash Everyday's spending. Unavailable pricing is explicitly incomplete.
+https://www.americanexpress.com/us/credit-cards/card/blue-cash-preferred/
+https://www.americanexpress.com/en-us/credit-cards/credit-intel/amex-gold-vs-blue-cash-preferred/
+
+112. Capital One Venture Rewards
+Do not assume lounge access is included: Venture holders can face entry charges. Rental protection depends on the card version and guide. Current public page and travel rules checked; full fee/insurance disclosure incomplete.
+https://www.capitalone.com/credit-cards/venture/
+https://capitalonetravel.com/airport-lounges
+
+113. Capital One Venture X Rewards
+Primary issuer/travel rules checked. Account-specific fee/insurance disclosure incomplete. Do not subtract a credit or assumed lounge value from the $395 fee unless the user actually qualifies and uses it.
+https://www.capitalone.com/credit-cards/venture-x/
+https://capitalonetravel.com/airport-lounges/lounge-access-guide
+https://www.capitalone.com/learn-grow/more-than-money/all-about-venture-x/
+
+114. Citi Double Cash
+Calculator review required for payment/qualification timing. Product/rewards and fee-free annual status verified; complete current pricing is unavailable. Extended warranty is secondary coverage with exclusions, not an automatic reimbursement.
+https://www.citi.com/credit-cards/citi-double-cash-credit-card
+https://www.citi.com/credit-cards/rewards-credit-cards
+
+115. Citi Strata Premier
+Product lists trip cancellation/interruption, trip delay, lost/damaged luggage and rental cover, but full current claim limits/guide were not obtained. Do not assume all delays or rental liability are covered. New-account bonus eligibility has prior-card restrictions; no bonus is included in estimates.
+https://www.citi.com/credit-cards/citi-strata-premier-credit-card
+https://www.citi.com/credit-cards/travel-reward-credit-cards
+
+116. Discover it Cash Back
+Calculator review required for the current calendar, activation and cap use. Product/standard earning checked; complete current pricing and detailed promotional terms remain incomplete. Do not assume travel or purchase insurance is included.
+https://www.discover.com/credit-cards/cash-back/it-card/
+https://www.discover.com/credit-cards/cash-back/cashback-calendar.html
+
+117. Bank of America Customized Cash Rewards
+Calculator review required for chosen category, account age, shared cap and tier. Current offer and category exclusions checked. No statement-credit, bank-balance or promotional maximum is counted as guaranteed cash.
+https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/
+https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/cash-back-category-choices/
+
+118. Amazon Prime Visa
+Calculator review required for exact merchant, membership and financing selection. Public reward terms checked. Protection benefits require current guide; no automatic insurance or membership-cost offset is assumed.
+https://creditcards.chase.com/cash-back-credit-cards/amazon-prime-rewards
+https://www.aboutamazon.com/news/retail/amazon-prime-free-trial
+
+119. Costco Anywhere Visa by Citi
+Calculator review required for merchant eligibility, shared gas use and membership. Rental cover excludes liability and has payment/waiver conditions. Emergency/roadside referral services can charge for work performed. Exact claim guide and current pricing remain incomplete.
+https://www.citi.com/credit-cards/costco-anywhere-visa-card
+https://customerservice.costco.com/app/answers/answer_view/a_id/1013504/~/membership-fee-increase
+
+120. Wells Fargo Autograph
+Pricing, product and insurance guide checked. Account amendments, claim deadlines and applicable coverage exclusions still control. No subscription, insurance payout or welcome bonus is treated as spendable cash.
+https://creditcards.wellsfargo.com/autograph-visa-credit-card/
+https://www.wellsfargo.com/credit-cards/autograph-visa/terms/?FPID=012988I6P10000&cx_nm=CXNAME_CSMPD&product_code=CC&sub_channel=WEB&subproduct_code=AU&vendor_code=WF
+https://www.wellsfargo.com/credit-cards/autograph-visa/guide-to-benefits/
+
+Source access notes
+
+The three current Chase insurance guides linked by the issuer were opened:
+Preferred BGC11599 (effective June 14, 2026), Reserve 508_BGC11559,
+and Flex BGC11542. Wells Fargo's active guides were opened and describe
+benefits effective September 15, 2025. Eligibility, claim limits and excluded
+losses were checked; insurance is never a guaranteed payout.
+The March 31, 2026 Amex Everyday agreement was read as dated agreement data.
+It does not establish a later applicant's personalized APR or amendments.
+Citi's current product pages and issuer-indexed listings were checked, but
+some dynamically loaded fee boxes were blank. No third-party fee number was
+promoted into a verified current fee. Capital One's lounge guide rendered
+only its shell; matching issuer-indexed lounge conditions and its issuer
+explanatory page were available. This limitation stays visible in the record.
+
+Research conclusion
+
+All twenty records have been investigated and have dated primary sources.
+Supported facts and remaining gaps are recorded before implementation.
+The app must call these researched summaries, not complete account contracts
+or an official popularity ranking. A future source change needs another check.
+Additional benefit cross-check before implementation
+
+Venture X's issuer explanation confirms 10,000 miles beginning at the first
+anniversary, plus collection-specific on-property benefits. Reserve's live
+terms also identify activation and period limits for StubHub, Lyft, Peloton
+and DoorDash; these were added to its summary without treating them as cash.
+https://www.capitalone.com/learn-grow/more-than-money/all-about-venture-x/
+https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve
+

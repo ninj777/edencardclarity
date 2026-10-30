@@ -1,0 +1,2043 @@
+Actual module, earlier-gate and Gate 4 checks. This is not a Windows desktop review.
+
+Command: build/testModules
+0.000 ms [Info] Logger initialized.
+0.094 ms [Info] Sample cards are ready.
+All 40 module checks passed, including the practice reward examples.
+Command result: passed
+
+Command: build/testGate1 build/cardClarity
+Gate 1 C menu checks
+Date: 2026-10-30 23:14:29 UTC
+Program: /workspace/cardClarityGateFour/build/cardClarity
+Test platform: POSIX
+
+Case 1: Three-option menu
+Expected: Exactly three numbered choices appear.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: 1. View sample cards: yes
+Observed: 2. About CardClarity: yes
+Observed: 3. Exit: yes
+Observed: exactly three numbered choices: yes
+Result: passed (6 checks matched).
+
+Case 2: Five sample names
+Expected: Each of the five names appears once.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Travel Sample: yes
+Observed: Points Sample: yes
+Observed: Cashback Sample: yes
+Observed: Everyday Sample: yes
+Observed: Starter Sample: yes
+Result: passed (7 checks matched).
+
+Case 3: Exact example values
+Expected: All base rates, fees, and category bonuses match the sample records.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Travel Sample: yes
+Observed: Points Sample: yes
+Observed: Cashback Sample: yes
+Observed: Everyday Sample: yes
+Observed: Starter Sample: yes
+Observed: it is not a times multiplier: yes
+Result: passed (8 checks matched).
+
+Case 4: Example labels
+Expected: Values are labeled as made-up examples and no words are all capitals.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: made up for practice, not real bank offers: yes
+Observed: no all-capital words in the display: yes
+Result: passed (4 checks matched).
+
+Case 5: Four planned features
+Expected: About lists the wallet, benefits, calculator, and recommendations.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card wallet:: yes
+Observed: Benefits display:: yes
+Observed: Rewards calculator:: yes
+Observed: Card recommendations:: yes
+Result: passed (6 checks matched).
+
+Case 6: Exit
+Expected: Goodbye appears and the program returns 0.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Goodbye!: yes
+Result: passed (3 checks matched).
+
+Case 7: Text input
+Expected: Text is rejected and exit still works.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 8: Zero
+Expected: Zero is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 9: Out-of-range choice
+Expected: Choice 9 is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 10: Negative choice
+Expected: A negative choice is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 11: Blank answer
+Expected: An empty answer is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 12: Decimal choice
+Expected: A decimal is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 13: Trailing characters
+Expected: Letters after a number are rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 14: Oversized numbers
+Expected: Both 30-digit and 300-digit numbers are rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (6 checks matched).
+
+Case 15: Long text
+Expected: A 600-character answer is one invalid answer.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Result: passed (3 checks matched).
+
+Case 16: Recovery after bad input
+Expected: A bad answer is rejected, then cards display and exit works.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Travel Sample: yes
+Observed: Goodbye!: yes
+Result: passed (5 checks matched).
+
+Case 17: Surrounding spaces
+Expected: Spaces and a tab around 1 are accepted.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Travel Sample: yes
+Result: passed (3 checks matched).
+
+Case 18: End of input
+Expected: End of input closes normally.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No more input: yes
+Result: passed (3 checks matched).
+
+Case 19: No final newline
+Expected: Exit works without a final newline.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Goodbye!: yes
+Result: passed (3 checks matched).
+
+Case 20: Repeated choices
+Expected: View and About return to the same menu.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: cards shown twice: yes
+Observed: four menu visits: yes
+Observed: one exit message: yes
+Result: passed (5 checks matched).
+
+Case 21: Input after exit
+Expected: Exit does not process another choice after it.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: no cards shown after Exit: yes
+Observed: one menu visit: yes
+Result: passed (4 checks matched).
+
+Case 22: Hidden null
+Expected: Hidden nulls are rejected, including at end of input.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Goodbye!: yes
+Observed: hidden answer did not show cards: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Goodbye!: yes
+Observed: hidden answer did not show cards: yes
+Result: passed (10 checks matched).
+
+Case 23: Standard whitespace
+Expected: All ordinary surrounding whitespace is accepted.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Travel Sample: yes
+Observed: no retry needed: yes
+Result: passed (4 checks matched).
+
+Case 24: Whole overlong line
+Expected: One overlong line causes one error, then the next answer works.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: one rejected line: yes
+Observed: next choice worked once: yes
+Observed: Goodbye!: yes
+Result: passed (5 checks matched).
+
+Case 25: Bad answer at end
+Expected: A bad final answer is rejected before input ends.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: No more input: yes
+Observed: one rejected final answer: yes
+Result: passed (5 checks matched).
+
+Case 26: Whitespace-only answer
+Expected: A whitespace-only line is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Goodbye!: yes
+Result: passed (4 checks matched).
+
+Case 27: Real read error
+Expected: A genuine read error returns 1 and does not say Goodbye.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: read error explained: yes
+Observed: no normal exit claim: yes
+Result: passed (3 checks matched).
+
+Case 28: Largest fitting line
+Expected: A 127-character answer ending with spaces is accepted.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Travel Sample: yes
+Observed: No more input: yes
+Observed: largest fitting line accepted: yes
+Result: passed (5 checks matched).
+
+Case 29: First overlong line
+Expected: A 128-character answer is rejected.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: No more input: yes
+Observed: overlong line did not show cards: yes
+Result: passed (5 checks matched).
+
+Case 30: Unknown argument
+Expected: An unknown argument returns 1.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: usage help printed: yes
+Result: passed (2 checks matched).
+
+Case 31: Window on another system
+Expected: The window option explains that Windows is needed and returns 1.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: Windows requirement explained: yes
+Result: passed (2 checks matched).
+
+Summary: 31 passed, 0 failed, 0 skipped.
+Command result: passed
+
+Command: build/testGate2 build/cardClarity
+Gate 2 C wallet checks
+Date: 2026-10-30 23:14:30 UTC
+Program: /workspace/cardClarityGateFour/build/cardClarity
+Test platform: POSIX
+
+Case 1: Start empty
+Expected: A missing file starts an empty wallet without writing a save.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: no saved file yet: yes
+Observed: Your wallet is empty: yes
+Observed: viewing created no save: yes
+Result: passed (5 checks matched).
+
+Case 2: Stable card IDs
+Expected: The five names keep IDs 1 through 5 and example labels.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 1: Travel Sample: yes
+Observed: Card 2: Points Sample: yes
+Observed: Card 3: Cashback Sample: yes
+Observed: Card 4: Everyday Sample: yes
+Observed: Card 5: Starter Sample: yes
+Observed: not real bank offers: yes
+Result: passed (8 checks matched).
+
+Case 3: Add and view
+Expected: Adding card 3 displays Cashback Sample and saves ID 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Added Cashback Sample.: yes
+Observed: Card 3: Cashback Sample | Example base rate: 1.00%: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (5 checks matched).
+
+Case 4: Duplicate card
+Expected: Adding card 1 twice is rejected and saves it once.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: already in your wallet: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 5: Remove middle
+Expected: Removing 3 from [1,3,5] saves [1,5].
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Removed Cashback Sample.: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 6: Remove absent card
+Expected: Removing an absent ID keeps the current list.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: isn't in your wallet: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 7: Remove from empty
+Expected: An empty list explains that there is nothing to remove.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Your wallet is empty: yes
+Observed: unwanted text is absent: yes
+Result: passed (4 checks matched).
+
+Case 8: Full wallet
+Expected: A full five-card list refuses another addition.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Your wallet is full: yes
+Observed: My card wallet (5 of 5 cards): yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (5 checks matched).
+
+Case 9: Save and restart
+Expected: A new process reloads the saved cards 1 and 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Loaded your saved card list: yes
+Observed: My card wallet (2 of 5 cards): yes
+Observed: Card 1: Travel Sample |: yes
+Observed: Card 3: Cashback Sample |: yes
+Observed: unwanted text is absent: yes
+Result: passed (10 checks matched).
+
+Case 10: Removal after restart
+Expected: A removed and saved card stays removed after restarting.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Observed: My card wallet (2 of 5 cards): yes
+Observed: unwanted text is absent: yes
+Result: passed (7 checks matched).
+
+Case 11: Save empty wallet
+Expected: Removing the last card saves a valid empty wallet.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Your wallet is empty: yes
+Result: passed (6 checks matched).
+
+Case 12: Reload saved list
+Expected: Reload restores [1] after an unsaved addition of card 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Reload reported a second successful load: yes
+Observed: one saved card restored: yes
+Observed: unsaved card removed by Reload: yes
+Observed: unsaved flag cleared: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (7 checks matched).
+
+Case 13: Missing reload
+Expected: A missing reload keeps an unsaved card available for saving.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Your current list hasn't changed: yes
+Observed: Card 1: Travel Sample |: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (5 checks matched).
+
+Case 14: Space after removal
+Expected: Removal frees a slot and adding appends the card.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (3 checks matched).
+
+Case 15: Bad menu choices
+Expected: Bad answers at both menus allow recovery.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Please enter 1, 2, or 3.: yes
+Observed: Please enter a whole number from 1 to 6.: yes
+Observed: Your wallet is empty: yes
+Result: passed (40 checks matched).
+
+Case 16: Bad card numbers
+Expected: Six invalid card answers are rejected before a valid answer.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: six bad answers rejected: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 17: Long and hidden input
+Expected: A long answer and hidden null are rejected before adding card 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: both invalid lines rejected: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 18: Cancel actions
+Expected: Zero cancels add and remove without changing [1].
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Add cancelled: yes
+Observed: Remove cancelled: yes
+Observed: unwanted text is absent: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (6 checks matched).
+
+Case 19: End of input
+Expected: Input ending at nested questions exits without saving.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No more input. Goodbye!: yes
+Observed: end of input did not create a save: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No more input. Goodbye!: yes
+Observed: end of input did not create a save: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No more input. Goodbye!: yes
+Observed: end of input did not create a save: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: No more input. Goodbye!: yes
+Observed: end of input did not create a save: yes
+Result: passed (16 checks matched).
+
+Case 20: Save on exit
+Expected: Save and exit writes the unsaved card first.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Save and exit: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 21: Discard changes
+Expected: Exit without saving preserves the older saved list.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (3 checks matched).
+
+Case 22: Keep editing
+Expected: Keep editing returns to the menu and later saving works.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: only the final Exit closed the program: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (4 checks matched).
+
+Case 23: Default save path
+Expected: Normal launch saves and reloads savedCards.txt in its current folder.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 5: Starter Sample |: yes
+Result: passed (6 checks matched).
+
+Case 24: Path with spaces
+Expected: A selected filename containing spaces works across restarts.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 2: Points Sample |: yes
+Result: passed (6 checks matched).
+
+Case 25: Damaged files
+Expected: All 22 malformed files are rejected without rewriting them.
+Damaged-file example: empty
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: wrong header
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: header only
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: negative count
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: too many cards
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: huge count
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: text count
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: decimal count
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: zero ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: unknown ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: negative ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: duplicate
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: missing ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: extra ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: extra blank line
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: hidden null in header
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: hidden null in count
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: hidden null in ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: long header
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: long ID
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: byte-order mark
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Damaged-file example: ID followed by letters
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Your wallet is empty: yes
+Observed: damaged file is unchanged: yes
+Result: passed (110 checks matched).
+
+Case 26: Windows line endings
+Expected: Windows line endings load cards 1 and 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 1: Travel Sample |: yes
+Observed: Card 3: Cashback Sample |: yes
+Result: passed (4 checks matched).
+
+Case 27: No final newline
+Expected: The final ID is accepted without a newline.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 5: Starter Sample |: yes
+Result: passed (3 checks matched).
+
+Case 28: Directory as save
+Expected: A directory used as a save reports an error and keeps its contents.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't read your saved cards: yes
+Observed: directory contents preserved: yes
+Result: passed (4 checks matched).
+
+Case 29: Missing folder
+Expected: A missing destination folder causes a save error without losing the live wallet.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't save your cards: yes
+Observed: Card 1: Travel Sample |: yes
+Observed: no save created in missing folder: yes
+Result: passed (5 checks matched).
+
+Case 30: Existing temporary file
+Expected: An existing temporary file blocks saving and stays unchanged.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't save your cards: yes
+Observed: Card 3: Cashback Sample |: yes
+Observed: saved bytes match the expected IDs: yes
+Observed: old temporary file preserved: yes
+Result: passed (6 checks matched).
+
+Case 31: Failed replacement
+Expected: Failed replacement keeps the directory and removes the newly written temporary file.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't save your cards: yes
+Observed: new temporary file removed: yes
+Observed: directory contents preserved: yes
+Result: passed (5 checks matched).
+
+Case 32: Failed save on exit
+Expected: Failed Save and exit keeps the menu usable.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't save your cards: yes
+Observed: Card 1: Travel Sample |: yes
+Observed: failure did not close the program early: yes
+Result: passed (5 checks matched).
+
+Case 33: Damage after startup
+Expected: Damage after startup causes Reload to keep the live card 1.
+Observed: initial save loaded before damage: yes
+Observed: program stayed usable after failed Reload: yes
+Observed: looks damaged or uses a different format: yes
+Observed: Card 1: Travel Sample |: yes
+Observed: unwanted text is absent: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (6 checks matched).
+
+Case 34: Numeric whitespace
+Expected: Surrounding whitespace is allowed in numeric lines.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Card 3: Cashback Sample |: yes
+Result: passed (3 checks matched).
+
+Case 35: Remove first and last
+Expected: Removing first and last leaves the middle ID 3.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved bytes match the expected IDs: yes
+Result: passed (3 checks matched).
+
+Case 36: Real read error
+Expected: A genuine stdin read error returns 1.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: real read error explained: yes
+Observed: unwanted text is absent: yes
+Result: passed (3 checks matched).
+
+Case 37: Bad arguments
+Expected: Unknown, incomplete, and empty arguments return 1 without saving.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: bad arguments explained: yes
+Observed: bad arguments created no save: yes
+Result: passed (24 checks matched).
+
+Case 38: Long save path
+Expected: An overlong save path reports a save error without overflowing.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: Couldn't save your cards: yes
+Observed: overlong save path created no file: yes
+Observed: overlong save path created no temporary file: yes
+Result: passed (5 checks matched).
+
+Case 39: Chosen window path on another system
+Expected: The chosen window path is parsed before explaining that Windows is required.
+Actual exit status: 1
+Observed: exit status matches: yes
+Observed: chosen window path accepted: yes
+Observed: valid window arguments did not print usage help: yes
+Observed: unsupported window created no save: yes
+Result: passed (4 checks matched).
+
+Summary: 39 passed, 0 failed, 0 skipped.
+Command result: passed
+
+Command: build/testGateFour build/cardClarity
+Gate 4 real-card checks
+Date: 2026-10-30 23:14:32 UTC
+Program: /workspace/cardClarityGateFour/build/cardClarity
+Test platform: POSIX
+
+Case 1: Eligible U.S. supermarket
+Expected: All five real cards match independently calculated cents.
+Purchase: $100.00 | Direct / ordinary purchase | prior category spending $0 | 2026-11-02
+Card 101: expected 150 cents; actual 150 to 150 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 102: expected 300 cents; actual 300 to 300 cents
+Actual total rate: 3.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 103: expected 150 cents; actual 150 to 150 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 104: expected 300 cents; actual 300 to 300 cents
+Actual total rate: 3.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 105: expected 200 cents; actual 200 to 200 cents
+Actual total rate: 2.00%; base rate: 2.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (5 checks matched).
+
+Case 2: Dining
+Expected: All five real cards match independently calculated cents.
+Purchase: $50.00 | Direct / ordinary purchase | prior category spending $0 | 2026-11-02
+Card 101: expected 75 cents; actual 75 to 75 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 102: expected 150 cents; actual 150 to 150 cents
+Actual total rate: 3.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 103: expected 150 cents; actual 150 to 150 cents
+Actual total rate: 3.00%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 104: expected 50 cents; actual 50 to 50 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 105: expected 100 cents; actual 100 to 100 cents
+Actual total rate: 2.00%; base rate: 2.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (5 checks matched).
+
+Case 3: Eligible U.S. gas station
+Expected: All five real cards match independently calculated cents.
+Purchase: $60.00 | Direct / ordinary purchase | prior category spending $0 | 2026-11-02
+Card 101: expected 90 cents; actual 90 to 90 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 102: expected 60 cents; actual 60 to 60 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 103: expected 90 cents; actual 90 to 90 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 104: expected 180 cents; actual 180 to 180 cents
+Actual total rate: 3.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 105: expected 120 cents; actual 120 to 120 cents
+Actual total rate: 2.00%; base rate: 2.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (5 checks matched).
+
+Case 4: Drugstore
+Expected: All five real cards match independently calculated cents.
+Purchase: $40.00 | Direct / ordinary purchase | prior category spending $0 | 2026-11-02
+Card 101: expected 60 cents; actual 60 to 60 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 102: expected 40 cents; actual 40 to 40 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 103: expected 120 cents; actual 120 to 120 cents
+Actual total rate: 3.00%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 104: expected 40 cents; actual 40 to 40 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 105: expected 80 cents; actual 80 to 80 cents
+Actual total rate: 2.00%; base rate: 2.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (5 checks matched).
+
+Case 5: Other eligible purchase
+Expected: All five real cards match independently calculated cents.
+Purchase: $80.00 | Direct / ordinary purchase | prior category spending $0 | 2026-11-02
+Card 101: expected 120 cents; actual 120 to 120 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 102: expected 80 cents; actual 80 to 80 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 103: expected 120 cents; actual 120 to 120 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 104: expected 80 cents; actual 80 to 80 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 105: expected 160 cents; actual 160 to 160 cents
+Actual total rate: 2.00%; base rate: 2.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (5 checks matched).
+
+Case 6: Hotel
+Expected: All five real cards match independently calculated cents.
+Purchase: $200.00 | Capital One Travel | prior category spending $0 | 2026-11-02
+Card 101: expected 1000 cents; actual 1000 to 1000 cents
+Actual total rate: 5.00%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 102: expected 1000 cents; actual 1000 to 1000 cents
+Actual total rate: 5.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 103: expected 300 cents; actual 300 to 300 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 104: expected 200 cents; actual 200 to 200 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 105: expected 400 cents; actual 400 to 400 cents
+Actual total rate: 2.00%; base rate: 2.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (5 checks matched).
+
+Case 7: Issuer booking services stay separate
+Expected: A $200 Chase Travel hotel gives Chase $10, Quicksilver $3 and Savor $2.
+Card 103: expected 1000 cents; actual 1000 to 1000 cents
+Actual total rate: 5.00%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 101: expected 300 cents; actual 300 to 300 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 102: expected 200 cents; actual 200 to 200 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 103: expected 300 cents; actual 300 to 300 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (4 checks matched).
+
+Case 8: Entertainment service
+Expected: $100 through Capital One Entertainment gives Quicksilver $5 and Savor $8.
+Card 101: expected 500 cents; actual 500 to 500 cents
+Actual total rate: 5.00%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 102: expected 800 cents; actual 800 to 800 cents
+Actual total rate: 8.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (2 checks matched).
+
+Case 9: Cross the grocery cap
+Expected: $10 at 3% plus $20 at 1% = $0.50, with $5,990 already spent.
+Card 104: expected 50 cents; actual 50 to 50 cents
+Actual total rate: 3.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Observed: purchase split is $10 plus $20: yes
+Result: passed (2 checks matched).
+
+Case 10: Exhausted cap and separate category
+Expected: $30 groceries after $6,000 gives $0.30; unused gas gives $0.90.
+Card 104: expected 30 cents; actual 30 to 30 cents
+Actual total rate: 3.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 104: expected 90 cents; actual 90 to 90 cents
+Actual total rate: 3.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (2 checks matched).
+
+Case 11: Unknown cap use
+Expected: $30 has a $0.30-$0.90 range and no definite winner.
+Observed: actual range is 30-90 cents: yes
+Observed: unknown spending prevents a definite ranking: yes
+Result: passed (2 checks matched).
+
+Case 12: Unknown usage on a purchase larger than the cap
+Expected: $10,000 gives a maximum $220, not $300.
+Observed: range uses at most $6,000 at the bonus rate: yes
+Result: passed (1 checks matched).
+
+Case 13: Promotion expiry boundary
+Expected: Lyft $100 earns $2 on 2027-09-30 and $1.50 on 2027-10-01.
+Card 103: expected 200 cents; actual 200 to 200 cents
+Actual total rate: 2.00%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 103: expected 150 cents; actual 150 to 150 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (2 checks matched).
+
+Case 14: Flights do not get the Capital One hotel bonus
+Expected: $100 portal flight gives Quicksilver $1.50 and Savor $1.
+Card 101: expected 150 cents; actual 150 to 150 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 102: expected 100 cents; actual 100 to 100 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (2 checks matched).
+
+Case 15: Show both dining winners
+Expected: Savor and Freedom Unlimited both appear after the winners heading.
+Observed: both $1.50 winners are displayed: yes
+Observed: a lower result is not listed as a winner: yes
+Result: passed (2 checks matched).
+
+Case 16: Save and reload real IDs
+Expected: The existing format preserves all five real IDs in order.
+Observed: real-card wallet saved: yes
+Observed: actual reloaded IDs match the original wallet: yes
+Result: passed (2 checks matched).
+
+Case 17: Late damaged record
+Expected: A valid first real ID followed by unknown ID 6 leaves the current wallet alone.
+Observed: partial load did not replace the current wallet: yes
+Result: passed (1 checks matched).
+
+Case 18: Duplicate real IDs
+Expected: A duplicate 101 fails loading without changing the wallet.
+Observed: duplicate rejected and wallet preserved: yes
+Result: passed (1 checks matched).
+
+Case 19: Old sample save
+Expected: IDs 1 and 3 still identify Travel Sample and Cashback Sample.
+Observed: sample identities were not changed into bank products: yes
+Observed: samples cannot become real-card recommendations: yes
+Result: passed (2 checks matched).
+
+Case 20: Source and benefit notes
+Expected: Every real card has a link, date, restrictions and pricing notes.
+Observed: source, date and conditions display: yes
+Observed: source, date and conditions display: yes
+Observed: source, date and conditions display: yes
+Observed: source, date and conditions display: yes
+Observed: source, date and conditions display: yes
+Observed: activation deadline and paid renewal are visible: yes
+Observed: enrollment is visible: yes
+Result: passed (7 checks matched).
+
+Case 21: Money input
+Expected: Whole cents parse exactly; bad text, fractions, signs and excessive amounts are rejected.
+Observed: accepted amount has exact expected cents: yes
+Observed: accepted amount has exact expected cents: yes
+Observed: accepted amount has exact expected cents: yes
+Observed: accepted amount has exact expected cents: yes
+Observed: accepted amount has exact expected cents: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Observed: bad money leaves the output unchanged: yes
+Result: passed (20 checks matched).
+
+Case 22: Calendar dates
+Expected: Leap years work; impossible, incomplete and malformed dates fail.
+Observed: leap day accepted: yes
+Observed: bad date leaves output unchanged: yes
+Observed: bad date leaves output unchanged: yes
+Observed: bad date leaves output unchanged: yes
+Observed: bad date leaves output unchanged: yes
+Observed: bad date leaves output unchanged: yes
+Observed: bad date leaves output unchanged: yes
+Observed: bad date leaves output unchanged: yes
+Observed: bad date leaves output unchanged: yes
+Result: passed (9 checks matched).
+
+Case 23: Invalid calculation inputs
+Expected: Negative, excessive, invalid-category, invalid-channel and invalid-date requests fail.
+Observed: negative amount rejected: yes
+Observed: overlarge amount rejected: yes
+Observed: unknown category rejected: yes
+Observed: impossible channel rejected: yes
+Observed: impossible date rejected: yes
+Observed: unknown marker must be exactly -1: yes
+Result: passed (6 checks matched).
+
+Case 24: Zero purchase
+Expected: All real cards return zero, including a capped category with unknown usage.
+Card 101: expected 0 cents; actual 0 to 0 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 102: expected 0 cents; actual 0 to 0 cents
+Actual total rate: 3.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 103: expected 0 cents; actual 0 to 0 cents
+Actual total rate: 1.50%; base rate: 1.50%
+Observed: expected cashback matches actual cashback: yes
+Card 104: expected 0 cents; actual 0 to 0 cents
+Actual total rate: 3.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 105: expected 0 cents; actual 0 to 0 cents
+Actual total rate: 2.00%; base rate: 2.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (5 checks matched).
+
+Case 25: Round only after adding split portions
+Expected: $0.50 at 3% plus $0.50 at 1% rounds to $0.02.
+Card 104: expected 2 cents; actual 2 to 2 cents
+Actual total rate: 3.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 104: expected 1 cents; actual 1 to 1 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (2 checks matched).
+
+Case 26: Largest supported purchase
+Expected: $1,000,000 at 2% gives $20,000 without overflow.
+Card 105: expected 2000000 cents; actual 2000000 to 2000000 cents
+Actual total rate: 2.00%; base rate: 2.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (1 checks matched).
+
+Case 27: Small display buffer
+Expected: Formatting reports failure instead of claiming a truncated result is complete.
+Observed: comparison reports insufficient space: yes
+Observed: card notes report insufficient space: yes
+Result: passed (2 checks matched).
+
+Case 28: Invalid wallet
+Expected: A negative count cannot be used for comparison or saving.
+Observed: invalid wallet rejected: yes
+Observed: invalid wallet cannot be saved: yes
+Result: passed (2 checks matched).
+
+Case 29: Superstore exclusion
+Expected: $100 at a superstore uses Savor and Amex base rates, both $1.
+Card 102: expected 100 cents; actual 100 to 100 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Card 104: expected 100 cents; actual 100 to 100 cents
+Actual total rate: 1.00%; base rate: 1.00%
+Observed: expected cashback matches actual cashback: yes
+Result: passed (2 checks matched).
+
+Case 30: Console: save, restart and compare
+Expected: A fresh process loads five real IDs and reports both $1.50 dining winners.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved file contains the expected real IDs: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: restarted comparison shows correct rewards: yes
+Result: passed (6 checks matched).
+
+Case 31: Console: bad amount recovery
+Expected: Invalid text, negative and fractional-cent amounts are rejected before a correct comparison.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: three bad amounts were rejected: yes
+Observed: date recovery and correct comparison: yes
+Result: passed (4 checks matched).
+
+Case 32: Console: cap crossing
+Expected: Entered prior grocery spending gives the expected $0.50 split.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: cap split appears in the real menu: yes
+Result: passed (3 checks matched).
+
+Case 33: Console: unknown spending
+Expected: Blank prior spending shows a range and no definite winner.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: menu keeps unknown use visible: yes
+Result: passed (3 checks matched).
+
+Case 34: Real removal survives restart
+Expected: Removing real ID 103 and saving keeps the other four IDs after restart.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: saved removal is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removed card is absent after restart: yes
+Result: passed (6 checks matched).
+
+Summary: 34 passed, 0 failed, 0 skipped.
+Command result: passed
+
+Command: build/testTwentyCards build/cardClarity
+Twenty-card catalog checks
+Date: 2026-10-30 23:14:32 UTC
+Program: /workspace/cardClarityGateFour/build/cardClarity
+Test platform: POSIX
+
+Case 1: Capital One Quicksilver Rewards
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (32 checks matched).
+
+Case 2: Capital One Savor Rewards
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (31 checks matched).
+
+Case 3: Chase Freedom Unlimited
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (30 checks matched).
+
+Case 4: American Express Blue Cash Everyday
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (29 checks matched).
+
+Case 5: Wells Fargo Active Cash
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (28 checks matched).
+
+Case 6: Chase Freedom Flex
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (27 checks matched).
+
+Case 7: Chase Sapphire Preferred
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (26 checks matched).
+
+Case 8: Chase Sapphire Reserve
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (25 checks matched).
+
+Case 9: American Express Gold
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (24 checks matched).
+
+Case 10: American Express Platinum
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (23 checks matched).
+
+Case 11: American Express Blue Cash Preferred
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (22 checks matched).
+
+Case 12: Capital One Venture Rewards
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (21 checks matched).
+
+Case 13: Capital One Venture X Rewards
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (20 checks matched).
+
+Case 14: Citi Double Cash
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (19 checks matched).
+
+Case 15: Citi Strata Premier
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (18 checks matched).
+
+Case 16: Discover it Cash Back
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (17 checks matched).
+
+Case 17: Bank of America Customized Cash Rewards
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (16 checks matched).
+
+Case 18: Amazon Prime Visa
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (15 checks matched).
+
+Case 19: Costco Anywhere Visa by Citi
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Observed: product name is unique: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (14 checks matched).
+
+Case 20: Wells Fargo Autograph
+Expected: The record has costs, conditions and dated sources; its ID can be added, saved, reopened and removed.
+Observed: lookup returns the same catalog identity: yes
+Observed: ongoing annual fee matches the checked fee list: yes
+Observed: complete sourced notes display, with costs first: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console shows this product's costs and earning rules: yes
+Observed: saved ID is correct: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: a fresh process reloads and displays the right card: yes
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: removal is saved without leaving the card behind: yes
+Result: passed (13 checks matched).
+
+Case 21: Case-insensitive search
+Expected: Names match regardless of letter case; missing names do not choose a substitute.
+Observed: partial name matching works: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: a missing product gives no match: yes
+Observed: clearing search restores twenty; invalid requests fail: yes
+Result: passed (22 checks matched).
+
+Case 22: Points and miles
+Expected: Eight points/miles products keep their units and cannot produce guessed cash estimates.
+Observed: no cashback percentage or guessed cash value for this product: yes
+Observed: no cashback percentage or guessed cash value for this product: yes
+Observed: no cashback percentage or guessed cash value for this product: yes
+Observed: no cashback percentage or guessed cash value for this product: yes
+Observed: no cashback percentage or guessed cash value for this product: yes
+Observed: no cashback percentage or guessed cash value for this product: yes
+Observed: no cashback percentage or guessed cash value for this product: yes
+Observed: no cashback percentage or guessed cash value for this product: yes
+Result: passed (8 checks matched).
+
+Case 23: Complex cashback conditions
+Expected: Rotating, payment, membership and selected-category cards are explicitly held for review.
+Observed: missing conditions cannot become an exact estimate: yes
+Observed: missing conditions cannot become an exact estimate: yes
+Observed: missing conditions cannot become an exact estimate: yes
+Observed: missing conditions cannot become an exact estimate: yes
+Observed: missing conditions cannot become an exact estimate: yes
+Observed: missing conditions cannot become an exact estimate: yes
+Observed: mixed wallet shows supported estimates and explains incomplete comparison: yes
+Result: passed (7 checks matched).
+
+Case 24: Preferred streaming, gas and transit
+Expected: $100 earns $6 on eligible streaming, $3 on gas/transit/Lyft rides, and $1 at a superstore.
+Observed: independent expected cents match: yes
+Observed: independent expected cents match: yes
+Observed: independent expected cents match: yes
+Observed: independent expected cents match: yes
+Observed: independent expected cents match: yes
+Result: passed (5 checks matched).
+
+Case 25: Separate Amex caps
+Expected: Everyday's unused or exhausted allowance never supplies Preferred's grocery usage.
+Observed: Preferred remains a $1-$6 range: yes
+Observed: Preferred remains a $1-$6 range: yes
+Observed: $10,000 has maximum $400: $6,000 at 6%, $4,000 at 1%: yes
+Observed: zero purchase stays zero: yes
+Result: passed (4 checks matched).
+
+Case 26: Dated fees and offer periods
+Expected: Different pricing versions stay labeled; an introductory waiver does not hide next year's fee.
+Observed: Preferred first year is zero, ongoing fee is $95: yes
+Observed: older table and indexed offer remain distinct: yes
+Observed: Prime membership cost is visible: yes
+Observed: Costco membership, certificate expiry and shared gas allowance are visible: yes
+Result: passed (4 checks matched).
+
+Case 27: New last ID and damaged later ID
+Expected: ID 120 loads, but 121 later in a file leaves the open wallet unchanged.
+Observed: late unknown ID cannot partially replace the wallet: yes
+Observed: catalog boundaries and original gap stay invalid: yes
+Result: passed (2 checks matched).
+
+Case 28: Five-card wallet stays bounded
+Expected: Twenty catalog choices still allow five selected cards, with duplicate and full checks.
+Observed: new product added: yes
+Observed: new product added: yes
+Observed: new product added: yes
+Observed: new product added: yes
+Observed: duplicate attempt is rejected before the wallet is full: yes
+Observed: full and duplicate attempts preserve a valid wallet: yes
+Result: passed (6 checks matched).
+
+Case 29: Read a missing ID and recover
+Expected: A gap ID is rejected and the next catalog visit still displays a real product.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: bad ID recovery reaches Autograph's benefit notes: yes
+Result: passed (3 checks matched).
+
+Case 30: No guessed winner through the real menu
+Expected: A saved points card is explained as needing review, not mislabeled as a practice card.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: real console preserves points and comparison limitations: yes
+Result: passed (3 checks matched).
+
+Case 31: Preferred rideshare through the menu
+Expected: $100 of eligible Lyft rides earns $3, without using Everyday's cap.
+Actual exit status: 0
+Observed: exit status matches: yes
+Observed: standard error is empty: yes
+Observed: actual console uses the issuer's transit rate for an eligible Lyft ride: yes
+Result: passed (3 checks matched).
+
+Summary: 31 passed, 0 failed, 0 skipped.
+Command result: passed

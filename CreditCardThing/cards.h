@@ -11,10 +11,13 @@ dollars; whole-cent cashback rounding is still later work. Both views use
 the catalog ID instead of a random identifier.
 
 I declare the shared functions below. The include guard stops repeated
-includes from defining these types twice. Saved IDs stay 1 through 5.
+includes from defining these types twice. Sample IDs stay 1 through 5.
+Gate 4 adds researched IDs 101-120 in realCards.c without changing the samples.
 */
 #ifndef CARDS_H
 #define CARDS_H
+
+#include <wchar.h>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -26,7 +29,8 @@ enum Network {
     VISA,
     MASTERCARD,
     AMEXPRESS,
-	DISCOVER
+	DISCOVER,
+	NETWORK_UNKNOWN
 };
 
 enum Reward {
@@ -73,7 +77,7 @@ Card* getCardById(int cardId);
 void initTestCards(void);
 void printSampleCards(void);
 
-LPCWSTR getBaseInfo(Card card);
-LPCWSTR getMultiplierInfo(Card card);
+const wchar_t* getBaseInfo(Card card);
+const wchar_t* getMultiplierInfo(Card card);
 
 #endif

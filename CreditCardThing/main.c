@@ -15,9 +15,9 @@ This is the feature checklist from our proposal, with the work divided up:
   Benefits display: Joe handles the records; Evan checks the wording.
   Rewards calculator: I connect the calculations; Joe checks the examples.
   Card recommendations: I compare cards using Joe's checked data.
-The wallet works for Gate 2. Researched benefits, whole-cent purchase amounts,
-rounding, comparisons, ties, and limits are later work. The practice reward
-formula by itself does not finish the calculator.
+The wallet works for Gate 2. Gate 4 adds researched benefits, whole-cent
+purchase amounts, comparisons, ties and limits through realCards and rewards.
+The practice reward formula remains separate from those real-card estimates.
 
 Eden leads Gate 2, due Wednesday, October 28, 2026. I connect its five actions:
 add, view, remove, save, and reload. The menu passes IDs to Eden's functions
@@ -30,6 +30,8 @@ At startup, I prepare the samples and check the command-line arguments:
   --wallet-file path uses another save for the console.
   --gui opens the Windows window with savedCards.txt.
   --gui --wallet-file path uses another save for the window.
+  --gate4 uses real products and a separate realSavedCards.txt wallet.
+  --gate4 --gui opens that mode in the existing Windows window.
 An incomplete or unknown argument returns 1. A normal exit returns 0.
 The actual compiler commands are in readMe.txt.
 
@@ -81,6 +83,7 @@ The teacher decides the gate ratings.
 #include "wallet.h"
 #include "storage.h"
 #include "window.h"
+#include "rewards.h"
 
 /* I use -1 for input ending and -2 for an actual read failure. */
 static int readChoice(void) {
@@ -147,7 +150,7 @@ static bool trySave(const char* filePath, const Wallet* wallet) {
 }
 
 /* I return 0 for Back, -1 for input ending, and -2 for a read error. */
-static int runWalletMenu(Wallet* wallet, const char* filePath, bool* changed) {
+static int runWalletMenu(Wallet* wallet, const char* filePath, bool* changed, bool gateFour) {
 	for (;;) {
 		printf("\nMy card wallet (%d of %d cards)\n", wallet->count, MAX_WALLET_CARDS);
 		if (*changed) {
@@ -170,8 +173,9 @@ static int runWalletMenu(Wallet* wallet, const char* filePath, bool* changed) {
 				puts("Your wallet is full. Remove a card before adding another.");
 				continue;
 			}
-			printSampleCards();
-			int cardId = askNumber("Enter a card number, or 0 to cancel: ", 0, SAMPLE_CARD_COUNT);
+			if (gateFour) printRealCardList(); else printSampleCards();
+			int cardId = askNumber("Enter a card number, or 0 to cancel: ", 0,
+				gateFour ? LAST_REAL_CARD_ID : SAMPLE_CARD_COUNT);
 			if (cardId < 0) {
 				return cardId;
 			}
@@ -194,7 +198,8 @@ static int runWalletMenu(Wallet* wallet, const char* filePath, bool* changed) {
 			if (wallet->count == 0) {
 				continue;
 			}
-			int cardId = askNumber("Enter the card number to remove, or 0 to cancel: ", 0, SAMPLE_CARD_COUNT);
+			int cardId = askNumber("Enter the card number to remove, or 0 to cancel: ", 0,
+				gateFour ? LAST_REAL_CARD_ID : SAMPLE_CARD_COUNT);
 			if (cardId < 0) {
 				return cardId;
 			}
@@ -236,7 +241,7 @@ static int finishInput(int result, bool changed) {
 	return 0;
 }
 
-static int runConsoleMenu(bool gate1Mode, const char* filePath) {
+static int runConsoleMenu(bool gate1Mode, const char* filePath, bool gateFour) {
 	/* I use one wallet for this session and share it with the submenu by address. */
 	Wallet wallet;
 	initWallet(&wallet);
@@ -248,17 +253,30 @@ static int runConsoleMenu(bool gate1Mode, const char* filePath) {
 		showLoadResult(loadWallet(filePath, &wallet));
 	}
 	for (;;) {
-		puts("\n1. View sample cards");
+		puts(gateFour ? "\n1. View real card benefits" : "\n1. View sample cards");
 		puts(gate1Mode ? "2. About CardClarity" : "2. My card wallet");
-		puts("3. Exit");
-		printf("Enter 1, 2, or 3: ");
-		fflush(stdout);
-		int choice = readChoice();
+		puts(gateFour ? "3. Compare a purchase\n4. Exit" : "3. Exit");
+		int choice;
+		if (gateFour) choice = askNumber("Choose 1 to 4: ", 1, 4);
+		else {
+			printf("Enter 1, 2, or 3: "); fflush(stdout);
+			choice = readChoice();
+		}
 		if (choice < 0) {
 			return finishInput(choice, changed);
 		}
 		if (choice == 1) {
-			printSampleCards();
+			if (gateFour) {
+				/* I open one complete summary at a time so twenty records stay readable. */
+				printRealCardList();
+				int id = askNumber("Card number for details, or 0 to go back: ", 0, LAST_REAL_CARD_ID);
+				if (id < 0) return finishInput(id, changed);
+				if (id != 0) {
+					char details[REAL_CARD_TEXT_CAPACITY];
+					if (formatRealCard(id, details, sizeof(details))) puts(details);
+					else puts("That isn't a real card in this catalog. Choose a listed number.");
+				}
+			} else printSampleCards();
 		} else if (choice == 2 && gate1Mode) {
 			puts("\nWhat we're planning");
 			puts("Card wallet: add, view, and remove card types.");
@@ -267,11 +285,14 @@ static int runConsoleMenu(bool gate1Mode, const char* filePath) {
 			puts("Card recommendations: help choose a card for a purchase.");
 			puts("For Gate 1, we've built the menu and five sample cards.");
 		} else if (choice == 2) {
-			int result = runWalletMenu(&wallet, filePath, &changed);
+			int result = runWalletMenu(&wallet, filePath, &changed, gateFour);
 			if (result < 0) {
 				return finishInput(result, changed);
 			}
-		} else if (choice == 3) {
+		} else if (gateFour && choice == 3) {
+			int result = compareFromConsole(&wallet);
+			if (result < 0) return finishInput(result, changed);
+		} else if (choice == (gateFour ? 4 : 3)) {
 			if (changed) {
 				/* I keep editing when asked, or when saving before Exit fails. */
 				puts("\nYou haven't saved your changes yet.");
@@ -297,6 +318,15 @@ static int runConsoleMenu(bool gate1Mode, const char* filePath) {
 int main(int argc, char* argv[]) {
 	/* I prepare the catalog before any menu, saved ID, or window tries to read it. */
 	initTestCards();
+	/* Gate 4 is opt-in; the Gate 2 commands and sample saves keep their meaning. */
+	if (argc == 2 && strcmp(argv[1], "--gate4") == 0)
+		return runConsoleMenu(false, "realSavedCards.txt", true);
+	if (argc == 3 && strcmp(argv[1], "--gate4") == 0 && strcmp(argv[2], "--gui") == 0)
+		return runGateFourWindow("realSavedCards.txt");
+	if (argc == 4 && strcmp(argv[1], "--gate4") == 0 && strcmp(argv[2], "--wallet-file") == 0 && argv[3][0])
+		return runConsoleMenu(false, argv[3], true);
+	if (argc == 5 && strcmp(argv[1], "--gate4") == 0 && strcmp(argv[2], "--gui") == 0
+		&& strcmp(argv[3], "--wallet-file") == 0 && argv[4][0]) return runGateFourWindow(argv[4]);
 	if (argc == 2 && strcmp(argv[1], "--gui") == 0) {
 		return runWindow("savedCards.txt");
 	}
@@ -305,14 +335,14 @@ int main(int argc, char* argv[]) {
 		return runWindow(argv[3]);
 	}
 	if (argc == 2 && strcmp(argv[1], "--gate1") == 0) {
-		return runConsoleMenu(true, "savedCards.txt");
+		return runConsoleMenu(true, "savedCards.txt", false);
 	}
 	if (argc == 3 && strcmp(argv[1], "--wallet-file") == 0 && argv[2][0] != '\0') {
-		return runConsoleMenu(false, argv[2]);
+		return runConsoleMenu(false, argv[2], false);
 	}
 	if (argc != 1) {
-		fputs("Run CardClarity without arguments, with --wallet-file path, --gate1, or --gui on Windows.\n", stderr);
+		fputs("Run CardClarity without arguments, with --wallet-file path, --gate1, --gate4, or --gui on Windows.\n", stderr);
 		return 1;
 	}
-	return runConsoleMenu(false, "savedCards.txt");
+	return runConsoleMenu(false, "savedCards.txt", false);
 }

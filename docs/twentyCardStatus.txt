@@ -1,0 +1,126 @@
+Twenty-card catalog - October 30, 2026
+
+What this adds
+
+There are twenty common U.S. consumer reward products in the existing C
+catalog. There is no database server to install. Card data stays in realCards.c,
+and the wallet saves the chosen IDs in the same small text format as before.
+IDs 1-5 still mean the practice cards; IDs 101-105 keep their original real
+product names. The new records continue through 120. The wallet holds five
+selected card types, while the catalog has twenty choices.
+
+The research files are twentyCardResearch.txt and cardTermsFollowUp.txt.
+The follow-up fills more fee and benefit details and records source versions.
+Each product has issuer sources
+and a check date. This is not a verified ranking by number of cardholders.
+Popularity surveys, website clicks and recommendations measure different
+things, so the app calls these twenty common cards rather than claiming an
+official top twenty.
+
+Reading the cards
+
+Run build\cardClarity.exe --gate4 --gui. Type part of a name above the list.
+The search ignores letter case. Clear it to see all twenty products again.
+If the search has no match, the app says the exact product may be missing
+and disables Add. It does not choose a similar card for you. Searching does
+not change the wallet or save file. A selected card shows its ordinary earning
+unit, annual fee, costs, earning limits, benefit conditions, source gaps and
+dated links. Scroll the notes to read them all. Long list names can scroll
+sideways. The search stays separate from the saved-card list.
+
+In the console, run build\cardClarity.exe --gate4. Choose 1 for the short
+catalog, then enter one of its IDs to read that card's complete summary.
+Choose 0 to return. Option 2 opens the existing wallet actions. Use its Add
+option with a listed ID, save, then restart to check the same product returns.
+The six purchase examples still use the original five real cards; follow
+gateFourDemo.txt for those.
+
+What the research checks
+
+Known costs appear before benefit claims. First-year annual-fee waivers are
+separate from the fee in later years. Some cards need a paid membership even
+though the card's annual fee is zero. Benefit notes explain allowance periods,
+required bookings, activation, spending caps, paid renewals and redemption
+limits. Insurance needs qualifying events, payment and claims; it is not
+guaranteed cash. No advertised annual benefit total is treated as profit.
+
+The follow-up found dated Amex agreements, Chase fee schedules, Citi pricing
+tables, Bank of America's sample agreement and Capital One disclosures.
+The June 2026 Amex agreements replace March as the latest read here. Indexed
+Citi offers and older tables sometimes disagree, so the app labels the
+versions separately. Some live fields and three full Chase pricing links
+remain unavailable. Missing numbers stay unconfirmed, never zero. Dated
+agreements are not confirmed current application offers. These summaries
+cover selected terms; the account's current contract and insurance policy
+control.
+This version does not update terms over the internet.
+
+Comparison limits
+
+The original five cashback cards keep their working purchase calculations.
+Blue Cash Preferred adds modeled streaming, gas and transit rewards.
+Eligible Lyft rides also receive transit's 3%. Its grocery result stays
+a capped range because the form does not collect that
+card's prior grocery use. Everyday's allowance is separate and is not reused.
+
+Freedom Flex, Double Cash, Discover, Customized Cash, Prime Visa and Costco
+need extra activation, payment, membership, merchant or shared-cap information
+to calculate fairly. Their summaries are available, but the comparison says
+needs review. The eight points/miles cards keep their actual reward units;
+there is no guessed cash value. A wallet containing any card that needs
+review cannot show an overall winner. Credits, welcome offers, annual fees,
+interest and insurance payouts are not added to a purchase cashback figure.
+
+Checks actually run
+
+GCC C11 with -Wall -Wextra -Wpedantic -Werror builds the app and C checks.
+All 40 original module checks, 31 Gate 1 cases, 39 Gate 2 cases, 34 original
+Gate 4 cases and 31 expanded-catalog cases passed on Linux. The new suite
+opens the actual console for every product, reads its costs and earning
+notes, adds and saves it, starts another process, checks the reloaded ID,
+and removes it. Other cases check fee periods, reward units, missing searches,
+unsupported comparisons, separate Amex caps and a damaged later saved ID.
+The added rideshare case runs the actual menu and checks $3 on a $100 ride.
+These software checks verify output and behavior; they do not prove that a
+bank's future offer or an individual insurance claim will match the summary.
+The actual output is in gateFourBuildLog.txt and gateFourTestLog.txt.
+
+Clang 19 AddressSanitizer and UndefinedBehaviorSanitizer builds use C11,
+-Wall -Wextra -Wpedantic -Werror -g -O1 -fsanitize=address,undefined
+-fno-omit-frame-pointer. The instrumented app and both the original Gate 4
+and twenty-card runners passed their 34 and 31 cases without a reported
+sanitizer error. ASAN_OPTIONS=detect_leaks=0 disables leak detection;
+UBSAN_OPTIONS=halt_on_error=1 stops on a detected undefined operation.
+This is not a leak check. Actual run output: twentyCardSanitizerLog.txt.
+
+MinGW C11 with warnings treated as errors compiled the Windows app, build
+helper, Gate 4 runner, twenty-card runner and desktop resize/search runner.
+The commands are in gateFourWindowsBuildLog.txt. Cross-compilation does not
+prove Windows execution. The old gateFourSanitizerLog.txt records the earlier
+five-product version, not a second run of the expanded catalog.
+
+Still check on the demo computer
+
+Build and run in Visual Studio. Search for Autograph, clear the search, try
+a missing name, and check that the wallet stays the same. Read Sapphire
+Reserve's fee, Blue Cash Preferred's first-year waiver, a points card and a
+miles card.
+Save and reload new IDs, including 120. Resize both wallet modes and the
+purchase form; minimize, restore, maximize and scroll. Check keyboard use,
+file replacement and all six original purchase examples. These Windows
+runtime checks have not been completed in this environment.
+
+The optional Windows check is:
+  build\testWindowResize.exe build\cardClarity.exe
+It checks real control bounds, overlap, responsiveness and search IDs while
+resizing. A person must also watch for flickering and old drawing trails.
+No desktop result, teammate review or teacher approval has been filled in.
+
+Code areas
+
+Joe's catalog area contains the twenty records, costs and benefit rules.
+Eden's wallet/storage area accepts the extra valid IDs while keeping the
+temporary-wallet loading check. Oliver's menu/window area opens the records,
+searches names and keeps reward units and fees correct. Evan's test area
+records expected and actual checks. These are assigned areas from the proposal,
+not proof that a particular person wrote or reviewed each changed line.

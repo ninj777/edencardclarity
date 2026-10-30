@@ -1,0 +1,69 @@
+Window resizing correction - October 30, 2026
+
+The reported problem
+
+The interface sometimes glitches when the window is resized. The old resize
+handler moved and immediately repainted all the sample controls first, then
+moved several controls again for Gate 4. Intermediate positions could become
+visible. The background was not fully invalidated for all child controls,
+and labels used transparent text backgrounds.
+
+What changed
+
+Both main-window modes now calculate each control's final position once.
+windowSizing.h uses a deferred-position batch with drawing disabled during
+the moves. Afterward it invalidates the parent and all children, including
+backgrounds at the old positions. If Windows cannot create the batch, it
+finishes the same positions without repainting between individual moves.
+
+The main window repaints its background in WM_PAINT, rather than flashing
+another erase pass first. Label backgrounds match the panel they belong to.
+Both window classes invalidate their contents when their size changes.
+Releasing the resize border forces a final complete redraw.
+
+Minimizing skips layout. The minimum tracking size is calculated from the
+required client area plus the actual frame and title bar, instead of confusing
+the outside window dimensions with the available space for controls.
+
+The purchase form is now resizable and maximizable. Its fields stay in two
+columns, and its results box expands with the available space. It uses the
+same positioning helper and a minimum client size that keeps fields apart.
+
+Checks and limits
+
+The complete program, build helper, Gate 4 runner and new desktop resize
+runner compile as C11 with MinGW warnings treated as errors. The ordinary
+portable build and all earlier recorded module/menu suites were rerun.
+Actual compiler and test observations are in gateFourBuildLog.txt,
+gateFourWindowsBuildLog.txt and gateFourTestLog.txt.
+
+No Windows desktop or Wine runtime is installed in this environment. This
+correction has not been visually reproduced or verified on Windows here.
+The existing arithmetic sanitizer evidence does not test Windows drawing.
+
+Windows check to run
+
+Build with the C helper, then run from the project root:
+  build\testWindowResize.exe build\cardClarity.exe
+
+The runner opens its own app copies and uses new temporary saves. It resizes
+the old sample view and Gate 4 main view 60 times each, then does the same
+for the purchase form. It also minimizes, restores and maximizes them, checks
+visible control bounds and overlaps, and checks that the wallet kept its card.
+It reports a failure if a window stops responding. It closes only its own
+test processes and deletes its own temporary saves.
+
+The desktop runner was cross-compiled, not executed here. Its geometric
+checks cannot prove that no brief flicker is visible. A teammate should also:
+
+1. Drag each window's edges and corners quickly, then slowly.
+2. Try the minimum size, maximize, restore, minimize and restore again.
+3. Scroll the benefits and result text before and after resizing.
+4. Confirm labels have no old letters behind them and buttons do not overlap.
+5. Check Tab, Enter, Escape, comparison results and save/reload afterward.
+6. Repeat using the presentation computer's normal display scaling.
+
+Computer/display scaling:
+Desktop runner's actual result:
+Observed visual result:
+Reviewer/date:

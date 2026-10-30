@@ -1,0 +1,19 @@
+Gate 4 Linux C11 build. Windows runtime remains unverified.
+
+Command: cc -std=c11 -Wall -Wextra -Wpedantic -Werror CreditCardThing/main.c CreditCardThing/cards.c CreditCardThing/realCards.c CreditCardThing/rewards.c CreditCardThing/rewardWindow.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/logger.c CreditCardThing/window.c -o build/cardClarity -lm
+Command result: passed
+
+Command: cc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testModules.c CreditCardThing/cards.c CreditCardThing/realCards.c CreditCardThing/logger.c -o build/testModules -lm
+Command result: passed
+
+Command: cc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGate1.c tests/testSupport.c -o build/testGate1
+Command result: passed
+
+Command: cc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGate2.c tests/testSupport.c -o build/testGate2
+Command result: passed
+
+Command: cc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testGateFour.c tests/testSupport.c CreditCardThing/cards.c CreditCardThing/realCards.c CreditCardThing/rewards.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/logger.c -o build/testGateFour -lm
+Command result: passed
+
+Command: cc -std=c11 -Wall -Wextra -Wpedantic -Werror tests/testTwentyCards.c tests/testSupport.c CreditCardThing/cards.c CreditCardThing/realCards.c CreditCardThing/rewards.c CreditCardThing/input.c CreditCardThing/wallet.c CreditCardThing/storage.c CreditCardThing/logger.c -o build/testTwentyCards -lm
+Command result: passed
