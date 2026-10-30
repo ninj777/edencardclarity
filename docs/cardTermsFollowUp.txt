@@ -1,0 +1,312 @@
+Card terms follow-up
+Checked October 30, 2026
+
+This is the second pass through the twenty products. It adds detail to
+twentyCardResearch.txt. The first pass left too many fee descriptions broad.
+This pass checks pricing tables, sample agreements, rewards agreements,
+member guides and the regulator's agreement directory as well as product pages.
+
+How to read the sources
+
+Direct document means the actual issuer page or PDF was readable. Dated
+document means its printed date is recorded; the check date does not make it
+a new offer. Indexed text means the search service could read an issuer's
+public text even though opening the live page left blanks or gave an error.
+That text helps fill gaps, but it is not a confirmed live application offer.
+Different offer pages and different account versions must stay separate.
+
+No application was submitted and no bank account was accessed. Individual
+APRs, credit limits, account amendments, card networks and activation/spending
+history cannot all be found in public research. A value which needs one of
+those details remains conditional. A calculator marked needs review can also
+mean that this version does not collect the necessary inputs.
+
+101. Capital One Quicksilver Rewards
+
+The issuer's indexed card-list disclosures identify the excellent-credit
+version, its 15-month intro period, cash-advance pricing and transfer charges.
+The student, good-credit, secured and QuicksilverOne versions have different
+terms and were kept separate. The live reader omits parts of the disclosure.
+The September agreement is supporting background, not proof of this exact offer.
+https://www.capitalone.com/credit-cards/
+https://www.capitalone.com/credit-cards/cash-back/?n=1
+https://www.capitalone.com/credit-cards/quicksilver/
+
+102. Capital One Savor Rewards
+
+The indexed Savor disclosures give a 12-month intro period. They identify
+the advance and transfer charges that were missing before. Different indexed
+versions have slightly different variable APRs; the app labels the snapshot.
+Insurance still depends on the network and exact card version.
+https://www.capitalone.com/credit-cards/cash-back/savor/
+https://www.capitalone.com/credit-cards/
+
+Capital One agreement and benefit checks for 101, 102, 112 and 113
+
+The agreement index says its files cover offers available September 30, 2026.
+The Visa Signature/World Mastercard sample lists an advance fee of the larger
+of $5 or 5%, and a late fee up to $40. Standard-APR transfers have no transfer
+fee there; promotional charges need the actual offer. The general consumer
+and no-preset-limit agreements cover different versions, so their APR ranges
+were not copied across all products.
+https://www.capitalone.com/credit-cards/lp/credit-card-agreements/
+https://ecm.capitalone.com/WCM/card/credit-card-agreements-q3-2026/credit-card-agreement-for-visa-signature-and-world-mastercard-cards-in-capital-one-n.a.pdf
+https://ecm.capitalone.com/WCM/card/credit-card-agreements-q3-2026/credit-card-agreement-for-consumer-no-preset-spending-limit-cards-in-capital-one-n.a.pdf
+
+The issuer's guide index tells holders to check the logo or statement to
+select the correct guide. Visa, Mastercard and Discover-network guides are
+separate. A product name alone does not identify every protection.
+https://www.capitalone.com/credit-cards/benefits-guide/
+
+103. Chase Freedom Unlimited
+
+The linked pricing document is dated December 16, 2025. It fills the foreign,
+advance, transfer, late/returned-payment and installment-fee gaps. Its APRs
+differ from today's product page. The app must label that older fee schedule
+instead of presenting it as a new personalized quote. Transfers/advances start
+interest immediately under that document; paying a minimum does not preserve
+the purchase grace period.
+https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC61498.html
+https://www.chase.com/content/dam/pricingandterms/LGC61498.html
+https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited
+
+104. American Express Blue Cash Everyday
+
+The June 30, 2026 agreement replaces March as the latest dated agreement
+read here. It provides the variable-rate formulas, plan fees, advances,
+transfers, penalties, returned-check and reopening charges. A promotional
+application offer may differ. The current member-guide text removes the old
+Disney-credit minimum purchase requirement; enrollment, qualifying U.S.
+subscription purchases, monthly limits and auto-renewal still apply.
+https://www.americanexpress.com/content/dam/amex/en-us/company/legal/cardmember-agreements/public-site-2026-q2-pdf-cmas/cps-lending/blue-cash-everyday-06-30-2026.pdf
+https://www.americanexpress.com/en-us/account/get-started/bce/uncover-your-benefits
+
+105. Wells Fargo Active Cash
+
+Following the product's current credit-terms link reaches a September 2026
+document. It confirms the existing fee table, immediate interest on advances
+and transfers, and full-balance purchase grace rule. It also explains that
+reward credits do not remove required payments. Redeem for Purchases needs
+a purchase of at least $1 and enough rewards to cover the whole transaction.
+No returned-payment fee was assigned a made-up zero when it was absent from
+the displayed pricing table.
+https://www.wellsfargo.com/credit-cards/documents/active-cash-terms/?FPID=012686I6F40000&cx_nm=CXNAME_CSMPD&product_code=CC&sub_channel=WEB&subproduct_code=AC&vendor_code=WF
+https://www.wellsfargo.com/credit-cards/active-cash/guide-to-benefits/
+
+106. Chase Freedom Flex
+
+The current product explicitly says no foreign transaction fee; old generic
+three-percent assumptions must not override it. The full current pricing link
+LGC65280 could not be fetched. The linked benefit guide is available. The
+known quarter, activation and shared-cap rules remain visible, but this does
+not establish an exact current borrowing-fee schedule.
+The rewards agreement separates the base and bonus portions. An overlap
+example must count the base once; it does not mean adding 5% and 3% as 8%.
+https://creditcards.chase.com/cash-back-credit-cards/freedom/flex
+https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC65280.html
+https://asset.chase.com/content/services/structured-document/document.en.pdf/card/benefits-center/product-benefits-guide-pdf/BGC11542.pdf
+https://www.chase.com/freedomflex/rewardsagreement
+
+107. Chase Sapphire Preferred
+
+The readable pricing document is dated May 5, 2026. It supplies advance,
+transfer, late/returned-payment and installment charges, with a penalty APR
+that may remain indefinitely. It has older APRs than the product page. The
+current rewards agreement separately confirms cash redemption at one cent
+per point; bonus earning rates are points per dollar, not cash percentages.
+https://www.chase.com/content/dam/pricingandterms/LGC65222.html
+https://www.chase.com/sapphirepreferred/rewardsagreement
+https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred
+
+108. Chase Sapphire Reserve
+
+The rewards agreement is readable and confirms the cash-redemption option.
+The current pricing link LGC64842 is still blocked. The existing annual fee,
+additional-card fee, public APR, credits and exclusions remain sourced to
+the product pages and guide. A different Chase card's fee schedule must not
+be labeled as Reserve's current contract.
+https://www.chase.com/sapphirereserve/rewardsagreement
+https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC64842.html
+https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve
+
+109. American Express Gold
+
+The June 30, 2026 agreement fills the missing Pay Over Time formula and
+advance, plan, penalty, returned-check and reopening charges. It confirms
+that no preset limit does not remove the payment obligation. The issuer's
+point-value explanation gives 0.6 cents per point for eligible statement
+charges. At that specific redemption, four points per dollar equals 2.4%
+before fees; four points is not automatically four-percent cash back.
+https://www.americanexpress.com/content/dam/amex/en-us/company/legal/cardmember-agreements/public-site-2026-q2-pdf-cmas/cps-charge/american-express-gold-card-06-30-2026.pdf
+https://www.americanexpress.com/en-us/credit-cards/credit-intel/american-express-points-value/
+https://www.americanexpress.com/en-us/account/get-started/gold/explore-benefits
+
+110. American Express Platinum
+
+The June 30, 2026 agreement confirms the fee and borrowing-cost details,
+including the difference between additional Platinum and Companion cards.
+The ordinary eligible-charge redemption described above also applies to
+Membership Rewards; it is different from travel or transfer redemptions.
+The existing credit periods, enrollment and lounge restrictions still matter.
+The full personal coverage and account amendments must match the holder's card.
+https://www.americanexpress.com/content/dam/amex/en-us/company/legal/cardmember-agreements/public-site-2026-q2-pdf-cmas/cps-charge/platinum-card-06-30-2026.pdf
+https://www.americanexpress.com/en-us/credit-cards/credit-intel/american-express-points-value/
+
+111. American Express Blue Cash Preferred
+
+The June 30 agreement fills the borrowing-fee gaps; the public first-year
+annual-fee waiver is a separate offer. The member guide confirms Disney's
+current monthly allowance has no minimum purchase threshold. Return cover
+needs a refused return, an eligible U.S./territory purchase paid in full on
+the card, and a timely claim. Transit includes rideshare: the separate Lyft
+ride category must therefore receive the eligible three-percent rate too.
+https://www.americanexpress.com/content/dam/amex/en-us/company/legal/cardmember-agreements/public-site-2026-q2-pdf-cmas/cps-lending/blue-cash-preferred-06-30-2026.pdf
+https://www.americanexpress.com/en-us/account/get-started/bcp/uncover-your-benefits
+https://www.americanexpress.com/us/credit-cards/card/blue-cash-preferred/
+https://www.americanexpress.com/content/dam/amex/us/credit-cards/features-benefits/policies/NAC-Benefit-Guides/RP_Benefit_Guide_Rev_10-20_10.09.23.pdf
+
+112. Capital One Venture Rewards
+
+The issuer's indexed card-list disclosure fills the cash-advance APR/fee
+and standard-versus-promotional transfer charges. These are the personal
+Venture Rewards terms, not VentureOne, business or good-credit terms. Travel
+purchase offsets must be requested within 90 days. Cash, travel and partner
+redemptions are separate; a universal cash value was not assumed.
+https://www.capitalone.com/credit-cards/
+https://www.capitalone.com/learn-grow/money-management/ways-to-redeem-venture-miles/
+https://www.capitalone.com/credit-cards/benefits-guide/
+
+113. Capital One Venture X Rewards
+
+The issuer's indexed disclosure gives the same advance fee and identifies
+standard versus promotional transfers. No-preset-limit and other agreement
+versions must be distinguished. The issuer-linked Visa Infinite guide,
+effective October 1, 2021, supplies cell protection's $50 deductible, $800
+per-claim limit and two-claim/$1,600 twelve-month limit. The bill must have
+been paid in the preceding month; missing phones and electronic-only failures
+are excluded. Matching the holder's actual guide remains necessary.
+https://www.capitalone.com/credit-cards/
+https://ecm.capitalone.com/WCM/card/benefits-guide/visa-benefits-guides/visa-infinite-english.pdf
+https://www.capitalone.com/learn-grow/money-management/ways-to-redeem-venture-miles/
+
+114. Citi Double Cash
+
+The issuer's v32 pricing table is readable. It fills the three-percent foreign
+fee, transfer/advance charges, penalties and plan fees. It has no printed
+effective date. Its APRs differ from the issuer-indexed offer, which also
+shows an 18-month transfer intro. The live product reader still has blanks.
+Keep those versions labeled; do not combine them into one guaranteed offer.
+The second purchase reward still requires qualifying payments.
+https://www.citi.com/CRD/PDF/CMA/pricingTables/PIT_PID142-DoubleCashADA-2.pdf
+https://www.citi.com/credit-cards/citi-double-cash-credit-card?uuid=IPAbF8Bmuv83059X5117&yLocale=en-us&yMarket=us
+https://www.citi.com/credit-cards/compare-credit-cards/CMA-PIT
+
+115. Citi Strata Premier
+
+The issuer-indexed offer fills advance and transfer fees, penalty APR,
+minimum interest and plan charges. Different indexed offer versions show
+different APRs and bonus eligibility; an exact live offer remains unconfirmed.
+A World Elite protection guide dated May 12, 2024 was found, but its general
+title alone does not establish current coverage for every Strata Premier.
+The app keeps that applicability warning instead of promising its limits.
+Mastercard's own Citi card catalog lists Strata Premier; the network field
+now identifies Mastercard. That does not establish a particular policy's
+current applicability or guarantee an insurance claim.
+https://www.citi.com/credit-cards/citi-strata-premier-credit-card?afc=126&category=view-all-credit-cards
+https://www.citi.com/credit-cards/credit-card-rewards/citi-strata-premier-travel-benefits
+https://snamwpm.eccmp.com/wpm/617/ContentUploads/docs/GTB_CRE131.pdf
+https://www.mastercard.com/us/en/personal/find-a-card/credit-card/issuers/citi.html
+
+116. Discover it Cash Back
+
+The issuer-indexed calendar identifies Q4 2026 as restaurants, entertainment
+and utilities. The bonus starts on activation if that is later than October
+1, ends December 31 and shares the $1,500 cap. Merchant classification and
+transaction dates matter. The September 30, 2026 Discover-by-Capital-One
+agreement is a family sample, with different possible account terms. It must
+not silently replace a legacy Discover account's fee schedule or first-late rule.
+The Discover agreement page directs existing holders to request their own
+agreement; it is not a public guarantee of one fee schedule for every holder.
+https://www.discover.com/credit-cards/cash-back/cashback-calendar.html?link=%2Fweb%2Frewards%2F&msockid=020eafe172196fb62678b95773226e45
+https://ecm.capitalone.com/WCM/card/credit-card-agreements-q3-2026/credit-card-agreement-for-discover-by-capital-one-n.a.pdf
+https://www.capitalone.com/credit-cards/lp/credit-card-agreements/
+https://www.discover.com/credit-cards/cardmember-agreement/
+
+117. Bank of America Customized Cash Rewards
+
+The actual sample agreement is dated September 30, 2026. It supplies foreign,
+cash-advance, late and plan-fee information. It distinguishes bank advances
+from direct-deposit/check advances. The current product's temporary transfer
+fee is separate from the sample's ordinary five-percent fee. The agreement
+lists percentages without a general dollar minimum; none was invented.
+https://www.bankofamerica.com/credit-cards/credit-card-agreements/
+https://www.bankofamerica.com/content/documents/creditcard/bank_of_america_customized_cash_rewards_english.pdf
+https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/
+
+118. Amazon Prime Visa
+
+The current full pricing link LGC59329 remains blocked. The product's stated
+costs, membership requirements and reward exclusions stay visible. Its linked
+protection guide needs to match the account. No unrelated Chase fee table
+was used to claim Prime's exact current borrowing charges.
+https://creditcards.chase.com/cash-back-credit-cards/amazon-prime-rewards
+https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC59329.html
+
+119. Costco Anywhere Visa by Citi
+
+The issuer's v32 table fills transfer, advance, late/returned-payment and
+plan charges. Its undated APRs differ from the indexed offer. The personal
+protection guide, effective January 22, 2023, caps damage/theft cover at
+$1,000 per item, not the business card's $10,000. It also supplies rental
+conditions. The personal agreement requires continuing Costco membership.
+Business application terms were rejected as a source for personal-card rules.
+https://www.citi.com/CRD/PDF/CMA/pricingTables/PIT_PID520-CostcoADA-2.pdf
+https://www.citi.com/CRD/PDF/CMA/cardAgreement/CMA_CostcoConsADA-3.pdf
+https://www.cardbenefits.citi.com/-/media/CPP/Files/LegalDocs/SOAPI/CostcoCon.ashx
+https://www.citi.com/credit-cards/costco-anywhere-visa-card?msockid=1cd7e9cbb4a763571705fff4b55262b2
+
+120. Wells Fargo Autograph
+
+The current credit-terms link leads to a September 2026 document. It confirms
+that the purchase intro does not cover balance transfers. Advances/transfers
+start interest immediately. Rewards are rounded according to the issuer's
+program, and redemptions can differ by option. The app still does not assign
+an unsupported universal point value or substitute insurance for cash back.
+https://www.wellsfargo.com/credit-cards/documents/autograph-visa-terms/?FPID=012988I6P10000&cx_nm=CXNAME_CSMPD&product_code=CC&sub_channel=WEB&subproduct_code=AU&vendor_code=WF
+https://www.wellsfargo.com/credit-cards/autograph-visa/guide-to-benefits/
+
+Checks beyond the product pages
+
+Chase's public sample agreement and the CFPB issuer directory were checked.
+The samples group multiple terms, and the directory does not map the COL
+form numbers to these exact offers. Those samples cannot establish the three
+blocked current pricing schedules. CFPB's current survey page offers data
+for July-December 2025 and explains that its comparison tool was retired
+because its source data was not timely enough. That is not a current-offer fix.
+https://www.chase.com/personal/credit-cards/cardmember-agreement
+https://www.chase.com/content/feed/public/creditcards/cma/Chase/COL00079.pdf
+https://www.consumerfinance.gov/credit-cards/agreements/issuer/jpmorgan-chase-bank-national-association/
+https://www.consumerfinance.gov/data-research/credit-card-data/terms-credit-card-plans-survey/
+
+The CFPB Citi directory links Q2 2026 pricing PDFs, but the reader rejected
+their binary/octet-stream content type. Issuer PDFs and indexed product
+disclosures were used where available. Amex's four possible Q3 agreement
+paths were also checked; none could be read. June remains the latest dated
+Amex agreement actually read in this pass. The benefit dashboard returned
+403 errors; selected indexed terms and member guides were available.
+https://www.consumerfinance.gov/credit-cards/agreements/issuer/citibank-na/
+
+Remaining checks that require another access route
+
+Open the exact pricing links for Freedom Flex, Sapphire Reserve and Prime
+Visa in a normal browser. Confirm each document's date and full APR/fee table.
+Then compare any actual account with its own agreement and later notices.
+For Citi, compare the currently displayed offer with the older tables and
+indexed variants before using its APR. For Capital One and Discover, match
+the network, credit version, issuer and agreement. Insurance should be checked
+against the guide supplied for that actual account and the proposed purchase.
+
+These are real remaining access and applicability limits. This research does
+not establish every personalized contract, future change or claim outcome.
+The updated app must preserve those distinctions instead of replacing them
+with a claim that all terms are completely verified.

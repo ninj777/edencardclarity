@@ -1,6 +1,10 @@
 Twenty-card research review
 Checked October 30, 2026, before adding these records.
 
+Follow-up: cardTermsFollowUp.txt records a deeper pass through fee tables,
+agreements and benefit guides. It replaces the first-pass availability notes
+below where a later source was found, and records the remaining access limits.
+
 Selection
 
 This is a practical selection of twenty common U.S. personal reward cards,
